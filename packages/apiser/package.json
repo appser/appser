@@ -1,0 +1,56 @@
+{
+  "name": "apiser",
+  "version": "0.1.0",
+  "description": "A low-code API framework",
+  "author": "Datap Team",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "apiser run",
+    "dev": "DEBUG=* ts-node src/server.ts",
+    "build": "rimraf lib & tsc",
+    "test": "echo coming soon..."
+  },
+  "bin": {
+    "apiser": "lib/bin/apiser.js",
+    "apiserD": "src/bin/apiser.ts"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=7.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datap-run/datap.git",
+    "directory": "packages/apiser"
+  },
+  "bugs": {
+    "url": "https://github.com/datap-run/datap/issues"
+  },
+  "homepage": "https://github.com/datap-run/packages/apiser#readme",
+  "dependencies": {
+    "@koa/router": "10.1.1",
+    "ajv": "8.11.0",
+    "debug": "4.3.4",
+    "fast-glob": "3.2.11",
+    "knex": "1.0.4",
+    "koa": "2.13.4",
+    "koa-bodyparser": "4.3.0",
+    "koa-compose": "4.1.0",
+    "koa-pino-logger": "^4.0.0",
+    "koa-qs": "3.0.0"
+  },
+  "devDependencies": {
+    "@swc/core": "1.2.163",
+    "@types/json-schema": "7.0.11",
+    "@types/koa__router": "8.0.11",
+    "@types/koa-bodyparser": "4.3.7",
+    "@types/koa-pino-logger": "3.0.1",
+    "commander": "9.1.0",
+    "node-dev": "7.4.2",
+    "rimraf": "3.0.2",
+    "ts-node": "10.7.0",
+    "tsconfig-paths": "3.14.1",
+    "typescript": "4.6.3"
+  }
+}

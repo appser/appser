@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node 14",
+  "ts-node": {
+    "transpileOnly": true,
+    "swc": true,
+    "files": true,
+    "require": ["tsconfig-paths/register"],
+    "compilerOptions": {}
+  },
+  "compilerOptions": {
+    "lib": ["es2020"],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "target": "es2020",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "declaration": true,
+    "baseUrl": ".",
+    "paths": {
+      "@apiser/*": ["packages/*/src"],
+      "apiser": ["packages/apiser/src"]
+    }
+  }
+}
