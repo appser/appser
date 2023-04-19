@@ -1,0 +1,24 @@
+{
+  "name": "@appser/access",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "sideEffects": false,
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "debug": "4.3.4",
+    "glob-to-regexp": "^0.4.1",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.7",
+    "@types/glob-to-regexp": "^0.4.1",
+    "@types/lodash": "^4.14.189",
+    "json-templates": "^4.2.0"
+  }
+}

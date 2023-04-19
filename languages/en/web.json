@@ -1,0 +1,215 @@
+{
+  "component": {
+    "ThemeSelect": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "RoleSelect": {
+      "chooseRole": "Choose Role",
+      "role": "ROLE"
+    },
+    "AppItem": {
+      "untitled": "Untitled"
+    }
+  },
+  "column": {
+    "id": "Row Id",
+    "name": "Name",
+    "creator": "Creator",
+    "createdAt": "Created Time",
+    "updatedAt": "Last Modified",
+    "lastEditor": "Last Modified By"
+  },
+  "field": {
+    "checkbox": "Checkbox",
+    "date": "Date",
+    "email": "Email",
+    "multipleSelect": "Multiple Select",
+    "number": "Number",
+    "numId": "Number Id",
+    "richText": "Rich Text",
+    "simpleText": "Simple Text",
+    "singleSelect": "Single Select",
+    "url": "Url"
+  },
+  "modal": {
+    "button": {
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "ok": "Ok",
+      "save": "Save",
+      "delete": "Delete"
+    },
+    "confirmSignOut": {
+      "title": "Are you sure you want to sign out?",
+      "signOut": "Sign Out"
+    },
+    "confirmDeleteOrg": {
+      "title": "Are you sure you want to delete this org?",
+      "alert": "This will permanently delete the <strong>{{name}}</strong> and all of its data.",
+      "inputLabel": "Enter this org’s name to confirm",
+      "delete": "Delete this org"
+    },
+    "confirmDeleteApp": {
+      "title": "Are you sure you want to delete this dataset?",
+      "alert": "This will permanently delete the <strong>{{name}}</strong> and all of its data."
+    },
+    "invitePeopleToOrg": {
+      "title": "Invite people to org",
+      "inviteBy": "Invite By",
+      "link": "Link",
+      "grantRole": "Grant the role to anyone who accepts it",
+      "copyLink": "Copy Link",
+      "copiedUrl": "Copied Link"
+    },
+    "removeOrgPerson": {
+      "title": "Are you sure you want to remove {{name}} from {{org}}",
+      "remove": "Remove"
+    },
+    "userSettings": {
+      "account": {
+        "title": "Account",
+        "changePassword": "Change Password",
+        "change": "Change"
+      },
+      "appearance": {
+        "title": "Appearance",
+        "theme": "Theme",
+        "themeMode": "Theme mode",
+        "language&region": "Language & region",
+        "language": "Language"
+      }
+    },
+    "userChangePassword": {
+      "title": "Change Account Password",
+      "oldPassword": "Old Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "passwordsNotMatch": "Passwords did not match",
+      "invalidPassword": "Password must contain at least 6 characters",
+      "edit": "Edit"
+    },
+    "datasetAddMember": {
+      "title": "Add people to {{name}}"
+    }
+  },
+  "config": {
+    "role": {
+      "system": {
+        "admin": {
+          "name": "Admin",
+          "description": "todo.."
+        },
+        "user": {
+          "name": "User",
+          "description": "todo.."
+        }
+      },
+      "org": {
+        "owner": {
+          "name": "Owner",
+          "description": "Has full administrative access to the entire org."
+        },
+        "member": {
+          "name": "Member",
+          "description": "Can create apps and see every member in the org."
+        },
+        "outsideCollaborator": {
+          "name": "Outside Collaborator",
+          "description": "todo.."
+        }
+      },
+      "dataset": {
+        "admin": {
+          "name": "Admin",
+          "description": "Can fully configure and edit this dataset"
+        },
+        "editor": {
+          "name": "Editor",
+          "description": "Can edit records and views, but can't configure dataset, datasets or fields"
+        },
+        "readOnly": {
+          "name": "Read Only",
+          "description": "Only can view the datasets, views and records in this dataset"
+        }
+      }
+    }
+  },
+  "page": {
+    "login": {
+      "title": "Sign in to Appser",
+      "email": "Email",
+      "password": "Password",
+      "signIn": "Sign In",
+      "subtitleWithInviter": "{{inviter}} invited you, sign in to start working in {{org}}",
+      "error": {
+        "invalidEmail": "Invalid email",
+        "invalidPassword": "Password must contain at least 6 characters"
+      },
+      "signUp": "Sign Up"
+    },
+    "org": {
+      "create": {
+        "title": "Create Your Organization",
+        "subTitle": "Once created, you'll become org owner who can invite members to join",
+        "name": "Organization Name",
+        "create": "Create",
+        "invalidName": "Organization name must contain at least 2 characters"
+      }
+    },
+    "invite": {
+      "title": "You've been invited to the <strong>{{org}}</strong> org",
+      "subTitle": "Invited by {{inviter}}",
+      "brokenLinkTitle": "The invitation link is broken",
+      "expiredLinkTitle": "The invitation link is expired",
+      "warnSubTitle": "Please contact the inviter to get a new invitation link",
+      "back": "Back",
+      "accept": "Accept"
+    },
+    "signup": {
+      "title": "Create Account",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "signUp": "Sign Up",
+      "subtitleWithInviter": "{{inviter}} invited you, sign up to start working in {{org}}",
+      "invalidEmail": "Invalid email",
+      "invalidPassword": "Password must contain at least 6 characters",
+      "invalidName": "Name must contain at least 2 characters",
+      "confirmPassword": "Confirm Password",
+      "passwordsNotMatch": "Passwords did not match"
+    },
+    "home": {
+      "apps": "Apps",
+      "members": "Members",
+      "settings": "Settings",
+      "api": "API",
+      "resources": "RESOURCES",
+      "signOut": "Sign Out",
+      "userSettings": "User Settings...",
+      "orgs": {
+        "-": {
+          "apps": {
+            "title": "Apps"
+          },
+          "settings": {
+            "orgName": "Org Name",
+            "general": "General",
+            "dangerZone": "Danger zone",
+            "deleteOrg": "Delete Org",
+            "deleteOrgDescription": "Once you delete a org, there is no going back. Please be certain.",
+            "settings": "Settings",
+            "orgNameError": "Name length must be between 1 and 50 characters"
+          },
+          "people": {
+            "members": "Members",
+            "invite": "Invite",
+            "remove": "Remove",
+            "changeRole": "Change Role..."
+          }
+        }
+      }
+    }
+  }
+}

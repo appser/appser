@@ -1,0 +1,14 @@
+{
+  "name": "create-appser",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run",
+    "build": "rimraf lib && tsc",
+    "check": "eslint ./src & tsc --noEmit"
+  }
+}

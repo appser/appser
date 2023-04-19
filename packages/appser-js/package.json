@@ -1,0 +1,10 @@
+{
+  "name": "@appser/appser-js",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "keywords": [],
+  "main": "src/index.ts",
+  "scripts": {}
+}

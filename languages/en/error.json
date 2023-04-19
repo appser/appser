@@ -1,0 +1,92 @@
+{
+  "common": {
+    "unknown": "Something went wrong. Please try again later.",
+    "invalidParameter": "parameters invalid",
+    "invalidRequest": "Unrecognized request",
+    "accessForbidden": "access to the resource is denied",
+    "internal": "something went wrong on appser's end",
+    "notFound": "the resource not found"
+  },
+  "db": {
+    "invalidFilter": "invalid filter"
+  },
+  "formula": {
+    "invalidExpression": "invalid expression"
+  },
+  "auth": {
+    "invalidEmail": "Invalid email address.",
+    "invalidPassword": "Password must NOT have fewer than 6 character.",
+    "account": {
+      "notMatch": "Incorrect username or password, please check your details and try again.",
+      "notFound": "account not found",
+      "roleChanged": "the user's role has changed, please login again."
+    },
+    "token": {
+      "notFound": "Missing bearer token in authorization header.",
+      "invalid": "invalid token",
+      "expired": "token expired",
+      "notBefore": "token not before.",
+      "revoked": "the token was revoked."
+    }
+  },
+  "access": {
+    "invalidPolicy": "Mismatch, action: '{{action}}' resource: {{resource}}"
+  },
+  "model": {
+    "validateFail": "validation failed",
+    "invalidInsertType": "Validate inserts must be object or array.",
+    "invalidUpdateType": "Origin update must be object.",
+    "notFound": "Model {{name}} is not stored",
+    "patchFieldFailed": "Prohibit patch field type, use column reset api to do that.",
+    "invalidColumnConfig": "Invalid column config",
+    "columnNotFound": "Column '{{columnId}}' not found",
+    "castFieldFailed": "Prohibit patch field type, use column reset api to do that.",
+    "invalidFieldOptions": "Invalid field option",
+    "columnIsLocked": "Column is frozen, can't be update.",
+    "missingTableWName": "model createTable without datasetName"
+  },
+  "signup": {
+    "userExist": "user already exist",
+    "denySignup": "signup is not allowed"
+  },
+  "dataset": {
+    "emptyRecord": "cannot add empty record or mismatch with dataset columns",
+    "invalidColumn": "Invalid column: {{columns}}",
+    "recordNotFound": "Record not found",
+    "invalidRecord": "Invalid record: {{errors}}",
+    "viewRequired": "dataset view must have at least one view",
+    "viewNotFound": "dataset view not found",
+    "viewColumnNotFound": "column {{names}} not found",
+    "invalidView": "Invalid view: {{errors}}",
+    "notFound": "dataset not found",
+    "invalidRecordColumn": "invalid record column",
+    "invalidFilterQuery": "invalid filter query",
+    "selectOutsideColumn": "column outside the range",
+    "invalidOperator": "invalid operator"
+  },
+  "org": {
+    "notFound": "org not found",
+    "peopleNotFound": "people not found",
+    "peopleRemoveSelf": "can't remove self",
+    "mustHaveOneOwner": "must have one owner",
+    "unavailableRole": "unavailable role",
+    "cannotChangeSelfRole": "You can't change yourself, please ask other owner to do that."
+  },
+  "invitation": {
+    "invalidToken": "invalid token",
+    "tokenExpired": "link.expired",
+    "tokenNotBefore": "link notBefore",
+    "alreadyJoined": "alreadyJoined",
+    "invalidInviter": "invalid Inviter"
+  },
+  "app": {
+    "notFound": "app not found",
+    "unavailableRole": "unavailable role"
+  },
+  "user": {
+    "notFound": "user not found"
+  },
+  "account": {
+    "incorrectPassword": "Incorrect password"
+  }
+}

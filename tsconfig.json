@@ -1,28 +1,21 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Node 14",
-  "ts-node": {
-    "transpileOnly": true,
-    "swc": true,
-    "files": true,
-    "require": ["tsconfig-paths/register"],
-    "compilerOptions": {}
-  },
   "compilerOptions": {
     "lib": ["es2020"],
-    "module": "CommonJS",
-    "moduleResolution": "node",
     "target": "es2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "sourceMap": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "sourceMap": false,
     "declaration": true,
-    "baseUrl": ".",
-    "paths": {
-      "@apiser/*": ["packages/*/src"],
-      "apiser": ["packages/apiser/src"]
-    }
-  }
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "types": ["vitest/globals"],
+    "noEmit": true
+  },
+  "include": ["packages", "scripts", "test.ts"],
+  "exclude": ["**/node_modules", "**/*/lib", "**/*/dist", "**/build"]
 }

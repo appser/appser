@@ -1,0 +1,26 @@
+{
+  "name": "appser",
+  "version": "0.0.1",
+  "description": "A no-code database",
+  "author": "",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "main": "lib/index.js",
+    "bin": {
+      "appser": "./bin/appser.js"
+    }
+  },
+  "scripts": {},
+  "dependencies": {
+    "@appser/backend": "workspace:*",
+    "appser-web": "workspace:*"
+  },
+  "devDependencies": {
+    "chokidar": "^3.5.3",
+    "commander": "9.2.0",
+    "concurrently": "^7.5.0",
+    "cross-spawn": "^7.0.3",
+    "tsx": "^3.12.1"
+  }
+}

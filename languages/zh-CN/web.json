@@ -1,0 +1,103 @@
+{
+  "component": {
+    "modal": {
+      "confirm": "确定",
+      "cancel": "取消",
+      "ok": "好的"
+    },
+    "RoleSelect": {
+      "chooseRole": "选择角色",
+      "orgRole": "工作区角色",
+      "role": "角色"
+    }
+  },
+  "page": {
+    "login": {
+      "title": "登录到 Appser",
+      "email": "邮箱",
+      "password": "密码",
+      "signIn": "登录",
+      "subtitleWithInviter": "{{inviter}} 邀请你加入 {{org}}, 请先登录并开始协作",
+      "error": {
+        "invalidEmail": "Email 地址不正确",
+        "invalidPassword": "密码至少 6 位数"
+      },
+      "signUp": "注册账号"
+    },
+    "org": {
+      "create": {
+        "title": "创建工作区",
+        "subTitle": "创建后，你将成为该工作区的管理员，可邀请其他人加入并开启高效协作",
+        "name": "工作区名称",
+        "invalidName": "工作区名称必须包含至少 2 个字符",
+        "create": "创建"
+      }
+    },
+    "invite": {
+      "back": "返回",
+      "accept": "接受"
+    },
+    "signup": {
+      "title": "创建账号",
+      "name": "姓名",
+      "email": "邮箱",
+      "password": "密码",
+      "signUp": "注册",
+      "subtitleWithInviter": "{{inviter}} 邀请了你, 创建一个新账号并在 {{org}} 中进行协作",
+      "invalidEmail": "邮箱地址不正确",
+      "invalidPassword": "密码必须包含至少 6 个字符",
+      "invalidName": "姓名必须包含至少 2 个字符",
+      "confirmPassword": "确认密码",
+      "passwordsNotMatch": "两次密码不匹配"
+    },
+    "home": {
+      "settings": "设置",
+      "members": "成员",
+      "apps": "应用",
+      "api": "API",
+      "resources": "资源",
+      "signOut": "退出登录",
+      "userSettings": "用户设置...",
+      "confirmSignOutTitle": "确定要退出登录吗？",
+      "orgs": {
+        "settings": {
+          "orgName": "工作区名称"
+        },
+        "-": {
+          "settings": {
+            "orgName": "工作区名称",
+            "dangerZone": "危险区域",
+            "deleteOrg": "删除工作区",
+            "deleteOrgDescription": "一旦删除整个工作区后将无法恢复，请谨慎操作。",
+            "general": "通用",
+            "settings": "设置"
+          },
+          "people": {
+            "members": "成员",
+            "invite": "邀请"
+          }
+        }
+      }
+    }
+  },
+  "config": {
+    "theme": {
+      "light": "浅色",
+      "dark": "深色",
+      "system": "随系统"
+    }
+  },
+  "modal": {
+    "button": {
+      "save": "保存",
+      "cancel": "取消"
+    },
+    "invitePeopleToOrg": {
+      "title": "邀请人们加入工作区",
+      "inviteBy": "邀请方式",
+      "link": "链接",
+      "grantRole": "接受邀请的人将获得的角色",
+      "copyLink": "拷贝链接"
+    }
+  }
+}

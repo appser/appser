@@ -1,0 +1,16 @@
+{
+  "name": "@appser/shared",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "sideEffects": false,
+  "main": "src/index.ts",
+  "dependencies": {
+    "qs": "^6.11.1"
+  },
+  "devDependencies": {
+    "@types/qs": "^6.9.7"
+  }
+}

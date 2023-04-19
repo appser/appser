@@ -1,0 +1,22 @@
+diff --git a/dist/js/index.js b/dist/js/index.js
+index 58fcf6782f63d44fffb3d58977edb5d6d583d01d..0b51e69a5b0cd04491edb8bc8f400e51dadc5a8b 100644
+--- a/dist/js/index.js
++++ b/dist/js/index.js
+@@ -4391,7 +4391,8 @@ var DataGrid = (p, forwardedRef) => {
+   const onMouseMoveImpl = React8.useCallback((ev) => {
+     var _a2;
+     const canvas = ref.current;
+-    if (canvas === null)
++    const eventTarget = eventTargetRef == null ? void 0 : eventTargetRef.current;
++    if (canvas === null || ev.target !== canvas && ev.target !== eventTarget)
+       return;
+     const args = getMouseArgsForPosition(canvas, ev.clientX, ev.clientY, ev);
+     if (!isSameItem(args, hoveredRef.current)) {
+@@ -9713,6 +9714,7 @@ var DataEditorImpl = (p, forwardedRef) => {
+   }, 5));
+   const onCanvasFocused = React34.useCallback(() => {
+     setIsFocusedDebounced.current(true);
++    return
+     if (gridSelection.current === void 0 && gridSelection.columns.length === 0 && gridSelection.rows.length === 0 && mouseState === void 0) {
+       setCurrent({
+         cell: [rowMarkerOffset, cellYOffset],

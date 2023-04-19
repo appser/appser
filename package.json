@@ -1,30 +1,68 @@
 {
   "private": true,
+  "packageManager": "pnpm@7.4.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/datap-run/datap.git"
+    "url": "git+https://github.com/appser/appser.git"
   },
-  "scripts": {},
-  "workspaces": [
-    "packages/apiser",
-    "packages/apiser-orm",
-    "packages/datap",
-    "packages/datap-apiser",
-    "packages/datap-studio"
-  ],
+  "engines": {
+    "node": ">=14.16",
+    "pnpm": ">=7.4.0"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev": "pnpm -r --parallel  --stream  -F'./packages/*' dev",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "vitest",
+    "check:ts": "tsc --noEmit",
+    "gen:openapi": "DB_URL=foo SECRET=foo tsx --tsconfig ./packages/backend/tsconfig.json scripts/gen-openapi.ts",
+    "gen:appser-js": "DB_URL=foo SECRET=foo tsx --tsconfig ./packages/backend/tsconfig.json scripts/gen-appser-js.ts",
+    "cleanup": "rimraf **/node_modules",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "storybook build"
+  },
   "devDependencies": {
-    "@swc/core": "^1.2.163",
-    "@types/node": "^17.0.23",
-    "@typescript-eslint/eslint-plugin": "^5.17.0",
-    "@typescript-eslint/parser": "^5.17.0",
-    "eslint": "^8.12.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-simple-import-sort": "^7.0.0",
-    "jest": "^27.5.1",
-    "prettier": "2.6.1",
-    "ts-node": "^10.7.0",
-    "tsconfig-paths": "^3.14.1",
-    "typescript": "^4.6.3"
+    "@emotion/react": "^11.10.6",
+    "@mantine/core": "^6.0.8",
+    "@storybook/addon-a11y": "^6.5.13",
+    "@storybook/addon-essentials": "^6.5.13",
+    "@storybook/addon-storysource": "^6.5.13",
+    "@storybook/builder-vite": "^0.2.5",
+    "@storybook/react": "^6.5.13",
+    "@storybook/theming": "^6.5.13",
+    "@types/node": "^18.11.9",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
+    "@types/rimraf": "^3.0.2",
+    "@types/supertest": "^2.0.12",
+    "@vercel/ncc": "^0.34.0",
+    "@vitejs/plugin-react-swc": "^3.0.1",
+    "eslint": "^8.38.0",
+    "eslint-config-appser": "workspace:^0.0.1",
+    "openapi-types": "^12.1.0",
+    "openapi-typescript-codegen": "^0.24.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^3.0.2",
+    "source-map-explorer": "^2.5.3",
+    "storybook-dark-mode": "^1.1.2",
+    "supertest": "^6.3.3",
+    "tsx": "3.12.6",
+    "typescript": "5.0.4",
+    "vite": "^4.2.2",
+    "vite-plugin-package-version": "^1.0.2",
+    "vite-tsconfig-paths": "^4.2.0",
+    "vitest": "^0.30.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "react": "^18.2.0",
+      "vite": "^4.0.3",
+      "react-dom": "^18.2.0"
+    },
+    "patchedDependencies": {
+      "@glideapps/glide-data-grid@5.2.1": "patches/@glideapps__glide-data-grid@5.2.1.patch"
+    }
   }
 }

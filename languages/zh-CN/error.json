@@ -1,0 +1,10 @@
+{
+  "invite": {
+    "unavailableRole": "unavailable role",
+    "invalidToken": "invalid token",
+    "tokenExpired": "link.expired",
+    "tokenNotBefore": "link notBefore",
+    "alreadyJoined": " 之前已经加入过这个工作区了",
+    "invalidInviter": "invalid Inviter"
+  }
+}
