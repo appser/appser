@@ -1,18 +1,16 @@
 import { App } from 'backend/models/app'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
 export const listOrgApp = new Controller(
   async (ctx, next) => {
     const {
-      access: { can, orgResource }
+      access: { guard, orgResource }
     } = ctx.state
     const { orgId } = ctx.params
-    const { deny } = can('org:app:list', { orgId })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('org:app:list', { orgId })
 
     const apps = await App.query
       .select('*')

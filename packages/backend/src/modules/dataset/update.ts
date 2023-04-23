@@ -1,20 +1,18 @@
 import { Dataset } from 'backend/models/dataset'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
 export const updateDataset = new Controller(
   async (ctx, next) => {
     const {
-      access: { can },
+      access: { guard },
       getDataset: { dataset: { appId } }
     } = ctx.state
     const { name } = ctx.request.body
     const { datasetId } = ctx.params
-    const { deny } = can('app:dataset:update', { appId, datasetId })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('app:dataset:update', { appId, datasetId })
 
     await Dataset.query.where({ id: datasetId, appId }).update({
       name,

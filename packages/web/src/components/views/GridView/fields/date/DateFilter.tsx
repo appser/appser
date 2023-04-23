@@ -9,11 +9,16 @@ import type { TransformedValues } from '@mantine/form'
 import type { FC } from 'react'
 import type { FilterConditionOperator } from 'web/servers/dataset/useQueryRecord'
 
-export const DateFilter: FC<FieldFilterProps> = ({ onChange, condition }) => {
+const THIS_WEEK = 'DATE_START_OF(NOW(),"w")'
+const THIS_MONTH = 'DATE_START_OF(NOW(),"M")'
+const YESTERDAY = 'DATE_ADD(NOW(),-1,"d")'
+const TOMORROW = 'DATE_ADD(NOW(),1,"d")'
+
+export const DateFilter: FC<FieldFilterProps> = ({ onChange, conditionValueDetail }) => {
   const form = useForm({
     initialValues: {
-      operator: condition?.operator ?? 'between',
-      value: condition?.value ?? '$customDate'
+      operator: conditionValueDetail?.operator ?? 'between',
+      value: conditionValueDetail?.value ?? '$customDate'
     },
     transformValues(values) {
       if (typeof values.value === 'string' || Array.isArray(values.value)) {
@@ -53,16 +58,16 @@ export const DateFilter: FC<FieldFilterProps> = ({ onChange, condition }) => {
         return [
           { label: '具体日期', value: '$customDate' },
           { label: '具体时间段', value: '$customRangeDate' },
-          { label: '今天', value: `=CONTACT(TODAY(),",",TODAY(1,'d'),",[)")` },
-          { label: '明天', value: `TODAY(1,'d'),TODAY(2,'d'),[)` },
-          { label: '昨天', value: `TODAY(-1,'d'),TODAY(),[)` },
-          { label: '本周', value: `THIS_WEEK(),THIS_WEEK(1,'w'),[)` },
-          { label: '上周', value: `THIS_WEEK(-1,'w'),THIS_WEEK(),[)` },
-          { label: '本月', value: `THIS_MONTH(),THIS_MONTH(1,'M'),[)` },
-          { label: '上月', value: `THIS_MONTH(-1,'M'),THIS_MONTH(),[)` },
-          { label: '过去 7 天内', value: `TODAY(-7,'d'),TODAY(),[)` },
-          { label: '未来 7 天内', value: `TODAY(),TODAY(8,'d'),[)` },
-          { label: '过去 30 天内', value: `TODAY(-30,'d'),TODAY(),[)` }
+          { label: '今天', value: `=ARG2ARRAY(TODAY(),${TOMORROW},"[)")` },
+          { label: '明天', value: `=ARG2ARRAY(${TOMORROW},DATE_ADD(TODAY(),2,"d"),"[)")` },
+          { label: '昨天', value: `=ARG2ARRAY(${YESTERDAY},TODAY(),"[)")` },
+          { label: '本周', value: `=ARG2ARRAY(${THIS_WEEK},DATE_ADD(${THIS_WEEK},1,"w"),"[)")` },
+          { label: '上周', value: `=ARG2ARRAY(DATE_ADD(${THIS_WEEK},-1,"w"),${THIS_WEEK},"[)")` },
+          { label: '本月', value: `=ARG2ARRAY(${THIS_MONTH},DATE_ADD(${THIS_MONTH},1,"M"),"[)")` },
+          { label: '上月', value: `=ARG2ARRAY(DATE_ADD(${THIS_MONTH},-1,"M"),${THIS_MONTH},"[)")` },
+          { label: '过去 7 天内', value: `=ARG2ARRAY(DATE_ADD(TODAY(),-7,"d"),TODAY(),"[)")` },
+          { label: '未来 7 天内', value: '=ARG2ARRAY(TODAY(),DATE_ADD(TODAY(),7,"d"),"[)")' },
+          { label: '过去 30 天内', value: `=ARG2ARRAY(DATE_ADD(TODAY(),-30,"d"),TODAY(),"[)")` }
         ]
       case 'lt': case 'gt':
         return [

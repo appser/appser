@@ -1,6 +1,6 @@
-import { Controller } from 'backend/server/controller'
 import config from 'backend/config'
 import db from 'backend/db'
+import { Controller } from 'backend/server/controller'
 import { compareSync } from 'backend/vendors/bcrypt'
 import dayjs from 'dayjs'
 import { z } from 'zod'

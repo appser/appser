@@ -1,6 +1,5 @@
 import { Role } from 'backend/models/role'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
@@ -9,12 +8,11 @@ import { listRoleByAppId } from './utils/listRoleByAppId'
 export const listAppRole = new Controller(
   async (ctx, next) => {
     const {
-      access: { can }
+      access: { guard }
     } = ctx.state
     const { appId } = ctx.params
-    const { deny } = can('app:role:list', { appId })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('app:role:list', { appId })
 
     const roles = await listRoleByAppId(appId)
 

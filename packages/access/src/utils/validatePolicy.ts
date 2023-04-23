@@ -1,6 +1,6 @@
 import { filter } from './match'
-import { rules } from '../data/rules'
 import { actions as allActions } from '../action'
+import { rules } from '../data/rules'
 
 import type { Action } from '../action'
 import type { Policy } from '../policy'

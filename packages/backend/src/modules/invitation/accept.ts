@@ -1,7 +1,7 @@
-import { Controller } from 'backend/server/controller'
 import { Org } from 'backend/models/org'
 import { People, PersonStatus } from 'backend/models/people'
 import { checkRoleInOrg } from 'backend/modules/org/utils/checkRoleInOrg'
+import { Controller } from 'backend/server/controller'
 import { z } from 'zod'
 
 import { invitationError } from './invitation.error'

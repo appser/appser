@@ -2,7 +2,6 @@ import db from 'backend/db'
 import { Model } from 'backend/model'
 import { Dataset } from 'backend/models/dataset'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
@@ -13,13 +12,12 @@ import type { TDataset } from 'backend/models/dataset'
 export const getDataset = new Controller(
   async (ctx, next) => {
     const {
-      access: { can }
+      access: { guard }
     } = ctx.state
     const { datasetId } = ctx.params
     const dataset = await getDatasetById(datasetId)
-    const { deny } = can('app:dataset:get', { appId: dataset.appId, datasetId })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('app:dataset:get', { appId: dataset.appId, datasetId })
 
     const model = new Model(dataset.column).connect({
       db,

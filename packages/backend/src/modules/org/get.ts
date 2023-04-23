@@ -9,12 +9,11 @@ import type { TOrg } from 'backend/models/org'
 export const getOrg = new Controller(
   async (ctx, next) => {
     const {
-      access: { can }
+      access: { guard }
     } = ctx.state
     const { orgId } = ctx.params
-    const { deny } = can('org:get', { orgId })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('org:get', { orgId })
 
     const org = await Org.query.select('*').where('id', orgId).first()
 

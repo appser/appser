@@ -3,19 +3,17 @@ import db from 'backend/db'
 import { Org } from 'backend/models/org'
 import { People, PersonStatus } from 'backend/models/people'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import { z } from 'zod'
 
 export const createAccountOrg = new Controller(
   async (ctx, next) => {
     const {
-      access: { can },
+      access: { guard },
       auth: { currentUser: user }
     } = ctx.state
     const { name } = ctx.request.body
-    const { deny } = can('account:org:create', { userId: user.id })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('account:org:create', { userId: user.id })
 
     await db.transaction(async trx => {
       const [org] = await Org.query

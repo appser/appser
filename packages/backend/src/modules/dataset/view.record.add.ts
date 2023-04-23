@@ -1,13 +1,12 @@
 import db from 'backend/db'
 import { datasetError } from 'backend/modules/dataset/dataset.error'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import { z } from 'zod'
 
 export const addViewRecord = new Controller(
   async (ctx, next) => {
     const {
-      access: { can },
+      access: { guard },
       auth: { currentUser },
       getDataset: { dataset, model },
       getDatasetView: { view }
@@ -15,9 +14,8 @@ export const addViewRecord = new Controller(
     const { appId, id: datasetId } = dataset
     const { id: viewId } = view
     const data = ctx.request.body
-    const { deny } = can('app:dataset:view:record:add', { appId, datasetId, viewId })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('app:dataset:view:record:add', { appId, datasetId, viewId })
 
     const pickColumn = Object
       .entries(model.columns)

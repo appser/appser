@@ -35,7 +35,7 @@ export const defaultConfig: z.infer<typeof configSchema> = {
     url: env.DB_URL
   },
   server: {
-    port: Number(env.PORT) ?? 3000,
+    port: Number(env.PORT) || 7900,
     secret: env.SECRET
   },
   auth: {

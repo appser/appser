@@ -1,19 +1,17 @@
 import { Org } from 'backend/models/org'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
 export const updateOrg = new Controller(
   async (ctx, next) => {
     const {
-      access: { can }
+      access: { guard }
     } = ctx.state
     const { name } = ctx.request.body
     const { orgId } = ctx.params
-    const { deny } = can('org:update', { orgId })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('org:update', { orgId })
 
     await Org.query.where('id', orgId).update({
       name,

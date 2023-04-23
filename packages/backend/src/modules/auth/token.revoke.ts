@@ -1,5 +1,5 @@
-import { Controller } from 'backend/server/controller'
 import { Token } from 'backend/models/token'
+import { Controller } from 'backend/server/controller'
 
 export const revokeToken = new Controller(
   async (ctx, next) => {

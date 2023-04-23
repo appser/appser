@@ -18,31 +18,29 @@ export const useColumns = () => {
     () => {
       if (!dataset || !view) return []
 
-      return Object.entries(view?.column ?? {})
-        // sort by position
-        .sort((a, b) => a[1].pos - b[1].pos)
-        .map<Column>(([columnName, viewColumn]) => {
-          const datasetColumn = dataset?.column[columnName]
+      return view.columns.map<Column>(columnName => {
+        const columnInDataset = dataset.column[columnName]
+        const columnInView = view.column[columnName]
 
-          if (!datasetColumn) throw new Error(`Column ${columnName} not found in dataset`)
+        if (!columnInDataset || !columnInView) throw new Error(`Column ${columnName} not found in dataset or view`)
 
-          return {
-            // column
-            name: columnName,
-            ...datasetColumn,
-            ...viewColumn,
-            // grid column
-            id: columnName,
-            title: datasetColumn.title || t(`column.${columnName}`) || t(`field.${datasetColumn.field}`),
-            icon: datasetColumn.field,
-            hasMenu: true,
-            width: viewColumn?.width
-          }
-        })
+        return {
+          // column
+          name: columnName,
+          ...columnInDataset,
+          ...columnInView,
+          // grid column
+          id: columnName,
+          title: columnInDataset.title || t(`column.${columnName}`) || t(`field.${columnInDataset.field}`),
+          icon: columnInDataset.field,
+          hasMenu: true,
+          width: columnInView?.width
+        }
+      })
     },
     [dataset, view]
   )
-  const visibleColumns = useMemo(() => columns.filter((column) => column.selected), [columns])
+  const visibleColumns = useMemo(() => columns.filter(column => column.selected), [columns])
 
   useEffect(() => {
     updateColumns(columns ?? [])

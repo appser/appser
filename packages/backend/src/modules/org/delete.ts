@@ -4,19 +4,17 @@ import { Dataset } from 'backend/models/dataset'
 import { Org } from 'backend/models/org'
 import { People } from 'backend/models/people'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
 export const deleteOrg = new Controller(
   async (ctx, next) => {
     const {
-      access: { can }
+      access: { guard }
     } = ctx.state
     const { orgId } = ctx.params
-    const { deny } = can('org:delete', { orgId })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('org:delete', { orgId })
 
     await db.transaction(async trx => {
       await Org.query.where('id', orgId).delete().transacting(trx)

@@ -11,5 +11,5 @@ export const getViewQuery = (datasetId: string, viewId: string) => ({
 })
 
 export const listRecordQuery = (datasetId: string, viewId: string, params?: unknown) => ({
-  queryKey: ['dataset', datasetId, 'view', viewId, 'records', params]
+  queryKey: ['dataset', datasetId, 'view', viewId, 'record', 'query', params]
 })

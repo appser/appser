@@ -1,5 +1,5 @@
-import { Group, Text } from '@mantine/core'
-import { useEffect, useState } from 'react'
+import { Group } from '@mantine/core'
+import { useEffect, useMemo, useState } from 'react'
 
 import { ColumnSelect } from './ColumnSelect'
 import { useFields } from '../fields'
@@ -7,24 +7,32 @@ import { useColumns } from '../hooks/useColumns'
 
 import type { FieldFilterProps } from '../fields'
 import type { FC } from 'react'
-import type { Filter } from 'web/servers/dataset/useQueryRecord'
+import type { FilterCondition, FilterConditionOperator, FilterConditionValueDetail } from 'web/servers/dataset/useQueryRecord'
 
 interface Props {
-  filter: Filter
-  onChange?: (filter: Filter) => void
+  condition: FilterCondition
+  onChange?: (condition: FilterCondition) => void
 }
 
-export const ColumnFilter: FC<Props> = ({ filter, onChange }) => {
+export const ColumnFilter: FC<Props> = ({ condition, onChange }) => {
   const fields = useFields()
   const { visibleColumns } = useColumns()
-  const [columnName, _condition] = Object.entries(filter)[0]
+  const [columnName, _conditionValue] = Object.entries(condition)[0]
   const initialColumn = visibleColumns.find(c => c.name === columnName)
   const [column, setColumn] = useState(initialColumn)
-  const [condition, setCondition] = useState(_condition)
+  const [conditionValue, setConditionValue] = useState(_conditionValue)
+  const conditionValueDetail = useMemo<FilterConditionValueDetail>(() => {
+    const [operator, value] = Object.entries(conditionValue)[0] as [FilterConditionOperator, never]
+
+    return {
+      operator,
+      value
+    }
+  }, [conditionValue])
 
   useEffect(() => {
-    column && condition && onChange?.({ [column.name]: condition })
-  }, [column, condition])
+    column && conditionValue && onChange?.({ [column.name]: conditionValue })
+  }, [column, conditionValue])
 
   if (!column) return null
 
@@ -51,8 +59,8 @@ export const ColumnFilter: FC<Props> = ({ filter, onChange }) => {
         onChange={column => setColumn(column)}
       />
       <FieldFilter
-        condition={condition}
-        onChange={(v) => setCondition(v)}
+        conditionValueDetail={conditionValueDetail}
+        onChange={(v) => setConditionValue({ [v.operator]: v.value })}
       />
     </Group>
   )

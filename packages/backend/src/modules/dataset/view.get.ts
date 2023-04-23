@@ -1,43 +1,36 @@
-import { unsafeViewSchema } from 'backend/models/dataset'
+import { viewSchema } from 'backend/models/dataset'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
-import { PositionObject } from 'backend/utils/positionObject'
 import { rNumId } from 'backend/utils/regex'
+import difference from 'lodash/difference'
+import merge from 'lodash/merge'
 import { z } from 'zod'
 
-import { datasetError } from './dataset.error'
+import { getViewFromDatasetById } from './utils/getViewFromDatasetById'
 
 import type { TView } from 'backend/models/dataset'
 
+/**
+ * When add a new column to the dataset, the view should be updated to include the new column.
+ */
 export const getView = new Controller(
   async (ctx, next) => {
     const {
-      access: { can },
+      access: { guard },
       getDataset: { dataset }
     } = ctx.state
     const { appId, id: datasetId } = dataset
     const { viewId } = ctx.params
-    const { deny } = can('app:dataset:view:get', { appId, datasetId, viewId })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('app:dataset:view:get', { appId, datasetId, viewId })
 
-    const viewIndex = dataset.views.findIndex(view => view.id === viewId)
-    const view = dataset.views[viewIndex]
+    const { view, viewIndex } = getViewFromDatasetById(dataset, viewId)
 
-    if (!view) return ctx.throw(datasetError('viewNotFound'))
+    // fill all the missing column in the dataset
+    view.column = merge(dataset.column, view.column)
+    // fill view.columns
+    const differenceColumns = difference(Object.keys(view.column), view.columns)
 
-    // fill all the missing columns
-    const column = new PositionObject(view.column)
-
-    Object.keys(dataset.column).forEach((columnName) => {
-      if (!view.column[columnName]) {
-        column.add(columnName, {
-          selected: false
-        })
-      }
-    })
-
-    view.column = column.toObject()
+    if (differenceColumns.length > 0) view.columns.push(...differenceColumns)
 
     Object.assign(ctx.state, {
       getDatasetView: {
@@ -60,7 +53,7 @@ export const getView = new Controller(
       viewId: z.string().regex(rNumId)
     }),
     response: {
-      200: unsafeViewSchema.extend({
+      200: viewSchema.extend({
         appId: z.string(),
         datasetId: z.string()
       })

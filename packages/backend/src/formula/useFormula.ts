@@ -14,7 +14,9 @@ export const useFormula = new Controller(
     })
 
     Object.assign(ctx.state, {
-      formula
+      formula: {
+        userFormula: formula
+      }
     })
 
     return next()
@@ -26,6 +28,8 @@ export const useFormula = new Controller(
 
 declare module 'backend/server/controller' {
   interface State {
-    formula: Formula
+    formula: {
+      userFormula: Formula
+    }
   }
 }

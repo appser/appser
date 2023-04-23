@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import db from 'web/vendor/db'
 
-import { useListRecordCurrentQueryKey } from './useQueryRecord'
+import { useCurrentRecordQueryKey } from './useQueryRecord'
 
 export const useDeleteRecord = (datasetId: string, recordId: string) => {
   const queryClient = useQueryClient()
-  const [queryKey] = useListRecordCurrentQueryKey()
+  const [queryKey] = useCurrentRecordQueryKey()
 
   return useMutation({
     mutationFn: async () => {

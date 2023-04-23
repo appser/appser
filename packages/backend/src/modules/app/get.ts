@@ -1,6 +1,5 @@
-import { Dataset, unsafeViewSchema } from 'backend/models/dataset'
+import { Dataset, viewSchema } from 'backend/models/dataset'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
@@ -11,12 +10,11 @@ import type { TApp } from 'backend/models/app'
 export const getApp = new Controller(
   async (ctx, next) => {
     const {
-      access: { can }
+      access: { guard }
     } = ctx.state
     const { appId } = ctx.params
-    const { deny } = can('app:get', { appId })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('app:get', { appId })
 
     const [app, datasets] = await Promise.all([
       getAppById(appId),
@@ -52,7 +50,7 @@ export const getApp = new Controller(
           id: true,
           name: true
         }).extend({
-          views: unsafeViewSchema.pick({
+          views: viewSchema.pick({
             id: true,
             type: true,
             name: true

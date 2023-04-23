@@ -1,7 +1,6 @@
 import db from 'backend/db'
-import { Dataset, unsafeViewSchema, viewColumnSchema, viewSchema } from 'backend/models/dataset'
+import { Dataset, safeDatasetSchema, viewColumnSchema, viewSchema } from 'backend/models/dataset'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import merge from 'lodash/merge'
 import { z } from 'zod'
 
@@ -10,33 +9,31 @@ import { datasetError } from './dataset.error'
 export const updateView = new Controller(
   async (ctx, next) => {
     const {
-      access: { can },
+      access: { guard },
       getDataset: { dataset },
       getDatasetView: { view, index: viewIndex }
     } = ctx.state
     const { appId, id: datasetId } = dataset
     const viewId = view.id
-    const { name, sorts, column, filter, stickyColumn } = ctx.request.body
-    const { deny } = can('app:dataset:view:update', { appId, datasetId, viewId })
+    const { name, sorts, column, filter, columns, stickyColumn } = ctx.request.body
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
-
-    if (column && Object.keys(column).some(c => !view.column[c])) {
-      return ctx.throw(datasetError('viewColumnNotFound'))
-    }
+    guard('app:dataset:view:update', { appId, datasetId, viewId })
 
     const freshView = merge(view, {
       name,
       sorts,
       column,
       filter,
+      columns,
       stickyColumn
     })
-    const parser = viewSchema.parse(freshView)
+    const parser = safeDatasetSchema.safeParse(Object.assign({}, dataset, { views: [freshView] }))
+
+    if (!parser.success) return ctx.throw(datasetError('invalidView', parser.error.formErrors))
 
     await Dataset.query
       .where({ id: datasetId, appId })
-      .update('views', db.jsonSet('views', `$.${viewIndex}`, JSON.stringify(freshView)))
+      .update('views', db.jsonSet('views', `$.${viewIndex}`, JSON.stringify(parser.data.views[0])))
 
     ctx.status = 204
 
@@ -44,16 +41,15 @@ export const updateView = new Controller(
   },
   {
     state: ['auth', 'access', 'getDataset', 'getDatasetView'],
-    body: unsafeViewSchema.pick({
+    body: viewSchema.pick({
       name: true,
       sorts: true,
       filter: true,
-      stickyColumn: true
-    })
-      .extend({
-        column: z.record(viewColumnSchema.deepPartial())
-      })
-      .deepPartial(),
+      stickyColumn: true,
+      columns: true
+    }).extend({
+      column: z.record(viewColumnSchema.deepPartial())
+    }).deepPartial(),
     response: {
       204: null
     }

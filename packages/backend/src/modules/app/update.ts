@@ -1,20 +1,18 @@
 import { HttpStatusCode, datasetIconIds, datasetTintColors } from '@appser/shared'
 import { App } from 'backend/models/app'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
 export const updateApp = new Controller(
   async (ctx, next) => {
     const {
-      access: { can }
+      access: { guard }
     } = ctx.state
     const { appId } = ctx.params
     const { name, tintColor, icon } = ctx.request.body
-    const { deny } = can('app:update', { appId })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('app:update', { appId })
 
     await App.query
       .where('id', appId)

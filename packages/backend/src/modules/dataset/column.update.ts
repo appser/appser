@@ -2,7 +2,6 @@ import db from 'backend/db'
 import { columnConfigSchema } from 'backend/model/config'
 import { Dataset } from 'backend/models/dataset'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import merge from 'lodash/merge'
 import { z } from 'zod'
 
@@ -11,15 +10,15 @@ import { datasetError } from './dataset.error'
 export const updateColumn = new Controller(
   async (ctx, next) => {
     const {
-      access: { can },
+      access: { guard },
       getDataset: { dataset },
       getDatasetColumn: { column }
     } = ctx.state
     const { appId, id: datasetId } = dataset
     const { title, options } = ctx.request.body
-    const { deny } = can('app:dataset:column:update', { appId, datasetId, columnName: column.name })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('app:dataset:column:update', { appId, datasetId, columnName: column.name })
+
     if (column.isLocked && options) return ctx.throw(datasetError('columnIsLocked'))
 
     const newColumnConfig = merge(column.config, { title, options })
@@ -29,7 +28,7 @@ export const updateColumn = new Controller(
 
     await Dataset.query
       .where({ id: datasetId, appId })
-      .update('column', db.jsonSet('column', `$.${column.name}`, JSON.stringify(newColumnConfig)))
+      .update('column', db.jsonSet('column', `$.${column.name}`, JSON.stringify(parser.data)))
 
     ctx.status = 204
 

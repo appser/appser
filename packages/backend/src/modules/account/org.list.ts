@@ -1,18 +1,16 @@
 import { roles } from '@appser/access'
 import { People, PersonStatus, personStatus } from 'backend/models/people'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import { z } from 'zod'
 
 export const listAccountOrg = new Controller(
   async (ctx, next) => {
     const {
-      access: { can },
+      access: { guard },
       auth: { currentUser: user }
     } = ctx.state
-    const { deny } = can('account:org:list', { userId: user.id })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('account:org:list', { userId: user.id })
 
     const orgs = await People.query
       .select('orgId as id', 'status', 'org.name')

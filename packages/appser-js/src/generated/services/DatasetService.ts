@@ -124,7 +124,7 @@ export class DatasetService {
       title?: string;
       field: 'checkbox' | 'date' | 'email' | 'multipleSelect' | 'number' | 'numId' | 'richText' | 'simpleText' | 'singleSelect' | 'url';
       options?: Record<string, any>;
-      currentViewId?: string;
+      associatedViewId?: string;
     },
   }): CancelablePromise<any> {
     return this.httpRequest.request({
@@ -232,7 +232,9 @@ export class DatasetService {
     type: 'grid';
     column: Record<string, {
       width?: number;
+      selected?: boolean;
     }>;
+    columns: Array<string>;
     sorts: Array<string>;
     filter?: {
       and?: Array<Record<string, {
@@ -268,7 +270,6 @@ export class DatasetService {
         notNull?: boolean;
       }>>;
     };
-    selects: Array<string>;
     stickyColumn: number;
     appId: string;
     datasetId: string;
@@ -332,8 +333,10 @@ export class DatasetService {
         }>>;
       };
       stickyColumn?: number;
+      columns?: Array<string>;
       column?: Record<string, {
         width?: number;
+        selected?: boolean;
       }>;
     },
   }): CancelablePromise<void> {
@@ -431,7 +434,7 @@ export class DatasetService {
     datasetId: string,
     viewId: string,
     requestBody: {
-      filter: {
+      filter?: {
         and?: Array<Record<string, {
           eq?: (string | number);
           neq?: (string | number);
@@ -465,8 +468,8 @@ export class DatasetService {
           notNull?: boolean;
         }>>;
       };
-      sorts?: (string | Array<string>);
-      selects?: (string | Array<string>);
+      sorts?: Array<string>;
+      selects?: Array<string>;
       pageSize?: number;
       pageToken?: number;
     },

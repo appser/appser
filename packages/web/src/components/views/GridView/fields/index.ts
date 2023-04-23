@@ -13,7 +13,7 @@ import type { Column, DatasetColumn } from '../column/Column'
 import type { Row } from '../row/Row'
 import type { GridCell, Rectangle, SpriteMap } from '@glideapps/glide-data-grid'
 import type { FC, ForwardRefExoticComponent, RefAttributes } from 'react'
-import type { FilterConditionItem } from 'web/servers/dataset/useQueryRecord'
+import type { FilterConditionValue, FilterConditionValueDetail } from 'web/servers/dataset/useQueryRecord'
 
 export interface FieldColumnInputProps<T=unknown> {
   data?: T
@@ -23,8 +23,8 @@ export interface FieldColumnInputProps<T=unknown> {
 }
 
 export interface FieldFilterProps {
-  condition?: FilterConditionItem
-  onChange?: (condition: FilterConditionItem) => void
+  conditionValueDetail?: FilterConditionValueDetail
+  onChange?: (v: FilterConditionValueDetail) => void
 }
 
 export type FieldSortDirection = 'asc' | 'desc'

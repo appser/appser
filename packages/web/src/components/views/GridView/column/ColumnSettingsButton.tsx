@@ -8,7 +8,7 @@ import { IconEye } from 'web/components/icons/IconEye'
 import { IconEyeOff } from 'web/components/icons/IconEyeOff'
 import { IconGripVertical } from 'web/components/icons/IconGripVertical'
 import { IconMoreVertical } from 'web/components/icons/IconMoreVertical'
-import { useAddColumn } from 'web/servers/dataset/useAddColumn'
+import { useAddViewColumn } from 'web/servers/dataset/useAddViewColumn'
 import { useDeleteColumn } from 'web/servers/dataset/useDeleteColumn'
 import { useUpdateView } from 'web/servers/dataset/useUpdateView'
 
@@ -16,14 +16,14 @@ import { ColumnConfigForm } from './ColumnConfigForm'
 import { FieldIcon } from '../field/FieldIcon'
 import { useColumns } from '../hooks/useColumns'
 
-import type { DatasetColumn, Column } from './Column'
+import type { Column, DatasetColumn } from './Column'
 import type { FC } from 'react'
 
 export const ColumnSettingsButton: FC = () => {
   const { columns } = useColumns()
   const [isEditing, setIsEditing] = useState(false)
   const updateView = useUpdateView()
-  const addColumn = useAddColumn()
+  const addColumn = useAddViewColumn()
   const deleteColumn = useDeleteColumn()
 
   const freshColumn: DatasetColumn = {

@@ -1,7 +1,6 @@
 import db from 'backend/db'
 import { datasetError } from 'backend/modules/dataset/dataset.error'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
@@ -9,7 +8,7 @@ export const updateViewRecord = new Controller(
   async (ctx, next) => {
     const {
       auth: { currentUser },
-      access: { can },
+      access: { guard },
       getDataset: { dataset, model },
       getDatasetView: { view }
     } = ctx.state
@@ -17,20 +16,19 @@ export const updateViewRecord = new Controller(
     const { recordId } = ctx.params
     const { id: viewId } = view
     const data = ctx.request.body
-    const { deny } = can('app:dataset:view:record:column:update', { appId, datasetId, viewId, recordId, columnName: '*' })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('app:dataset:view:record:column:update', { appId, datasetId, viewId, recordId, columnName: '*' })
 
-    const pickColumn = Object
+    const availableColumns = Object
       .entries(model.columns)
       .reduce<Record<string, true>>((acc, [name, column]) => {
-        if (!column.isLocked && name in view.column) {
+        if (!column.isLocked && view.column?.[name].selected) {
           acc[name] = true
         }
 
         return acc
       }, {})
-    const schema = model.schema.pick(pickColumn).partial().strict()
+    const schema = model.schema.pick(availableColumns).partial().strict()
     const parser = schema.safeParse(data)
 
     if (!parser.success) {

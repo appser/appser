@@ -1,62 +1,61 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { atom, useAtom } from 'jotai'
-import { isPlainObject, mergeWith } from 'lodash'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
+import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
+import { useActivatedView } from 'web/hooks/useActivatedView'
 import db from 'web/vendor/db'
 
 import { listRecordQuery } from './queries'
-import { useActivatedDataset } from '../../hooks/useActivatedDataset'
-import { useActivatedView } from '../../hooks/useActivatedView'
 
 import type { QueryKey } from '@tanstack/react-query'
 
 export type QueryRecordParameters = Parameters<typeof db.dataset.queryRecord>[0]
-export type Filter = QueryRecordParameters['requestBody']['filter']
-export type FilterCondition = Filter[keyof Filter]
-export type FilterConditionOperator = keyof NonNullable<FilterCondition>[number][keyof NonNullable<FilterCondition>[number]]
-export type FilterConditionItem<O extends FilterConditionOperator = FilterConditionOperator> = {
-  operator: O
-  value: NonNullable<FilterCondition>[number][keyof NonNullable<FilterCondition>[number]][O]
+export type Filter = NonNullable<QueryRecordParameters['requestBody']['filter']>
+export type FilterContext = {
+  logic: 'and' | 'or'
+  items: FilterCondition[]
+}
+export type FilterCondition = NonNullable<Filter[keyof Filter]>[number]
+export type FilterConditionValue = FilterCondition[string]
+export type FilterConditionOperator = keyof FilterConditionValue
+export type FilterConditionValueDetail = {
+  operator: FilterConditionOperator
+  value: FilterConditionValue[FilterConditionOperator]
 }
 
 export const RECORDS_PAGE_SIZE = 100
 
-const currentQueryKey = atom<QueryKey | null>(null)
-const filters = atom<Filter[]>([])
+const queryKey = atom<QueryKey | null>(null)
+const filter = atom<FilterContext | null>(null)
 const sorts = atom<string[]>([])
 
-export const useListRecordCurrentQueryKey = () => useAtom(currentQueryKey)
-
-export const useRecordsFilters = () => useAtom(filters)
-
-export const useRecordsSorts = () => useAtom(sorts)
-
-function mergeFilters(objValue: unknown, srcValue: unknown): unknown {
-  if (Array.isArray(objValue)) {
-    return objValue.concat(srcValue)
-  } else if (isPlainObject(objValue)) {
-    return mergeWith(objValue, srcValue, mergeFilters)
-  } else {
-    return objValue ? [objValue, srcValue] : srcValue
-  }
-}
+export const useCurrentRecordQueryKey = () => useAtom(queryKey)
+export const useCurrentRecordFilter = () => useAtom(filter)
+export const useCurrentRecordSorts = () => useAtom(sorts)
 
 export function useQueryRecord(datasetId?: string, viewId?: string) {
   const p = useParams()
   const [dataset] = useActivatedDataset()
   const [view] = useActivatedView()
-  const [filters] = useRecordsFilters()
-  const [sorts] = useRecordsSorts()
-  const [, setCurrentQueryKey] = useListRecordCurrentQueryKey()
+  const [filter] = useCurrentRecordFilter()
+  const [sorts] = useCurrentRecordSorts()
+  const [, setCurrentQueryKey] = useCurrentRecordQueryKey()
   const _datasetId = datasetId ?? dataset?.id ?? p.datasetId ?? ''
   const _viewId = viewId ?? view?.id ?? p.viewId ?? ''
-  const filter = mergeWith({}, ...filters, mergeFilters)
-  const params = {
-    filter,
-    sorts
+  const queryParamsFilter = useMemo<Filter | undefined>(() => {
+    if (!filter) return
+
+    return {
+      [filter.logic]: filter.items
+    }
+  }, [filter])
+
+  const queryParams = {
+    filter: queryParamsFilter,
+    sorts: sorts.length === 0 ? undefined : sorts
   }
-  const queryKey = listRecordQuery(_datasetId, _viewId, params).queryKey
+  const queryKey = listRecordQuery(_datasetId, _viewId, queryParams).queryKey
 
   useEffect(() => {
     setCurrentQueryKey(queryKey)
@@ -67,7 +66,7 @@ export function useQueryRecord(datasetId?: string, viewId?: string) {
   }, [])
 
   if (!_datasetId || !_viewId) {
-    throw new Error('Dataset ID and View ID are required to list records')
+    throw new Error('Dataset ID and View ID are required to query records.')
   }
 
   return useInfiniteQuery({
@@ -77,7 +76,7 @@ export function useQueryRecord(datasetId?: string, viewId?: string) {
         datasetId: _datasetId,
         viewId: _viewId,
         requestBody: {
-          ...params,
+          ...queryParams,
           pageSize: RECORDS_PAGE_SIZE,
           pageToken: pageParam
         }

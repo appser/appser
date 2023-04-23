@@ -10,35 +10,21 @@ import type { Optional } from '@appser/shared'
 import type { Knex } from 'knex'
 
 export const viewColumnSchema = z.object({
-  width: z.number().int().optional()
-})
+  width: z.number().int(),
+  selected: z.boolean()
+}).partial()
 
-export const unsafeViewSchema = z.object({
+export const viewSchema = z.object({
   id: z.string(),
   name: z.string().optional(),
   type: z.enum(['grid']).default('grid'),
   column: z.record(viewColumnSchema),
+  /** Store column sort index. */
+  columns: z.string().array().nonempty(),
   sorts: z.string().array().nonempty().default(['-id']),
   filter: filterSchema.optional(),
-  /** If you want to hide a column, use a '-' at the beginning of its name., eg. '-name' */
-  selects: z.string().array().nonempty(),
   stickyColumn: z.number().int().default(0)
 })
-
-export const viewSchema = unsafeViewSchema.refine(
-  obj => {
-    const availableColumns = Object.keys(obj.column)
-    const validateSorts = obj.sorts.every(s => availableColumns.includes(s.startsWith('-') ? s.slice(1) : s))
-    const validateFilter = obj.filter ? Object.keys(obj.filter).every(f => availableColumns.includes(f)) : true
-    const validateSelects = obj.selects.every(s => availableColumns.includes(s.startsWith('-') ? s.slice(1) : s))
-    const validateStickyColumn = obj.stickyColumn <= availableColumns.length - 1
-
-    return validateSorts && validateFilter && validateSelects && validateStickyColumn
-  },
-  {
-    message: 'sorts, filter, selects or stickyColumn is not match column'
-  }
-)
 
 export type TView = z.infer<typeof viewSchema>
 
@@ -61,6 +47,23 @@ export const Dataset = Model.define('dataset', {
   updatedAt: { field: 'date', options: { dynamicDefault: 'now' }, isRequired: true }
 })
   .primary(['appId', 'id'])
+
+export const safeDatasetSchema = Dataset.schema.refine(dataset => {
+  const datasetColumns = Object.keys(dataset.column)
+
+  return dataset.views.every(view => {
+    const viewColumns = Object.keys(view.column)
+    const validateColumn = viewColumns.every(c => datasetColumns.includes(c))
+    const validateColumns = view.columns.every(s => viewColumns.includes(s))
+    const validateSorts = view.sorts.every(s => viewColumns.includes(s.startsWith('-') ? s.slice(1) : s))
+    const validateFilter = view.filter ? Object.keys(view.filter).every(f => viewColumns.includes(f)) : true
+    const validateStickyColumn = view.stickyColumn <= viewColumns.length - 1
+
+    return validateColumn && validateColumns && validateSorts && validateFilter && validateStickyColumn
+  })
+}, {
+  message: 'dataset column, view column, sorts, filter, selects or stickyColumn is not match column'
+})
 
 export type TDataset = z.infer<typeof Dataset.schema>
 

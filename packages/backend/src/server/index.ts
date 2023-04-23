@@ -62,10 +62,8 @@ export class Server {
     return this
   }
 
-  private init() {
-    this.#modules.forEach((module) => {
-      this.#koa.use(module.router.routes)
-    })
+  callback() {
+    return this.#koa.callback()
   }
 
   listen(port?: number, hostname?: string) {
@@ -113,6 +111,12 @@ export class Server {
           process.exit(0)
         })
       })
+    })
+  }
+
+  private init() {
+    this.#modules.forEach((module) => {
+      this.#koa.use(module.router.routes)
     })
   }
 }

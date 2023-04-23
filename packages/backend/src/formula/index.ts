@@ -14,28 +14,28 @@ export class Formula {
     return typeof tpl === 'string' && tpl.startsWith('=') && tpl.length > 1
   }
 
-  parse(obj: unknown): any {
-    if (Array.isArray(obj)) {
-      return obj.map(item => this.parse(item))
-    } else if (typeof obj === 'object' && obj !== null) {
-      return Object.entries(obj).reduce((acc, [key, value]) => {
+  parse(data: unknown): any {
+    if (Array.isArray(data)) {
+      return data.map(item => this.parse(item))
+    } else if (typeof data === 'object' && data !== null) {
+      return Object.entries(data).reduce((acc, [key, value]) => {
         acc[key] = this.parse(value)
 
         return acc
       }, {} as any)
-    } else if (typeof obj === 'string') {
-      if (this.isValidExpression(obj)) {
-        const expression = obj.slice(1)
-        const data = this.parser.parse(expression)
+    } else if (typeof data === 'string') {
+      if (this.isValidExpression(data)) {
+        const expression = data.slice(1)
+        const ret = this.parser.parse(expression)
 
-        if (data.error) throw formulaError('invalidExpression', { parserError: data.error })
+        if (ret.error) throw formulaError('invalidExpression', { parserError: ret.error })
 
-        return data.result
+        return ret.result
       } else {
-        return obj
+        return data
       }
     } else {
-      return obj
+      return data
     }
   }
 }

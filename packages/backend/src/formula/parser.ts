@@ -1,5 +1,5 @@
 /**
- * All excel formulas defined in https://github.com/handsontable/formula.js/tree/develop/lib
+ * All excel formulas defined in https://github.com/handsontable/formula-parser/blob/develop/src/supported-formulas.js
  */
 
 import dayjs from 'backend/vendors/dayjs'

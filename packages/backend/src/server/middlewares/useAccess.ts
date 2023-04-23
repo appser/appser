@@ -7,6 +7,8 @@ import { Role } from 'backend/models/role'
 import { authError } from 'backend/modules/auth/auth.error'
 import jsonTemplate from 'backend/utils/jsonTemplate'
 
+import { serverError } from '../server.error'
+
 import type { TPeople } from 'backend/models/people'
 import type { TRole } from 'backend/models/role'
 import type { Middleware } from 'koa'
@@ -78,10 +80,18 @@ export const useAccess: Middleware = async (ctx, next) => {
     })
   })
 
+  const guard = (...args: Parameters<typeof access.can>) => {
+    const permission = access.can(...args)
+
+    if (permission.deny) return ctx.throw(serverError('accessForbidden'))
+
+    return permission
+  }
+
   Object.assign(ctx.state, {
     access: {
       ac: access,
-      can: access.can.bind(access),
+      guard,
       orgResource
     }
   })
@@ -93,7 +103,7 @@ declare module 'backend/server/controller' {
   interface State {
     access: {
       ac: Access
-      can: Access['can']
+      guard: Access['can']
       orgResource: Record<string, { appIds: string[] }>
     }
   }

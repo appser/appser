@@ -17,6 +17,10 @@ describe('class Formula', () => {
       expect(formula.parse({ a: 1, b: { c: ['=SUM(1,2)'] } })).toEqual({ a: 1, b: { c: [3] } })
     })
 
+    test('should work with custom function', () => {
+      // expect(formula.parse(`=ARGS2ARRAY(TODAY(),DATE_ADD(TODAY(),1,"d"),"[)")`)).toEqual(1)
+    })
+
     test('should fail', () => {
       expect(() => formula.parse('=NOT_EXIST_FUNCTION()')).toThrowError()
     })

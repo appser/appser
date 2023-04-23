@@ -1,23 +1,21 @@
 import { User } from 'backend/models/user'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
+import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
 import { getUserById } from './utils/getUserById'
-import { rNumId } from 'backend/utils/regex'
 
 import type { TUser } from 'backend/models/user'
 
 export const getUser = new Controller(
   async (ctx, next) => {
     const {
-      access: { can },
+      access: { guard },
       auth: { currentUser }
     } = ctx.state
     const { userId } = ctx.request.query
-    const { deny } = can('account:user:get', { userId: currentUser.id })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('account:user:get', { userId: currentUser.id })
 
     const user = await getUserById(userId, ctx)
 

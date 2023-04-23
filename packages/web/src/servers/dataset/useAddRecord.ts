@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import db from 'web/vendor/db'
 
-import { useListRecordCurrentQueryKey } from './useQueryRecord'
+import { useCurrentRecordQueryKey } from './useQueryRecord'
 
 type Params = Parameters<typeof db.dataset.addRecord>[0]
 
 export const useAddRecord = (datasetId: string, viewId: string) => {
   const queryClient = useQueryClient()
-  const [queryKey] = useListRecordCurrentQueryKey()
+  const [queryKey] = useCurrentRecordQueryKey()
 
   return useMutation({
     mutationFn: async (d: Params['requestBody']) => {

@@ -6,7 +6,6 @@ import { App } from 'backend/models/app'
 import { Dataset } from 'backend/models/dataset'
 import { People } from 'backend/models/people'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import { rNumId } from 'backend/utils/regex'
 import { genSnowflakeId } from 'backend/vendors/snowflakeId'
 import { z } from 'zod'
@@ -25,7 +24,7 @@ const randomIconId = () => {
 export const createOrgApp = new Controller(
   async (ctx, next) => {
     const {
-      access: { can },
+      access: { guard },
       auth: { currentUser: user }
     } = ctx.state
     const {
@@ -34,9 +33,8 @@ export const createOrgApp = new Controller(
       icon = randomIconId()
     } = ctx.request.body
     const { orgId } = ctx.params
-    const { deny } = can('org:app:create', { orgId })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('org:app:create', { orgId })
 
     await db.transaction(async trx => {
       const [app] = await App.query

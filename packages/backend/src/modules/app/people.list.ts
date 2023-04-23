@@ -1,18 +1,16 @@
 import { People, PersonStatus, personStatus } from 'backend/models/people'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
 export const listAppPeople = new Controller(
   async (ctx, next) => {
     const {
-      access: { can }
+      access: { guard }
     } = ctx.state
     const { appId } = ctx.params
-    const { deny } = can('app:people:list', { appId })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('app:people:list', { appId })
 
     const persons = await People.query
       .select(

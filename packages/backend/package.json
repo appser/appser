@@ -62,8 +62,10 @@
     "@types/merge-descriptors": "^1.0.1",
     "@types/micromatch": "^4.0.2",
     "@types/node": "^18.11.9",
+    "@types/supertest": "^2.0.12",
     "openapi-types": "^12.0.2",
-    "pino-pretty": "^9.1.1"
+    "pino-pretty": "^9.1.1",
+    "supertest": "^6.3.3"
   },
   "tsd": {
     "directory": "test/types"

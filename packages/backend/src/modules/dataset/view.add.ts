@@ -2,7 +2,6 @@ import { HttpStatusCode } from '@appser/shared'
 import db from 'backend/db'
 import { Dataset } from 'backend/models/dataset'
 import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
 import { genSnowflakeId } from 'backend/vendors/snowflakeId'
 import { z } from 'zod'
 
@@ -13,14 +12,13 @@ import type { TView } from 'backend/models/dataset'
 export const addView = new Controller(
   async (ctx, next) => {
     const {
-      access: { can },
+      access: { guard },
       getDataset: { dataset }
     } = ctx.state
     const { appId, id: datasetId } = dataset
     const { name } = ctx.request.body
-    const { deny } = can('app:dataset:view:add', { appId, datasetId })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('app:dataset:view:add', { appId, datasetId })
 
     const view: TView = {
       id: genSnowflakeId().toString(),
