@@ -1,6 +1,8 @@
-import { Button } from '@mantine/core'
+import { DatePicker, useForm } from '@appser/ui'
 import React from 'react'
 
 export function App() {
-  return <Button>Test</Button>
+  useForm()
+
+  return <DatePicker>Test</DatePicker>
 }
