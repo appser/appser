@@ -1,0 +1,19 @@
+{
+  "name": "ui-test",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@appser/ui": "workspace:^0.0.1",
+    "@emotion/react": "^11.10.5",
+    "@mantine/core": "^6.0.4",
+    "@mantine/hooks": "^6.0.4"
+  }
+}
