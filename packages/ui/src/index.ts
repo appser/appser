@@ -18,8 +18,10 @@ export * from './components/Logo'
 export * from './styles'
 export { colors } from './theme/colors'
 export { mantineTheme }
+
 export * from '@mantine/dates'
-export * from '@mantine/core'
+// Layout
+export {} from '@mantine/core'
 export * from '@mantine/form'
 
 mantineTheme.components = {
