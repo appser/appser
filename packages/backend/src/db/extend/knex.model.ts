@@ -1,0 +1,54 @@
+import { Model } from 'backend/model'
+import { type Knex as KnexOriginal, knex } from 'knex'
+
+knex.QueryBuilder.extend('model', handler)
+
+function handler(this: KnexOriginal.QueryBuilder, _model?: Model) {
+  const { table } = this._single
+  const model = _model ?? Model.get(table) as Model
+
+  return this.queryContext({ model })
+    .on('start', (builder: KnexOriginal.QueryBuilder) => {
+      model.emit('startQuery', builder)
+
+      const { insert: insertData, update: updateData } = builder._single
+      const method = builder._method
+
+      if (method === 'insert' && insertData) {
+        builder._single.insert = model.validator.parseInsert(insertData)
+      }
+
+      if (method === 'update' && updateData) {
+        builder._single.update = model.validator.parseUpdate(updateData)
+      }
+    })
+    .on('query-response', (response: unknown, obj: KnexResponseObject) => {
+      if (obj.response?.command === 'SELECT') {
+        response = model.validator.transformResponse(response)
+      }
+
+      model.emit('endQuery')
+    })
+    .on('query-error', () => {
+      model.emit('endQuery')
+    })
+}
+
+interface KnexResponseObject {
+  response: {
+    command?: 'SELECT'
+    rowCount: number
+    rows: Record<string, unknown>[]
+  }
+}
+
+declare module 'knex' {
+  namespace Knex {
+    interface QueryInterface<TRecord extends {} = any, TResult = any> {
+      model: (model?: Model) => KnexOriginal.QueryBuilder<TRecord, TResult>
+      _queryContext?: {
+        model?: Model
+      }
+    }
+  }
+}

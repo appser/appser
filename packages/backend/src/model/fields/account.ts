@@ -16,7 +16,7 @@ export default Field.define(
     roleId: z.string().default(opts.grantRoleId)
   }),
   {
-    onGet(data, options) {
+    onResponse(data, options) {
       if (data.password) data.password = '********'
 
       return data

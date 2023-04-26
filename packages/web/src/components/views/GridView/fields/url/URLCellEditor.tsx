@@ -21,7 +21,7 @@ const URLCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, FieldCellE
   }
 
   useImperativeHandle(forwardedRef, () => ({
-    done: save
+    save
   }))
 
   return (

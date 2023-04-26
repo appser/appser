@@ -7,7 +7,7 @@ import { z } from 'zod'
 
 import { defaultView } from './data/defaultView'
 
-import type { TView } from 'backend/models/dataset'
+import type { TView } from 'backend/models/dataset/view.schema'
 
 export const addView = new Controller(
   async (ctx, next) => {

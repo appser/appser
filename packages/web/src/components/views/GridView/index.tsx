@@ -18,7 +18,7 @@ import { useHeaderIcons } from './hooks/useHeaderIcons'
 import { useHoverItem } from './hooks/useHoverItem'
 import { userResizeColumn } from './hooks/userResizeColumn'
 import { RowMenu } from './row/RowMenu'
-import { StatusBar } from './StatusBar'
+import { StatusBar } from './statusBar/StatusBar'
 import { GridToolbar } from './toolbar/Toolbar'
 
 import type { Column } from './column/Column'

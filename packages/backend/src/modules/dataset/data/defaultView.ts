@@ -1,4 +1,4 @@
-import type { TView } from 'backend/models/dataset'
+import type { TView } from 'backend/models/dataset/view.schema'
 
 export const defaultView: Omit<TView, 'id'> = {
   type: 'grid',

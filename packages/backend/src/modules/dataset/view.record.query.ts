@@ -1,6 +1,6 @@
 import db from 'backend/db'
-import { filterSchema } from 'backend/db/filter'
-import { viewSchema } from 'backend/models/dataset'
+import { filterSchema } from 'backend/models/dataset/view.filter.schema'
+import { viewSchema } from 'backend/models/dataset/view.schema'
 import { Controller } from 'backend/server/controller'
 import { z } from 'zod'
 

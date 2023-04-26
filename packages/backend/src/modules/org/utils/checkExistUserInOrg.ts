@@ -1,4 +1,5 @@
-import { People } from '../../../models/people'
+import { People } from 'backend/models/people'
+
 import { orgError } from '../org.error'
 
 interface InOrg {

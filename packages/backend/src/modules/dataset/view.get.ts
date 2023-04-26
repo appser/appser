@@ -1,4 +1,4 @@
-import { viewSchema } from 'backend/models/dataset'
+import { viewSchema } from 'backend/models/dataset/view.schema'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
 import difference from 'lodash/difference'
@@ -7,7 +7,7 @@ import { z } from 'zod'
 
 import { getViewFromDatasetById } from './utils/getViewFromDatasetById'
 
-import type { TView } from 'backend/models/dataset'
+import type { TView } from 'backend/models/dataset/view.schema'
 
 /**
  * When add a new column to the dataset, the view should be updated to include the new column.

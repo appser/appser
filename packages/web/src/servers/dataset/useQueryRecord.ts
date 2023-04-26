@@ -14,7 +14,7 @@ export type QueryRecordParameters = Parameters<typeof db.dataset.queryRecord>[0]
 export type Filter = NonNullable<QueryRecordParameters['requestBody']['filter']>
 export type FilterContext = {
   logic: 'and' | 'or'
-  items: FilterCondition[]
+  conditions: FilterCondition[]
 }
 export type FilterCondition = NonNullable<Filter[keyof Filter]>[number]
 export type FilterConditionValue = FilterCondition[string]
@@ -47,7 +47,7 @@ export function useQueryRecord(datasetId?: string, viewId?: string) {
     if (!filter) return
 
     return {
-      [filter.logic]: filter.items
+      [filter.logic]: filter.conditions
     }
   }, [filter])
 

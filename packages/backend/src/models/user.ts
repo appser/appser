@@ -1,4 +1,5 @@
 import { roles } from '@appser/access'
+import db from 'backend/db'
 import { Model } from 'backend/model'
 import { z } from 'zod'
 

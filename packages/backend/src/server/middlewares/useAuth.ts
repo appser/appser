@@ -1,6 +1,5 @@
 import db from 'backend/db'
 import { Token } from 'backend/models/token'
-import { User } from 'backend/models/user'
 import { authError } from 'backend/modules/auth/auth.error'
 import { parseAccessToken } from 'backend/modules/auth/utils/accessToken'
 

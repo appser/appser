@@ -1,6 +1,6 @@
 import cleanViewColumn from '../cleanViewColumn'
 
-import type { TView } from 'backend/models/dataset'
+import type { TView } from 'backend/models/dataset/view.schema'
 
 describe('func cleanViewColumn', () => {
   let view: TView

@@ -1,4 +1,5 @@
-import { Dataset, viewSchema } from 'backend/models/dataset'
+import { Dataset } from 'backend/models/dataset'
+import { viewSchema } from 'backend/models/dataset/view.schema'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'

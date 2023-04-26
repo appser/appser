@@ -5,7 +5,7 @@ import { ActionButton } from 'web/components/common/ActionButton'
 import { IconPlus } from 'web/components/icons/IconPlus'
 import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
 import { useActivatedView } from 'web/hooks/useActivatedView'
-import { useAddViewColumn } from 'web/servers/dataset/useAddViewColumn'
+import { useAddColumn } from 'web/servers/dataset/useAddColumn'
 
 import { ColumnConfigForm } from './ColumnConfigForm'
 
@@ -15,7 +15,7 @@ import type { FC } from 'react'
 export const ColumnAddButton: FC = () => {
   const [dataset] = useActivatedDataset()
   const [view] = useActivatedView()
-  const { mutate, isLoading } = useAddViewColumn(dataset?.id)
+  const { mutate, isLoading } = useAddColumn(dataset?.id)
   const [opened, { toggle }] = useDisclosure(false)
 
   const onSubmit = (column: DatasetColumn) => {

@@ -20,7 +20,7 @@ export const useAddColumn = (_datasetId?: string) => {
       datasetId,
       requestBody: {
         ...values,
-        currentViewId: view?.id
+        associatedViewId: view?.id
       }
     }),
     onSuccess(_, value) {

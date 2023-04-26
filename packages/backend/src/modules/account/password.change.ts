@@ -1,6 +1,5 @@
 import { HttpStatusCode } from '@appser/shared'
 import db from 'backend/db'
-import { User } from 'backend/models/user'
 import { Controller } from 'backend/server/controller'
 import { compareSync, hashSync } from 'backend/vendors/bcrypt'
 import { z } from 'zod'
@@ -18,10 +17,9 @@ export const changeAccountPassword = new Controller(
       ctx.throw(accountError('incorrectPassword'))
     }
 
-    await User.query.where({ id: user.id }).update({
-      // TODO: fix type error
-      account: db.jsonSet('account', '$.password', JSON.stringify(hashSync(newPwd))) as never
-    })
+    await db('user').model()
+      .where({ id: user.id })
+      .update('account', db.jsonSet('account', '$.password', JSON.stringify(hashSync(newPwd))))
 
     ctx.status = HttpStatusCode.NotContent
 

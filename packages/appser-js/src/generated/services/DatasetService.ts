@@ -39,7 +39,7 @@ export class DatasetService {
       field: 'multipleSelect';
       options: {
         items: Array<{
-          id: number;
+          id?: number;
           name: string;
         }>;
       };
@@ -63,7 +63,7 @@ export class DatasetService {
       field: 'singleSelect';
       options: {
         items: Array<{
-          id: number;
+          id?: number;
           name: string;
         }>;
       };
@@ -124,6 +124,7 @@ export class DatasetService {
       title?: string;
       field: 'checkbox' | 'date' | 'email' | 'multipleSelect' | 'number' | 'numId' | 'richText' | 'simpleText' | 'singleSelect' | 'url';
       options?: Record<string, any>;
+      associatedViewId?: string;
     },
   }): CancelablePromise<any> {
     return this.httpRequest.request({

@@ -34,7 +34,7 @@ export default Field.define(
       )
     },
     */
-    onGet(data, options) {
+    onResponse(data, options) {
       const table = options?.table
 
       if (!table) throw new Error('option table required')

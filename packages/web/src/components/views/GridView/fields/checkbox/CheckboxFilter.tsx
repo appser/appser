@@ -1,5 +1,6 @@
-import { Box, Checkbox, Group, Select } from '@mantine/core'
+import { Group, Select } from '@mantine/core'
 import { useForm } from '@mantine/form'
+import { useEffect } from 'react'
 
 import type { FieldFilterProps } from '..'
 import type { FC } from 'react'
@@ -7,46 +8,30 @@ import type { FC } from 'react'
 export const CheckboxFilter: FC<FieldFilterProps> = ({ onChange, condition }) => {
   const form = useForm({
     initialValues: {
-      operator: condition?.operator,
+      operator: condition?.operator ?? 'eq',
       value: condition?.value
     }
   })
+
+  const valueData = [
+    { label: 'select ', value: 'true' },
+    { label: 'unselected ', value: 'false' }
+  ] as const
+
+  useEffect(() => {
+    if (form.values.operator && form.values.value) {
+      onChange?.(form.values)
+    }
+  }, [form.values])
 
   return (
     <Group spacing={0} noWrap>
       <Select
         w={100}
-        styles={{
-          root: {
-            left: -1,
-            position: 'relative',
-            '&:focus-within': {
-              zIndex: 1
-            }
-          },
-          input: {
-            borderRadius: 0
-          }
-        }}
-        onChange={v => {
-          if (v) {
-            v && form.setFieldValue('operator', v)
-            onChange?.({ [v]: form.values.value ?? 'false' })
-          }
-        }}
-        data={[{ value: 'eq', label: '=' }]}
+        defaultValue={String(form.values.value)}
+        data={valueData}
+        onChange={v => v && form.setFieldValue('value', Boolean(v))}
       />
-      <Box>
-        <Checkbox onChange={e => {
-          form.setFieldValue('value', `${e.currentTarget.checked}`)
-          const k = form.values.operator as string
-
-          if (k) {
-            onChange?.({ [k]: `${e.currentTarget.checked}` })
-          }
-        }}
-        />
-      </Box>
     </Group>
   )
 }

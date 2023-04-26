@@ -24,7 +24,7 @@ interface Config {
 }
 
 interface Event<Value, Options> {
-  onGet?: (data: Value, options: Options) => unknown
+  onResponse?: (data: Value, options: Options) => unknown
   // onModelUpdate?: (fieldValue: unknown, options: Options) => unknown
   // onQuery?: (context: FieldContext, options: Options) => void
 }
@@ -87,8 +87,8 @@ export default class Field {
     return typeof this.#schema === 'function' ? this.#schema(this.#options) : this.#schema
   }
 
-  onGet(origin: unknown) {
-    return this.#event?.onGet?.(origin as never, this.#options)
+  onResponse<T=unknown>(originData: T) {
+    return this.#event?.onResponse?.(originData as T, this.#options)
   }
 }
 

@@ -1,6 +1,6 @@
 import set from 'lodash/set'
 
-import { viewSchema } from '../dataset'
+import { viewSchema } from '../dataset/view.schema'
 
 describe('view schema', () => {
   const schema = {

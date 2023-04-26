@@ -7,10 +7,18 @@ export default Field.define(
     baseType: 'smallint',
     optionSchema: z.object({
       items: z.object({
-        id: z.number().int().max(30000).min(-30000),
+        id: z.coerce.number().int().max(30000).min(-30000).optional(),
         name: z.string()
-      }).array()
+      }).array().transform(items => {
+        const ids = items.map(i => i.id || 0)
+        const maxId = Math.max(...ids)
+
+        return items.map((item, index) => ({
+          ...item,
+          id: item.id || maxId + index + 1
+        }))
+      })
     })
   },
-  opts => z.number().int()
+  opts => z.coerce.number().int()
 )

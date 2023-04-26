@@ -45,6 +45,7 @@
     "timestamptz",
     "typebox",
     "Unactivated",
+    "updateable",
     "uselessdev",
     "vite",
     "vitejs",

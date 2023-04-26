@@ -19,7 +19,7 @@ const DateCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, FieldCell
   }
 
   useImperativeHandle(forwardedRef, () => ({
-    done: save
+    save
   }))
 
   if (column.field !== 'date') throw new Error('DateCellEditor used for non-date column')

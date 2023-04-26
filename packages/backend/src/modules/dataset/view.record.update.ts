@@ -1,6 +1,6 @@
 import db from 'backend/db'
-import { datasetError } from 'backend/modules/dataset/dataset.error'
 import { Controller } from 'backend/server/controller'
+import jsonSchema from 'backend/utils/jsonSchema'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
@@ -19,27 +19,11 @@ export const updateViewRecord = new Controller(
 
     guard('app:dataset:view:record:column:update', { appId, datasetId, viewId, recordId, columnName: '*' })
 
-    const availableColumns = Object
-      .entries(model.columns)
-      .reduce<Record<string, true>>((acc, [name, column]) => {
-        if (!column.isLocked && view.column?.[name].selected) {
-          acc[name] = true
-        }
-
-        return acc
-      }, {})
-    const schema = model.schema.pick(availableColumns).partial().strict()
-    const parser = schema.safeParse(data)
-
-    if (!parser.success) {
-      return ctx.throw(datasetError('invalidRecordColumn', parser.error.formErrors))
-    }
-
     await db(dataset.id)
       .model(model)
       .where('id', recordId)
       .update({
-        ...parser.data,
+        ...data,
         lastEditor: currentUser.id,
         updatedAt: new Date().toISOString()
       })
@@ -54,7 +38,7 @@ export const updateViewRecord = new Controller(
       datasetId: z.string().regex(rNumId),
       recordId: z.string().regex(rNumId)
     }),
-    body: z.object({}).catchall(z.unknown()),
+    body: jsonSchema as any, // TODO: fix type
     response: {
       204: null
     }

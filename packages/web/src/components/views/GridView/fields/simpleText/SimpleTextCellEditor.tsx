@@ -22,7 +22,7 @@ const SimpleTextCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, Fie
   }
 
   useImperativeHandle(forwardedRef, () => ({
-    done: save
+    save
   }))
 
   return (

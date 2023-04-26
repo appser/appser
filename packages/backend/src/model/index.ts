@@ -6,6 +6,7 @@ import { modelError } from 'backend/model/model.error'
 import { z } from 'zod'
 
 import { Column } from './column'
+import { Validator } from './validator'
 
 import type { Columns, field } from './config'
 import type { ResolveFieldSchema } from './field'
@@ -55,7 +56,7 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
     this.columns = this.compileColumns(columns)
     this.schema = this.getSchema()
 
-    this.setup()
+    this.init()
   }
 
   static define<T extends string, C extends Columns = Columns>(tableName: T, column: C) {
@@ -84,6 +85,10 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
 
   get query() {
     return db(this.tableName as T extends keyof Dataset ? T : never).model()
+  }
+
+  get validator() {
+    return new Validator(this as any)
   }
 
   connect({ db: client = db, table: tableName }: DBConfig) {
@@ -126,52 +131,6 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
     }, z.object({})) as ResolveModelSchema<C>
   }
 
-  parseInserts(originInserts: unknown) {
-    if (Array.isArray(originInserts)) {
-      this.state.insert = originInserts.map(record => this.parseInsert(record))
-
-      return this.state.insert
-    }
-    else if (typeof originInserts === 'object' && originInserts !== null) {
-      this.state.insert = this.parseInsert(originInserts as Record<string, unknown>)
-
-      return this.state.insert
-    }
-    else {
-      throw modelError('invalidInsertType')
-    }
-  }
-
-  parseUpdate(originUpdate: unknown) {
-    if (typeof originUpdate === 'object' && originUpdate !== null) {
-      // Don't use `this.schema.partial().parse` here, because the values of originUpdate may be as a function that render by the knex,
-      // use `this.schema.partial().parse` in the incoming request to validate the request body.
-
-      this.state.update = originUpdate
-
-      return this.state.update
-    }
-    else {
-      throw modelError('invalidUpdateType')
-    }
-  }
-
-  transformResponse(data: unknown) {
-    if (Array.isArray(data)) {
-      this.state.response = data.map(record => this.preRecordResponse(record))
-
-      return this.state.response
-    }
-    else if (typeof data === 'object' && data !== null) {
-      this.state.response = this.preRecordResponse(data as Record<string, unknown>)
-
-      return this.state.response
-    }
-    else {
-      return data
-    }
-  }
-
   toTableBuilder(t: Knex.TableBuilder) {
     Object.values(this.columns).forEach(column => column.toColumnBuilder?.(t))
 
@@ -199,69 +158,23 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
     return this.knex.schema.dropTableIfExists(this.tableName)
   }
 
-  private parseInsert(data: Record<string, unknown>): ResolveModel<C> {
-    // parser can remove additional properties and set default value
-    const parser = this.schema.safeParse(data)
-
-    if (!parser.success) throw modelError('validateFail', parser.error.formErrors)
-
-    const ret = parser.data as any
-
-    // Fix:
-    // https://github.com/knex/knex/issues/5430
-    // https://github.com/knex/knex/issues/5320
-    Object.entries(this.columns).forEach(([name, column]) => {
-      if (column.config.field === 'custom' && name in ret && ret[name]) {
-        ret[name] = JSON.stringify(ret[name])
-      }
-    })
-
-    return ret
-  }
-
-  /** for respond */
-  private preRecordResponse(record: Record<string, unknown>) {
-    if (typeof record !== 'object' || record === null) {
-      return record
-    }
-
-    Object.entries(record).forEach(([name, value]) => {
-      const field = this.columns[name]?.field
-
-      if (field) {
-        Object.defineProperty(record, name, {
-          value: field.onGet(value) ?? value,
-          enumerable: true,
-          writable: true
-        })
-      }
-    })
-
-    return record
-  }
-
   private get knex() {
     if (!this.#dbConfig?.db) throw new Error('model db without knex')
 
     return this.#dbConfig.db
   }
 
-  private setup() {
-    this.on('startQuery', queryBuilder => {
-      log.debug('startQuery')
-      this.#queryBuilder = queryBuilder
-      this.prepareQuery()
-    })
-      .on('preInsert', originInserts => {
-        this.parseInserts(originInserts)
-      })
-      .on('preUpdate', originUpdate => {
-        this.parseUpdate(originUpdate)
-      })
-      // .on('insert', () => {})
-      // .on('update', () => {})
-      .on('preRespond', originResponse => {
-        this.transformResponse(originResponse)
+  // TODO
+  private prepareQuery() {
+    return this
+  }
+
+  private init() {
+    this
+      .on('startQuery', queryBuilder => {
+        log.debug('startQuery')
+        this.#queryBuilder = queryBuilder
+        this.prepareQuery()
       })
       .on('endQuery', () => {
         this.#queryBuilder = undefined
@@ -277,12 +190,6 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
 
       return acc
     }, {})
-  }
-
-  private prepareQuery() {
-    // Object.values(this.columns).forEach(column => column.field.onQuery())
-
-    return this
   }
 }
 
@@ -300,31 +207,22 @@ type ColumnNames<T extends Columns> = Extract<keyof T, string>
 
 type EventName =
   | 'startQuery'
-  | 'preInsert'
-  | 'insert'
-  | 'preUpdate'
-  | 'update'
-  | 'delete'
-  | 'preRespond'
-  | 'respond'
+  // | 'insert'
+  // | 'update'
+  // | 'delete'
+  // | 'respond'
   | 'endQuery'
 
 type EventArgs<T extends Columns, E extends EventName> = E extends 'startQuery'
   ? [queryBuilder: Knex.QueryBuilder]
-  : E extends 'preInsert'
+  : E extends 'insert'
     ? [unknown]
-    : E extends 'insert'
-      ? [ResolveModel<T> | ResolveModel<T>[]]
-      : E extends 'preUpdate'
-        ? [unknown]
-        : E extends 'update'
-          ? [NonNullable<State<T>['update']>] // The type of update will be string, function etc..
-          : E extends 'delete'
+    : E extends 'update'
+      ? [unknown, Knex.QueryBuilder? ] // The type of update will be string, function etc..
+      : E extends 'delete'
+        ? []
+        : E extends 'respond'
+          ? [unknown]
+          : E extends 'endQuery'
             ? []
-            : E extends 'preRespond'
-              ? [unknown]
-              : E extends 'respond'
-                ? [unknown]
-                : E extends 'endQuery'
-                  ? []
-                  : never
+            : never

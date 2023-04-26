@@ -22,7 +22,7 @@ export default Field.define(
     return s
   },
   {
-    onGet(data, options) {
+    onResponse(data, options) {
       return data ? new Date(data).valueOf().toString() : data
     }
   }
