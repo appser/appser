@@ -1,10 +1,14 @@
-import db from 'backend/db'
 import { Dataset } from 'backend/models/dataset'
 import { Controller } from 'backend/server/controller'
 
 import { datasetError } from './dataset.error'
-import cleanViewColumn from './utils/cleanViewColumn'
+import cleanColumnFromView from './utils/cleanColumnFromView'
 
+/**
+ * TODO:
+ * 1. Currently, we are using a soft delete method, but we will need to implement hard timed delete in the future.
+ * 2. There are no ways to restore the deleted column, because the column metadata is permanently deleted.
+ */
 export const deleteColumn = new Controller(
   async (ctx, next) => {
     const {
@@ -17,28 +21,18 @@ export const deleteColumn = new Controller(
 
     guard('app:dataset:column:delete', { appId, datasetId, columnName: name })
 
-    if (column.isLocked) return ctx.throw(datasetError('columnIsLocked'))
+    if (column.config.isLocked) return ctx.throw(datasetError('columnIsLocked'))
 
-    await db.transaction(async trx => {
-      delete dataset.column[name]
+    dataset.column[name].deletedAt = new Date()
+    dataset.views.forEach(view => cleanColumnFromView(name, view))
 
-      dataset.views.forEach(view => cleanViewColumn(view, name))
-
-      await Dataset.query
-        .where({ id: datasetId })
-        // TODO: test
-        .update({
-          column: dataset.column,
-          views: dataset.views
-        })
-        .transacting(trx)
-
-      await db.schema
-        .alterTable(datasetId, t => {
-          t.dropColumn(name)
-        })
-        .transacting(trx)
-    })
+    await Dataset.query
+      .where({ id: datasetId })
+    // TODO: test
+      .update({
+        column: dataset.column,
+        views: dataset.views
+      })
 
     ctx.status = 204
     ctx.body = null

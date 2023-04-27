@@ -7,8 +7,14 @@ import type { Model } from '.'
 import type { Column } from './column'
 
 export class Validator {
-  constructor(private model: Model) {
-    this.model = model
+  #model
+  #updateableColumns
+  #insertableColumns
+
+  constructor(model: Model) {
+    this.#model = model
+    this.#updateableColumns = this.getUpdateableColumns()
+    this.#insertableColumns = this.getInsertableColumns()
   }
 
   parseInsert(data: unknown) {
@@ -24,11 +30,7 @@ export class Validator {
   parseUpdate(data: unknown) {
     if (typeof data === 'object' && data !== null) {
       const { verifiableObject, unverifiableObject } = this.filterQueryData(data)
-      const picked = Object.keys(this.updateableColumns).reduce((acc, columnName) => {
-        acc[columnName] = true
-
-        return acc
-      }, {} as Record<string, true>)
+      const picked = this.pickColumns(this.#updateableColumns)
       const parser = this.schema
         .deepPartial()
         .pick(picked)
@@ -57,9 +59,14 @@ export class Validator {
     }
   }
 
+  private get schema() {
+    return this.#model.schema
+  }
+
   private parseInsertItem(item: Record<string, unknown>) {
     // parser can remove additional properties and set default value
-    const parser = this.schema.safeParse(item)
+    const picked = this.pickColumns(this.#insertableColumns)
+    const parser = this.schema.pick(picked).strict().safeParse(item)
 
     if (!parser.success) throw modelError('validateFail', parser.error.formErrors)
 
@@ -74,7 +81,7 @@ export class Validator {
     }
 
     Object.entries(record).forEach(([name, value]) => {
-      const field = this.model.columns[name]?.field
+      const field = this.#model.columns[name]?.field
 
       if (field) {
         Object.defineProperty(record, name, {
@@ -92,17 +99,13 @@ export class Validator {
   // https://github.com/knex/knex/issues/5320
   // https://github.com/knex/knex/issues/5430
   private fixTopLevelArrayJSONData(data: Record<string, unknown>) {
-    Object.entries(this.model.columns).forEach(([name, column]) => {
+    Object.entries(this.#model.columns).forEach(([name, column]) => {
       if (column.field.baseType === 'jsonb' && Array.isArray(data[name])) {
         data[name] = JSON.stringify(data[name])
       }
     })
 
     return data
-  }
-
-  private get schema() {
-    return this.model.schema
   }
 
   /**
@@ -127,12 +130,32 @@ export class Validator {
     })
   }
 
-  private get updateableColumns() {
+  private pickColumns(data: Record<string, Column>) {
+    return Object.keys(this.#updateableColumns).reduce((acc, columnName) => {
+      acc[columnName] = true
+
+      return acc
+    }, {} as Record<string, true>)
+  }
+
+  private getInsertableColumns() {
     return Object
-      .keys(this.model.columns)
-      .reduce((acc, columnName) => {
-        if (!this.model.columns[columnName].isLocked) {
-          acc[columnName] = this.model.columns[columnName]
+      .entries(this.#model.columns)
+      .reduce((acc, [name, column]) => {
+        if (!column.config.deletedAt) {
+          acc[name] = column
+        }
+
+        return acc
+      }, {} as Record<string, Column>)
+  }
+
+  private getUpdateableColumns() {
+    return Object
+      .entries(this.#model.columns)
+      .reduce((acc, [name, column]) => {
+        if (!column.config.isLocked && !column.config.deletedAt) {
+          acc[name] = column
         }
 
         return acc

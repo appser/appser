@@ -23,7 +23,7 @@ export const getView = new Controller(
 
     guard('app:dataset:view:get', { appId, datasetId, viewId })
 
-    const { view, viewIndex } = getViewFromDatasetById(dataset, viewId)
+    const { view, viewIndex } = getViewFromDatasetById(viewId, dataset)
 
     // fill all the missing column in the dataset
     view.column = merge(dataset.column, view.column)

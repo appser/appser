@@ -11,7 +11,7 @@ export const queryRecord = new Controller(
   async (ctx, next) => {
     const {
       access: { guard },
-      getDataset: { dataset, model },
+      getDataset: { dataset, recordModel: model },
       getDatasetView: { view },
       formula: { userFormula }
     } = ctx.state
@@ -25,6 +25,7 @@ export const queryRecord = new Controller(
 
     if (selects && selects.some(s => !viewSelects.includes(s))) ctx.throw(datasetError('selectOutsideColumn'))
 
+    // TODO: bugfix
     const records = await db(dataset.id)
       .model(model)
       .limit(pageSize)

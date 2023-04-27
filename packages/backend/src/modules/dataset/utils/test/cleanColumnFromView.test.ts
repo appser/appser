@@ -1,4 +1,4 @@
-import cleanViewColumn from '../cleanViewColumn'
+import cleanColumnFromView from '../cleanColumnFromView'
 
 import type { TView } from 'backend/models/dataset/view.schema'
 
@@ -53,7 +53,7 @@ describe('func cleanViewColumn', () => {
       columns: ['column2'],
       sorts: ['-column2']
     }
-    expect(cleanViewColumn(view, columnName)).toEqual(expectedView)
+    expect(cleanColumnFromView(columnName, view)).toEqual(expectedView)
   })
 
   test('should remove column from view.filter.and', () => {
@@ -78,7 +78,7 @@ describe('func cleanViewColumn', () => {
       columns: ['column2'],
       sorts: ['-column2']
     }
-    expect(cleanViewColumn(view, columnName)).toEqual(expectedView)
+    expect(cleanColumnFromView(columnName, view)).toEqual(expectedView)
   })
 
   test('should remove column from view.filter.or', () => {
@@ -103,7 +103,7 @@ describe('func cleanViewColumn', () => {
       columns: ['column1'],
       sorts: ['column1']
     }
-    expect(cleanViewColumn(view, columnName)).toEqual(expectedView)
+    expect(cleanColumnFromView(columnName, view)).toEqual(expectedView)
   })
 
   test('should remove column from view.columns', () => {
@@ -119,7 +119,7 @@ describe('func cleanViewColumn', () => {
       columns: ['column2'],
       sorts: ['-column2']
     }
-    expect(cleanViewColumn(view, columnName)).toEqual(expectedView)
+    expect(cleanColumnFromView(columnName, view)).toEqual(expectedView)
   })
 
   test('should remove column from view.sorts', () => {
@@ -135,6 +135,6 @@ describe('func cleanViewColumn', () => {
       columns: ['column2'],
       sorts: ['-column2']
     }
-    expect(cleanViewColumn(view, columnName)).toEqual(expectedView)
+    expect(cleanColumnFromView(columnName, view)).toEqual(expectedView)
   })
 })

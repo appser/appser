@@ -19,15 +19,12 @@ export const getDataset = new Controller(
 
     guard('app:dataset:get', { appId: dataset.appId, datasetId })
 
-    const model = new Model(dataset.column).connect({
-      db,
-      table: dataset.id
-    })
+    const recordModel = new Model(dataset.column)
 
     Object.assign(ctx.state, {
       getDataset: {
         dataset,
-        model
+        recordModel
       }
     })
 
@@ -55,7 +52,7 @@ declare module 'backend/server/controller' {
   interface State {
     getDataset: {
       dataset: TDataset
-      model: Model
+      recordModel: Model
     }
   }
 }

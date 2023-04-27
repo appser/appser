@@ -14,7 +14,7 @@ export const deleteView = new Controller(
     guard('app:dataset:view:delete', { appId, datasetId, viewId })
 
     const views = dataset.views.filter(view => view.id !== viewId)
-    await Dataset.query.where({ id: datasetId }).update('views', JSON.stringify(views))
+    await Dataset.query.where({ id: datasetId }).update('views', views)
 
     ctx.status = 204
 

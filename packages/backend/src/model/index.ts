@@ -8,8 +8,9 @@ import { z } from 'zod'
 import { Column } from './column'
 import { Validator } from './validator'
 
-import type { Columns, field } from './config'
 import type { ResolveFieldSchema } from './field'
+import type { fields } from './fields'
+import type { Columns } from './schemas/column.config.schema'
 import type { Knex } from 'knex'
 import type { ZodObject, ZodOptional, ZodSchema, ZodUnknown } from 'zod'
 
@@ -193,10 +194,10 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
 }
 
 type ResolveModelSchema<T extends Columns> = ZodObject<{
-  [K in keyof T]-?: T[K] extends { field: infer F extends keyof typeof field; isRequired?: infer R; schema?: infer S }
+  [K in keyof T]-?: T[K] extends { field: infer F extends keyof typeof fields; isRequired?: infer R; schema?: infer S }
     ? R extends true
-      ? S extends ZodSchema ? S : ResolveFieldSchema<typeof field[F]['schema']>
-      : ZodOptional<S extends ZodSchema ? S : ResolveFieldSchema<typeof field[F]['schema']>>
+      ? S extends ZodSchema ? S : ResolveFieldSchema<typeof fields[F]['schema']>
+      : ZodOptional<S extends ZodSchema ? S : ResolveFieldSchema<typeof fields[F]['schema']>>
     : ZodUnknown
 }>
 

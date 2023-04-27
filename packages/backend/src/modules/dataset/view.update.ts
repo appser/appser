@@ -5,7 +5,6 @@ import { viewColumnSchema } from 'backend/models/dataset/view.column.schema'
 import { viewSchema } from 'backend/models/dataset/view.schema'
 import { Controller } from 'backend/server/controller'
 import merge from 'lodash/merge'
-import { z } from 'zod'
 
 import { datasetError } from './dataset.error'
 

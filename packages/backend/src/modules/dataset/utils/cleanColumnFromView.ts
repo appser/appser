@@ -1,6 +1,6 @@
 import type { TView } from 'backend/models/dataset/view.schema'
 
-export default function cleanViewColumn(view: TView, columnName: string) {
+export default function cleanColumnFromView(columnName: string, view: TView) {
   delete view.column[columnName]
 
   // clean filter

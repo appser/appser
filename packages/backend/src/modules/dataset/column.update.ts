@@ -1,5 +1,6 @@
 import db from 'backend/db'
-import { columnConfigSchema } from 'backend/model/config'
+import { publicFieldTypes } from 'backend/model/fields'
+import { columnConfigSchema } from 'backend/model/schemas/column.config.schema'
 import { Dataset } from 'backend/models/dataset'
 import { Controller } from 'backend/server/controller'
 import merge from 'lodash/merge'
@@ -15,16 +16,21 @@ export const updateColumn = new Controller(
       getDatasetColumn: { column }
     } = ctx.state
     const { appId, id: datasetId } = dataset
-    const { title, options } = ctx.request.body
+    const { title, field } = ctx.request.body
 
     guard('app:dataset:column:update', { appId, datasetId, columnName: column.name })
 
-    if (column.isLocked && options) return ctx.throw(datasetError('columnIsLocked'))
+    if (column.config.isLocked && field) return ctx.throw(datasetError('columnIsLocked'))
 
-    const newColumnConfig = merge(column.config, { title, options })
+    const newColumnConfig = merge(column.config, { title, field })
     const parser = columnConfigSchema.safeParse(newColumnConfig)
 
     if (!parser.success) return ctx.throw(datasetError('invalidColumn', parser.error.formErrors))
+
+    // TODO: cast type
+    if (field?.type && field.type !== column.config.field) {
+      //
+    }
 
     await Dataset.query
       .where({ id: datasetId, appId })
@@ -37,8 +43,10 @@ export const updateColumn = new Controller(
   {
     state: ['auth', 'access', 'getDataset', 'getDatasetColumn'],
     body: z.object({
-      title: z.string().max(50).trim().optional(),
-      options: z.record(z.unknown())
+      title: z.string().max(50).trim(),
+      field: z.object({
+        type: z.enum(publicFieldTypes)
+      }).catchall(z.unknown())
     }).partial(),
     response: {
       204: null

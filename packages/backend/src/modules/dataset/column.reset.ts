@@ -11,7 +11,7 @@ export const resetColumn = new Controller(
   async (ctx, next) => {
     const {
       access: { guard },
-      getDataset: { model, dataset },
+      getDataset: { recordModel: model, dataset },
       getDatasetColumn: { column }
     } = ctx.state
     const { appId, id: datasetId } = dataset
@@ -22,7 +22,7 @@ export const resetColumn = new Controller(
     const name = column.name
     const legacyColumn = model.getColumn(name)
 
-    if (legacyColumn.isLocked) return ctx.throw(datasetError('columnIsLocked'))
+    if (legacyColumn.config.isLocked) return ctx.throw(datasetError('columnIsLocked'))
 
     const freshColumn = new Column(name, { field, title, options })
     const [sql, bindings] = castType({

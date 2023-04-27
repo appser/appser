@@ -1,8 +1,8 @@
 import { modelError } from 'backend/model/model.error'
 import { z } from 'zod'
 
-import { columnConfigSchema } from './config'
 import Field from './field'
+import { columnConfigSchema } from './schemas/column.config.schema'
 
 import type { Knex } from 'knex'
 
@@ -32,10 +32,6 @@ export class Column {
     if (this.config.isRequired) s = s.required()
 
     return s
-  }
-
-  get isLocked() {
-    return Boolean(this.config.isLocked)
   }
 
   toColumnBuilder(t: Knex.TableBuilder) {

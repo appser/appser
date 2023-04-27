@@ -1,3 +1,4 @@
+import { HttpStatusCode } from '@appser/shared'
 import { Dataset } from 'backend/models/dataset'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
@@ -16,10 +17,10 @@ export const updateDataset = new Controller(
 
     await Dataset.query.where({ id: datasetId, appId }).update({
       name,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date()
     })
 
-    ctx.status = 204
+    ctx.status = HttpStatusCode.NotContent
 
     await next()
   },

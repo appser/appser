@@ -15,15 +15,15 @@ export default Field.define(
   },
   (opts) => {
     let s
-    s = z.string()
+    s = z.coerce.date()
 
-    if (opts?.dynamicDefault === 'now') s = s.default(() => new Date().toISOString())
+    if (opts?.dynamicDefault === 'now') s = s.default(() => new Date())
 
     return s
   },
   {
     onResponse(data, options) {
-      return data ? new Date(data).valueOf().toString() : data
+      return data ? data.valueOf().toString() : data
     }
   }
 )
