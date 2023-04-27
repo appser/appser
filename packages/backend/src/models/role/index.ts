@@ -1,4 +1,5 @@
 import { Model } from 'backend/model'
+import { custom } from 'backend/model/column'
 
 import { policySchema } from './policy.schema'
 
@@ -10,11 +11,7 @@ export const Role = Model.define('role', {
   id: { field: 'numId', options: { dynamicDefault: 'snowflakeId' }, isRequired: true },
   name: { field: 'simpleText', isRequired: true },
   description: { field: 'simpleText' },
-  policies: {
-    field: 'custom',
-    schema: policySchema.array(),
-    isRequired: true
-  },
+  policies: custom(policySchema.array(), 'jsonb'),
   creatorId: { field: 'numId' },
   orgId: { field: 'numId' },
   appId: { field: 'numId' },

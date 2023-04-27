@@ -1,12 +1,13 @@
+import EventEmitter from 'node:events'
+
 import { createLogger } from 'backend/logger'
 import { modelError } from 'backend/model/model.error'
 
-import type { OnlyRequired } from '@appser/shared'
 import type { Schema, z } from 'zod'
 
 const log = createLogger('model:field')
 
-export const types = [
+export const dataTypes = [
   'smallint',
   'bigint',
   'text',
@@ -14,90 +15,98 @@ export const types = [
   'timestamp', // store as time with zone type in PostgreSQL.
   'jsonb'
   // 'geography',
-  // 'virtual', // generated column
-  // 'stored' // generated column
 ] as const
 
-interface Config {
-  baseType: typeof types[number]
-  optionSchema?: Schema
+export type DataType = typeof dataTypes[number]
+
+interface Config<T, D, S, O extends Schema> {
+  type: T
+  dataType: D
+  schema?: S | ((o: z.infer<O>) => S)
+  optionSchema?: O
+  options?: z.infer<O>
 }
 
-interface Event<Value, Options> {
-  onResponse?: (data: Value, options: Options) => unknown
-  // onModelUpdate?: (fieldValue: unknown, options: Options) => unknown
-  // onQuery?: (context: FieldContext, options: Options) => void
-}
+export class Field<T extends string, D extends DataType, S extends Schema, O extends Schema> extends EventEmitter {
+  static store: { [T in string]?: any } = {}
 
-export default class Field {
-  static store: { [K in string]?: Parameters<typeof Field.define> } = {}
+  config
 
-  baseType
-  optionSchema?: Schema
-
-  #options: unknown
-  #schema
-  #event
-
-  constructor(public name: string) {
-    const defined = Field.store[name]
-
-    if (!defined) throw new Error(`Field type '${name}' not stored, define it first.`)
-
-    const [,config, schema, event] = defined
-
-    this.baseType = config.baseType
-    this.optionSchema = config.optionSchema
-    this.#schema = schema
-    this.#event = event
+  constructor(config: Config<T, D, S, O>) {
+    super()
+    this.config = config
   }
 
-  static define<C extends Config, S extends Schema>(
-    name: string,
-    config: C,
-    schema: S | ((o: ResolveFieldOptions<C>) => S),
-    event?: Event<z.infer<S>, ResolveFieldOptions<C>>
-  ) {
-    if (!types.includes(config.baseType)) throw new Error(`Invalid field base type: ${config.baseType}.`)
-
-    Object.assign(Field.store, {
-      [name]: [name, config, schema, event]
+  static define<T extends string, D extends DataType>(type: T, dataType: D) {
+    const field = new Field({
+      type,
+      dataType
     })
+    Object.assign(this.store, { [type]: field })
 
-    log.debug('defined field type', name)
+    log.debug('defined field type', type)
 
-    return {
-      field: name,
-      schema,
-      optionSchema: config.optionSchema as C['optionSchema']
+    return field
+  }
+
+  static create(type: string): Field<any, DataType, any, any> {
+    const field = this.store[type]
+
+    if (!field) {
+      throw new Error(`Field type '${type}' not stored, define it first.`)
     }
+
+    return Object.create(Object.getPrototypeOf(field))
+  }
+
+  optionSchema<_O extends O>(schema: _O) {
+    this.config.optionSchema = schema
+
+    return this as unknown as Field<T, D, S, _O>
+  }
+
+  schema<_S extends S>(schema: _S | ((o: z.infer<O>) => _S)) {
+    this.config.schema = schema
+
+    return this as unknown as Field<T, D, _S, O>
   }
 
   options(opt: unknown = {}) {
-    if (this.optionSchema?.safeParse(opt).success === false) {
+    const parser = this.config.optionSchema?.safeParse(opt)
+
+    if (parser && !parser.success) {
       throw modelError('invalidFieldOptions')
     }
 
-    this.#options = opt
+    this.config.options = parser?.data
 
     return this
   }
 
-  get schema() {
-    return typeof this.#schema === 'function' ? this.#schema(this.#options) : this.#schema
-  }
+  getSchema() {
+    const { schema } = this.config
 
-  onResponse<T=unknown>(originData: T) {
-    return this.#event?.onResponse?.(originData as T, this.#options)
+    if (!schema) throw new Error('Schema not defined')
+
+    return typeof schema === 'function' ? schema(this.config.options = {}) : schema
   }
 }
 
-export interface Fields {}
+export declare interface Field<T extends string, D extends DataType, S extends Schema, O extends Schema> {
+  on<E extends EventName>(eventName: E, listener: (...args: EventArgs<E, S, O>) => void): this
+  emit<E extends EventName>(eventName: E, ...args: EventArgs<E, S, O>): boolean
+}
+
+type EventName =
+  | 'response'
+  // | 'other'
+
+type EventArgs< E extends EventName, S extends Schema, O extends Schema> =
+ E extends 'response' ? [z.infer<S>, z.infer<O>] :
+   never
 
 export type ResolveFieldSchema<S> = S extends Schema
   ? S
   : S extends (o: infer O) => Schema
     ? ReturnType<S>
     : unknown
-
-type ResolveFieldOptions<C> = C extends OnlyRequired<Config, 'optionSchema'> ? z.infer<C['optionSchema']> : unknown

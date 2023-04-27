@@ -1,4 +1,5 @@
 import { Model } from 'backend/model'
+import { custom } from 'backend/model/column'
 import jsonSchema from 'backend/utils/json.schema'
 
 import { recordModelColumn } from './dataset/dataset.column.schema'
@@ -10,7 +11,7 @@ import type { z } from 'zod'
 export const Record = Model.define('record', {
   datasetId: { field: 'numId', isRequired: true },
   ...recordModelColumn,
-  extra: { field: 'custom', schema: jsonSchema }
+  extra: custom(jsonSchema, 'jsonb')
 })
   .primary(['datasetId', 'id'])
 

@@ -1,15 +1,20 @@
 import { modelError } from 'backend/model/model.error'
 import { z } from 'zod'
 
-import Field from './field'
+import { Field } from './field'
 import { columnConfigSchema } from './schemas/column.config.schema'
 
+import type { DataType } from './field'
 import type { Knex } from 'knex'
+import type { Schema } from 'zod'
 
 export class Column {
   field
+  config
 
-  constructor(public readonly name: string, public config: z.infer<typeof columnConfigSchema>) {
+  readonly name: string
+
+  constructor(name: string, config: z.infer<typeof columnConfigSchema>) {
     const parser = columnConfigSchema.safeParse(config)
 
     if (!parser.success) {
@@ -18,15 +23,14 @@ export class Column {
 
     this.name = name
     this.config = parser.data
-    this.field = new Field(config.field).options(this.config.options)
+    this.field = Field.create(config.field).options(this.config.options)
   }
 
   get schema() {
     let s
 
     s = z.object({
-    // override schema, only for custom field
-      [this.name]: this.config.field === 'custom' ? this.config.schema : this.field.schema
+      [this.name]: this.field.getSchema()
     }).partial()
 
     if (this.config.isRequired) s = s.required()
@@ -36,8 +40,26 @@ export class Column {
 
   toColumnBuilder(t: Knex.TableBuilder) {
     const field = this.field
-    const column = t[field.baseType](this.name)
 
-    return column
+    return t[field.config.dataType](this.name)
   }
+}
+
+export class CustomColumn<S extends Schema = Schema> {
+  name?: string
+
+  constructor(public schema: S, public dataType: DataType) {
+    this.schema = schema
+    this.dataType = dataType
+  }
+
+  toColumnBuilder(t: Knex.TableBuilder) {
+    if (!this.name) throw new Error('CustomColumn name is required')
+
+    return t[this.dataType](this.name)
+  }
+}
+
+export function custom<S extends Schema, D extends DataType>(schema: S, dataType: D) {
+  return new CustomColumn<S>(schema, dataType)
 }

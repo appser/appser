@@ -1,5 +1,6 @@
 import { roles } from '@appser/access'
 import { Model } from 'backend/model'
+import { custom } from 'backend/model/column'
 import { z } from 'zod'
 
 import type { Optional } from '@appser/shared'
@@ -28,12 +29,14 @@ export const User = Model.define('user', {
     }
   },
   account: { field: 'account', options: { grantRoleId: roles.system.user.id }, isRequired: true },
-  settings: { field: 'custom', schema: settingsSchema },
+  settings: custom(settingsSchema, 'jsonb'),
   createdAt: { field: 'date', options: { dynamicDefault: 'now' }, isRequired: true },
   updatedAt: { field: 'date', options: { dynamicDefault: 'now' }, isRequired: true }
 })
   .primary('id')
-  .sql('CREATE INDEX idx_account ON public.user USING gin (account jsonb_path_ops)')
+  .on('createTable', sb => {
+    sb.raw('CREATE INDEX idx_account ON public.user USING gin (account jsonb_path_ops)')
+  })
 
 export type TUser = z.infer<typeof User.schema>
 

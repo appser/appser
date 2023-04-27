@@ -9,8 +9,6 @@ function handler(this: KnexOriginal.QueryBuilder, _model?: Model) {
 
   return this.queryContext({ model })
     .on('start', (builder: KnexOriginal.QueryBuilder) => {
-      model.emit('startQuery', builder)
-
       const { insert: insertData, update: updateData } = builder._single
       const method = builder._method
 
@@ -26,11 +24,8 @@ function handler(this: KnexOriginal.QueryBuilder, _model?: Model) {
       if (obj.response?.command === 'SELECT') {
         response = model.validator.transformResponse(response)
       }
-
-      model.emit('endQuery')
     })
     .on('query-error', () => {
-      model.emit('endQuery')
     })
 }
 

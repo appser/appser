@@ -5,7 +5,7 @@ import { createLogger } from 'backend/logger'
 import { modelError } from 'backend/model/model.error'
 import { z } from 'zod'
 
-import { Column } from './column'
+import { Column, CustomColumn } from './column'
 import { Validator } from './validator'
 
 import type { ResolveFieldSchema } from './field'
@@ -16,47 +16,26 @@ import type { ZodObject, ZodOptional, ZodSchema, ZodUnknown } from 'zod'
 
 const log = createLogger('model')
 
-interface ModelConfig {
+interface DBConfig {
+  db?: Knex
+  table?: string
   index?: Parameters<Knex.TableBuilder['index']>
   primary?: string[]
-  sql?: string
-}
-
-interface DBConfig {
-  table: string
-  db?: Knex
-}
-
-interface State<T extends Columns> {
-  insert?: ResolveModel<T> | ResolveModel<T>[]
-  update?: Partial<Record<keyof T, unknown>>
-  response?: unknown
-}
-
-export declare interface Model<T, C> {
-  on<E extends EventName>(eventName: E, listener: (...args: EventArgs<C, E>) => void): this
-  emit<E extends EventName>(eventName: E, ...args: EventArgs<C, E>): boolean
 }
 
 export class Model<T = unknown, C extends Columns = Columns> extends EventEmitter {
   static store: Record<string, Omit<Model, 'tableName'> & { tableName: string }> = {}
 
-  state: State<C> = {}
   schema
   columns
 
-  #config: ModelConfig = {}
-
-  #dbConfig?: DBConfig
-  #queryBuilder?: Knex.QueryBuilder
+  #dbConfig: DBConfig = {}
 
   constructor(columns: C) {
     super()
 
     this.columns = this.compileColumns(columns)
     this.schema = this.getSchema()
-
-    this.init()
   }
 
   static define<T extends string, C extends Columns = Columns>(tableName: T, column: C) {
@@ -98,19 +77,13 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
   }
 
   index(...args: Parameters<Knex.TableBuilder['index']>) {
-    this.#config.index = args
+    this.#dbConfig.index = args
 
     return this
   }
 
   primary(keys: ColumnNames<C> | ColumnNames<C>[]) {
-    this.#config.primary = Array.isArray(keys) ? keys.map(key => String(key)) : [String(keys)]
-
-    return this
-  }
-
-  sql(sql: string) {
-    this.#config.sql = sql
+    this.#dbConfig.primary = Array.isArray(keys) ? keys.map(key => String(key)) : [String(keys)]
 
     return this
   }
@@ -127,15 +100,17 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
 
   getSchema() {
     return Object.entries(this.columns).reduce((acc, [name, column]) => {
-      return acc.merge(column.schema)
+      return acc.extend({
+        [name]: column.schema
+      })
     }, z.object({})) as ResolveModelSchema<C>
   }
 
   toTableBuilder(t: Knex.TableBuilder) {
     Object.values(this.columns).forEach(column => column.toColumnBuilder?.(t))
 
-    if (this.#config.index) t.index(...this.#config.index)
-    if (this.#config.primary) t.primary(this.#config.primary)
+    if (this.#dbConfig.index) t.index(...this.#dbConfig.index)
+    if (this.#dbConfig.primary) t.primary(this.#dbConfig.primary)
 
     return t
   }
@@ -143,15 +118,9 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
   createTable() {
     const schemaBuilder = this.knex.schema.createTable(this.tableName, t => this.toTableBuilder(t))
 
-    if (this.#config.sql) {
-      schemaBuilder.raw(this.#config.sql)
-    }
+    this.emit('createTable', schemaBuilder)
 
     return schemaBuilder
-  }
-
-  hasTable() {
-    return this.knex.schema.hasTable(this.tableName)
   }
 
   dropTable() {
@@ -164,29 +133,15 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
     return this.#dbConfig.db
   }
 
-  // TODO
-  private prepareQuery() {
-    return this
-  }
-
-  private init() {
-    this
-      .on('startQuery', queryBuilder => {
-        log.debug('startQuery')
-        this.#queryBuilder = queryBuilder
-        this.prepareQuery()
-      })
-      .on('endQuery', () => {
-        this.#queryBuilder = undefined
-        log.debug('endQuery')
-      })
-  }
-
   private compileColumns(columns: Columns) {
-    return Object.entries(columns).reduce<Record<string, Column>>((acc, [name, columnObj]) => {
-      const column = new Column(name, columnObj)
-
-      acc[name] = column
+    return Object.entries(columns).reduce<Record<string, Column | CustomColumn>>((acc, [name, columnObj]) => {
+      if (columnObj instanceof CustomColumn) {
+        columnObj.name = name
+        acc[name] = columnObj
+      } else {
+        const column = new Column(name, columnObj)
+        acc[name] = column
+      }
 
       return acc
     }, {})
@@ -196,36 +151,28 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
 type ResolveModelSchema<T extends Columns> = ZodObject<{
   [K in keyof T]-?: T[K] extends { field: infer F extends keyof typeof fields; isRequired?: infer R; schema?: infer S }
     ? R extends true
-      ? S extends ZodSchema ? S : ResolveFieldSchema<typeof fields[F]['schema']>
-      : ZodOptional<S extends ZodSchema ? S : ResolveFieldSchema<typeof fields[F]['schema']>>
-    : ZodUnknown
+      ? S extends ZodSchema ? S : ResolveFieldSchema<ReturnType<typeof fields[F]['getSchema']>>
+      : ZodOptional<S extends ZodSchema ? S : ResolveFieldSchema<ReturnType<typeof fields[F]['getSchema']>>>
+    : T[K] extends CustomColumn ? T[K]['schema'] : ZodUnknown
 }>
-
-type ResolveModel<T extends Columns> = z.infer<ResolveModelSchema<T>>
 
 type ColumnNames<T extends Columns> = Extract<keyof T, string>
 
+export declare interface Model<T, C> {
+  on<E extends EventName>(eventName: E, listener: (...args: EventArgs<C, E>) => void): this
+  emit<E extends EventName>(eventName: E, ...args: EventArgs<C, E>): boolean
+}
+
 type EventName =
-  | 'startQuery'
+  | 'createTable'
   // | 'insert'
   // | 'update'
   // | 'delete'
   // | 'respond'
-  | 'endQuery'
 
-type EventArgs<T extends Columns, E extends EventName> = E extends 'startQuery'
-  ? [queryBuilder: Knex.QueryBuilder]
-  : E extends 'insert'
-    ? [unknown]
-    : E extends 'update'
-      ? [unknown, Knex.QueryBuilder? ] // The type of update will be string, function etc..
-      : E extends 'delete'
-        ? []
-        : E extends 'respond'
-          ? [unknown]
-          : E extends 'endQuery'
-            ? []
-            : never
+type EventArgs<T extends Columns, E extends EventName> =
+E extends 'createTable' ? [Knex.SchemaBuilder] :
+  never
 
 export interface Models {}
 

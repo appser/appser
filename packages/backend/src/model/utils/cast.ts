@@ -1,12 +1,12 @@
 import { modelError } from '../model.error'
 
-import type { types } from '../field'
+import type { dataTypes } from '../field'
 
 interface CastTypeProps {
   tableName: string
   columnName: string
-  from: typeof types[number]
-  to: typeof types[number]
+  from: typeof dataTypes[number]
+  to: typeof dataTypes[number]
 }
 
 const MAX_SMALLINT = 32767
@@ -70,9 +70,9 @@ export const castMap = (column: string): CastMap => ({
 
 type CastMap = {
   // from type
-  [From in typeof types[number]]: {
+  [From in typeof dataTypes[number]]: {
     // to type
-    [To in typeof types[number]]: [string, string[]?]
+    [To in typeof dataTypes[number]]: [string, string[]?]
   }
 }
 

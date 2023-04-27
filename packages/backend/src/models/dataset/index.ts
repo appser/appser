@@ -1,4 +1,5 @@
 import { Model } from 'backend/model'
+import { custom } from 'backend/model/column'
 
 import { datasetColumnSchema } from './dataset.column.schema'
 import { renderDefaultView, viewSchema } from './view.schema'
@@ -11,16 +12,8 @@ export const Dataset = Model.define('dataset', {
   id: { field: 'numId', options: { dynamicDefault: 'snowflakeId' }, isRequired: true },
   appId: { field: 'numId', isRequired: true },
   name: { field: 'simpleText' },
-  column: {
-    field: 'custom',
-    schema: datasetColumnSchema,
-    isRequired: true
-  },
-  views: {
-    field: 'custom',
-    schema: viewSchema.array().default(() => [renderDefaultView()]),
-    isRequired: true
-  },
+  column: custom(datasetColumnSchema, 'jsonb'),
+  views: custom(viewSchema.array().default(() => [renderDefaultView()]), 'jsonb'),
   createdAt: { field: 'date', options: { dynamicDefault: 'now' }, isRequired: true },
   updatedAt: { field: 'date', options: { dynamicDefault: 'now' }, isRequired: true }
 })

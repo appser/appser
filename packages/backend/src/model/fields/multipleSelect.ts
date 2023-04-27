@@ -1,11 +1,10 @@
-import Field from 'backend/model/field'
+import { Field } from 'backend/model/field'
 import { z } from 'zod'
 
-export default Field.define(
-  'multipleSelect',
-  {
-    baseType: 'jsonb',
-    optionSchema: z.object({
+export default Field
+  .define('multipleSelect', 'jsonb')
+  .optionSchema(
+    z.object({
       items: z.object({
         id: z.coerce.number().int().max(30000).min(-30000).optional(),
         name: z.string()
@@ -20,6 +19,11 @@ export default Field.define(
         }))
       })
     })
-  },
-  opts => z.coerce.number().array()
-)
+  )
+  .schema(
+    opts => z.coerce.number()
+      .refine(d => opts.items.find(item => item.id === d) !== undefined, {
+        message: 'Invalid option selected'
+      })
+      .array()
+  )

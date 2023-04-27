@@ -1,7 +1,6 @@
 import account from './account'
 // import attachment from './fields/attachment'
 import checkbox from './checkbox'
-import custom from './custom'
 import date from './date'
 import email from './email'
 import multipleSelect from './multipleSelect'
@@ -14,7 +13,7 @@ import singleSelect from './singleSelect'
 import url from './url'
 
 const publicField = { checkbox, date, email, multipleSelect, number, numId, richText, simpleText, singleSelect, url }
-const privateField = { account, custom }
+const privateField = { account }
 export const fields = { ...publicField, ...privateField } as const
 
 type FieldsTuple = [keyof typeof fields, ...(keyof typeof fields)[]]
