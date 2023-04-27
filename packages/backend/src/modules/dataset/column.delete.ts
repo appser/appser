@@ -26,8 +26,11 @@ export const deleteColumn = new Controller(
 
       await Dataset.query
         .where({ id: datasetId })
-        .update('column', JSON.stringify(dataset.column))
-        .update('views', JSON.stringify(dataset.views))
+        // TODO: test
+        .update({
+          column: dataset.column,
+          views: dataset.views
+        })
         .transacting(trx)
 
       await db.schema

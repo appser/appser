@@ -1,17 +1,12 @@
 import { roles } from '@appser/access'
 import { datasetIconIds, datasetTintColors } from '@appser/shared'
 import db from 'backend/db'
-import { Model } from 'backend/model'
 import { App } from 'backend/models/app'
 import { Dataset } from 'backend/models/dataset'
 import { People } from 'backend/models/people'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
-import { genSnowflakeId } from 'backend/vendors/snowflakeId'
 import { z } from 'zod'
-
-import { datasetDefaultColumn } from '../dataset/data/defaultColumn'
-import { defaultView } from '../dataset/data/defaultView'
 
 const randomTintColor = () => {
   return datasetTintColors[Math.floor(Math.random() * datasetTintColors.length)]
@@ -59,27 +54,11 @@ export const createOrgApp = new Controller(
         })
         .transacting(trx)
 
-      const [dataset] = await Dataset.query
+      await Dataset.query
         .insert({
-          appId: app.id,
-          column: datasetDefaultColumn,
-          views: [
-            {
-              id: genSnowflakeId().toString(),
-              ...defaultView
-            }
-          ]
+          appId: app.id
         })
         .returning('id')
-        .transacting(trx)
-
-      await new Model(datasetDefaultColumn)
-        .primary('id')
-        .connect({
-          db,
-          table: dataset.id
-        })
-        .createTable()
         .transacting(trx)
 
       ctx.body = app

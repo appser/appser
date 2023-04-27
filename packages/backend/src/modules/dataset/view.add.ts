@@ -1,13 +1,9 @@
 import { HttpStatusCode } from '@appser/shared'
 import db from 'backend/db'
 import { Dataset } from 'backend/models/dataset'
+import { renderDefaultView } from 'backend/models/dataset/view.schema'
 import { Controller } from 'backend/server/controller'
-import { genSnowflakeId } from 'backend/vendors/snowflakeId'
 import { z } from 'zod'
-
-import { defaultView } from './data/defaultView'
-
-import type { TView } from 'backend/models/dataset/view.schema'
 
 export const addView = new Controller(
   async (ctx, next) => {
@@ -20,11 +16,7 @@ export const addView = new Controller(
 
     guard('app:dataset:view:add', { appId, datasetId })
 
-    const view: TView = {
-      id: genSnowflakeId().toString(),
-      name,
-      ...defaultView
-    }
+    const view = renderDefaultView({ name })
 
     await Dataset.query
       .where({ id: datasetId })

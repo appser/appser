@@ -10,7 +10,6 @@ import { Validator } from './validator'
 
 import type { Columns, field } from './config'
 import type { ResolveFieldSchema } from './field'
-import type { Dataset } from 'backend/db'
 import type { Knex } from 'knex'
 import type { ZodObject, ZodOptional, ZodSchema, ZodUnknown } from 'zod'
 
@@ -80,11 +79,11 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
   get tableName() {
     if (!this.#dbConfig?.table) throw modelError('missingTableWName')
 
-    return this.#dbConfig?.table as keyof Dataset
+    return this.#dbConfig?.table as keyof Models
   }
 
   get query() {
-    return db(this.tableName as T extends keyof Dataset ? T : never).model()
+    return db(this.tableName as T extends keyof Models ? T : never).model()
   }
 
   get validator() {
@@ -226,3 +225,9 @@ type EventArgs<T extends Columns, E extends EventName> = E extends 'startQuery'
           : E extends 'endQuery'
             ? []
             : never
+
+export interface Models {}
+
+declare module 'knex/types/tables' {
+  interface Tables extends Models {}
+}

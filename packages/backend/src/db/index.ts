@@ -21,12 +21,6 @@ export { default as connect } from './connect'
 
 export default db
 
-export interface Dataset {}
-
-declare module 'knex/types/tables' {
-  interface Tables extends Dataset {}
-}
-
 declare module 'knex' {
   namespace Knex {
     interface QueryInterface<TRecord extends {} = any, TResult = any> {

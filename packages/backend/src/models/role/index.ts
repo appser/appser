@@ -25,8 +25,8 @@ export const Role = Model.define('role', {
 
 export type TRole = z.infer<typeof Role.schema>
 
-declare module 'backend/db' {
-  interface Dataset {
+declare module 'backend/model' {
+  interface Models {
     role: Knex.CompositeTableType<TRole, Optional<TRole, 'id' | 'createdAt' | 'updatedAt'>>
   }
 }

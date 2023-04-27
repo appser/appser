@@ -28,8 +28,8 @@ export const Org = Model.define('org', {
 
 export type TOrg = z.infer<typeof Org.schema>
 
-declare module 'backend/db' {
-  interface Dataset {
+declare module 'backend/model' {
+  interface Models {
     org: Knex.CompositeTableType<TOrg, Optional<TOrg, 'id' | 'createdAt' | 'updatedAt'>>
   }
 }

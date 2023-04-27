@@ -51,7 +51,7 @@ export const updateView = new Controller(
       stickyColumn: true,
       columns: true
     }).extend({
-      column: z.record(viewColumnSchema.deepPartial())
+      column: viewColumnSchema
     }).deepPartial(),
     response: {
       204: null

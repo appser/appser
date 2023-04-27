@@ -57,4 +57,3 @@ export const columnConfigSchema = publicColumnConfigSchema.or(privateColumnConfi
 const columnsSchema = z.record(columnConfigSchema)
 
 export type Columns = z.infer<typeof columnsSchema>
-columnConfigSchema.parse({ field: 'account', options: { grantRoleId: '123' } })

@@ -16,8 +16,8 @@ export const Token = Model.define('token', {
 
 export type TToken = z.infer<typeof Token.schema>
 
-declare module 'backend/db' {
-  interface Dataset {
+declare module 'backend/model' {
+  interface Models {
     token: TToken
   }
 }

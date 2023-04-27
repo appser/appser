@@ -124,7 +124,7 @@ export class DatasetService {
       title?: string;
       field: 'checkbox' | 'date' | 'email' | 'multipleSelect' | 'number' | 'numId' | 'richText' | 'simpleText' | 'singleSelect' | 'url';
       options?: Record<string, any>;
-      associatedViewId?: string;
+      appendViewId?: string;
     },
   }): CancelablePromise<any> {
     return this.httpRequest.request({

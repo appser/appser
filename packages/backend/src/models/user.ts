@@ -1,9 +1,8 @@
 import { roles } from '@appser/access'
-import db from 'backend/db'
 import { Model } from 'backend/model'
 import { z } from 'zod'
 
-import type { DeepPartial, Optional } from '@appser/shared'
+import type { Optional } from '@appser/shared'
 import type { Knex } from 'knex'
 
 export enum UserStatus {
@@ -16,18 +15,9 @@ const settingsSchema = z.object({
 }).partial()
 
 export const User = Model.define('user', {
-  id: {
-    field: 'numId',
-    options: { dynamicDefault: 'snowflakeId' },
-    isRequired: true
-  },
-  avatar: {
-    field: 'url'
-  },
-  name: {
-    field: 'simpleText',
-    isRequired: true
-  },
+  id: { field: 'numId', options: { dynamicDefault: 'snowflakeId' }, isRequired: true },
+  avatar: { field: 'url' },
+  name: { field: 'simpleText', isRequired: true },
   status: {
     field: 'singleSelect',
     options: {
@@ -37,33 +27,18 @@ export const User = Model.define('user', {
       ]
     }
   },
-  account: {
-    field: 'account',
-    options: { grantRoleId: roles.system.user.id },
-    isRequired: true
-  },
-  settings: {
-    field: 'custom',
-    schema: settingsSchema
-  },
-  createdAt: {
-    field: 'date',
-    options: { dynamicDefault: 'now' },
-    isRequired: true
-  },
-  updatedAt: {
-    field: 'date',
-    options: { dynamicDefault: 'now' },
-    isRequired: true
-  }
+  account: { field: 'account', options: { grantRoleId: roles.system.user.id }, isRequired: true },
+  settings: { field: 'custom', schema: settingsSchema },
+  createdAt: { field: 'date', options: { dynamicDefault: 'now' }, isRequired: true },
+  updatedAt: { field: 'date', options: { dynamicDefault: 'now' }, isRequired: true }
 })
   .primary('id')
   .sql('CREATE INDEX idx_account ON public.user USING gin (account jsonb_path_ops)')
 
 export type TUser = z.infer<typeof User.schema>
 
-declare module 'backend/db' {
-  interface Dataset {
-    user: Knex.CompositeTableType<TUser, Optional<DeepPartial<TUser>, 'id' | 'createdAt' | 'updatedAt'>>
+declare module 'backend/model' {
+  interface Models {
+    user: Knex.CompositeTableType<TUser, Optional<Omit<TUser, 'account'> & { account: Partial<TUser['account']> }, 'id' | 'createdAt' | 'updatedAt'>>
   }
 }
