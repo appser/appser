@@ -9,10 +9,11 @@ export * from '@mantine/dates'
 export * from '@mantine/form'
 export * from '@mantine/hooks'
 export * from '@mantine/modals'
-export * from '@mantine/next'
 export * from '@mantine/prism'
-export * from '@mantine/core'
 export { Notifications, showNotification } from '@mantine/notifications'
+
+export * from '@mantine/core'
+
 // // Layout
 // export { Center, Container, Flex, Grid, Group, MediaQuery, SimpleGrid, Space, Stack } from '@mantine/core'
 // // Buttons
