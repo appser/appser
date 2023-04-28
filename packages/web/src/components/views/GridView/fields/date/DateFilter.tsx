@@ -1,11 +1,11 @@
-import { Group, Select } from '@mantine/core'
+import { Group, Select } from '@appser/ui'
 import { DatePickerInput } from '@mantine/dates'
-import { useForm } from '@mantine/form'
+import { useForm } from '@appser/ui'
 import dayjs from 'dayjs'
 import { useEffect, useMemo } from 'react'
 
 import type { FieldFilterProps } from '..'
-import type { TransformedValues } from '@mantine/form'
+import type { TransformedValues } from '@appser/ui'
 import type { FC } from 'react'
 import type { FilterConditionOperator } from 'web/servers/dataset/useQueryRecord'
 

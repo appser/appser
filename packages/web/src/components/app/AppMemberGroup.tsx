@@ -1,4 +1,4 @@
-import { Avatar, Button, Group } from '@mantine/core'
+import { Avatar, Button, Group } from '@appser/ui'
 import { useAppPeople } from 'web/servers/app/useAppPeople'
 
 import { openAppMember } from '../modals/appMember'

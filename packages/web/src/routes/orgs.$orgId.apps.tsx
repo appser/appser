@@ -1,5 +1,5 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { Box, Flex, Text, Title } from '@mantine/core'
+import { Box, Flex, Text, Title } from '@appser/ui'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import { AppCreatorButton } from 'web/components/app/AppCreatorButton'

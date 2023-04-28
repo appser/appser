@@ -1,8 +1,25 @@
-import { DatePicker, useForm } from '@appser/ui'
-import React from 'react'
+// import { ModalsProvider } from '@appser/ui'
+// import { Box, Button, Center, ColorSchemeProvider, MantineProvider } from '@mantine/core'
+import { Box, Button, Center, ColorSchemeProvider, MantineProvider, ModalsProvider, AppserUIProvider } from '@appser/ui'
+// import { ModalsProvider } from '@mantine/modals'
 
 export function App() {
-  useForm()
+  // useForm()
 
-  return <DatePicker>Test</DatePicker>
+  return (
+    // <ColorSchemeProvider colorScheme='light' toggleColorScheme={() => {}}>
+    //   <MantineProvider theme={{}}>
+    <AppserUIProvider colorScheme='light' toggleColorScheme={() => {}}>
+<ModalsProvider modals={{}}>
+          <Box>lalala</Box>
+          <Center>dddddd</Center>
+          <Button>dddd</Button>
+          {/* <DatePicker /> */}
+        </ModalsProvider>
+    </AppserUIProvider>
+        
+    //   </MantineProvider>
+
+    // </ColorSchemeProvider>
+  )
 }

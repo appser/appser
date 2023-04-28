@@ -1,5 +1,5 @@
-import { Popover } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
+import { Popover } from '@appser/ui'
+import { useDisclosure } from '@appser/ui'
 import { useEffect } from 'react'
 import { ActionButton } from 'web/components/common/ActionButton'
 import { IconPlus } from 'web/components/icons/IconPlus'

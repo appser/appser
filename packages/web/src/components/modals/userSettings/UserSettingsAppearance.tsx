@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core'
+import { createStyles } from '@appser/ui'
 import { useTranslation } from 'react-i18next'
 import { FormSectionSelect } from 'web/components/common/FormSection/FormSectionSelect'
 import { LanguageSelect } from 'web/components/common/LanguageSelect'

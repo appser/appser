@@ -1,6 +1,6 @@
-import { TextInput } from '@mantine/core'
-import { useForm } from '@mantine/form'
-import { getHotkeyHandler } from '@mantine/hooks'
+import { TextInput } from '@appser/ui'
+import { useForm } from '@appser/ui'
+import { getHotkeyHandler } from '@appser/ui'
 import { forwardRef, useImperativeHandle } from 'react'
 
 import type { FieldCellEditorProps, FieldCellEditorRef } from '..'

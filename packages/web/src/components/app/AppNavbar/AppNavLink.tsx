@@ -1,6 +1,6 @@
-import { NavLink, createStyles } from '@mantine/core'
+import { NavLink, createStyles } from '@appser/ui'
 
-import type { NavLinkProps } from '@mantine/core'
+import type { NavLinkProps } from '@appser/ui'
 import type { FC } from 'react'
 
 interface Props extends NavLinkProps {}

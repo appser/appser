@@ -1,10 +1,10 @@
-import { Flex, Group, Text } from '@mantine/core'
+import { Flex, Group, Text } from '@appser/ui'
 
 import { FieldIcon } from '../field/FieldIcon'
 import { useFields } from '../fields'
 
 import type { FieldColumnInputProps } from '../fields'
-import type { FlexProps } from '@mantine/core'
+import type { FlexProps } from '@appser/ui'
 import type { FC } from 'react'
 
 type ColumnInputProps = FieldColumnInputProps & FlexProps & {

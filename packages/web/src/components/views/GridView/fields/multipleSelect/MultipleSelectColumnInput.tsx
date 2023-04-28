@@ -1,4 +1,4 @@
-import { Box, Checkbox, Group, MultiSelect, Text, createStyles } from '@mantine/core'
+import { Box, Checkbox, Group, MultiSelect, Text, createStyles } from '@appser/ui'
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 
 import type { FieldColumnInputProps } from '..'

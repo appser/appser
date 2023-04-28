@@ -1,5 +1,5 @@
-import { Box, Button, Divider, Flex, Group, Modal, Text, TextInput, Title } from '@mantine/core'
-import { hasLength, useForm } from '@mantine/form'
+import { Box, Button, Divider, Flex, Group, Modal, Text, TextInput, Title } from '@appser/ui'
+import { hasLength, useForm } from '@appser/ui'
 import { useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'

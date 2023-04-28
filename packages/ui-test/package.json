@@ -12,6 +12,10 @@
   },
   "dependencies": {
     "@appser/ui": "workspace:^0.0.1",
-    "@emotion/react": "^11.10.5"
+    "@emotion/react": "^11.10.5",
+    "@mantine/modals": "^6.0.4"
+  },
+  "devDependencies": {
+    "rollup-plugin-visualizer": "^5.9.0"
   }
 }

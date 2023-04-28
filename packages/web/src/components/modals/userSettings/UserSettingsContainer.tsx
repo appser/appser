@@ -1,4 +1,4 @@
-import { Box, Flex, Title, createStyles } from '@mantine/core'
+import { Box, Flex, Title, createStyles } from '@appser/ui'
 
 import type { PropsWithChildren, ReactNode } from 'react'
 

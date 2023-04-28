@@ -1,6 +1,6 @@
 import { colors } from '@appser/ui'
-import { Button, Flex, Group } from '@mantine/core'
-import { openContextModal } from '@mantine/modals'
+import { Button, Flex, Group } from '@appser/ui'
+import { openContextModal } from '@appser/ui'//modals
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAddRecord } from 'web/servers/dataset/useAddRecord'
@@ -9,7 +9,7 @@ import i18n from 'web/vendor/i18n'
 import { ColumnInput } from '../views/GridView/column/ColumnInput'
 
 import type { Column } from '../views/GridView/column/Column'
-import type { ContextModalProps } from '@mantine/modals'
+import type { ContextModalProps } from '@appser/ui'//modals
 
 type CreateRecordProps = {
   datasetId: string

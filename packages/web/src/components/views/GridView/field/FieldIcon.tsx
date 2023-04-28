@@ -1,5 +1,5 @@
 import { colors } from '@appser/ui'
-import { Flex, useMantineTheme } from '@mantine/core'
+import { Flex, useMantineTheme } from '@appser/ui'
 
 import { useFields } from '../fields'
 

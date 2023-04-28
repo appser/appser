@@ -1,9 +1,9 @@
-import { Select, createStyles } from '@mantine/core'
+import { Select, createStyles } from '@appser/ui'
 import { useTranslation } from 'react-i18next'
 
 import { IconGlobe } from '../icons/IconGlobe'
 
-import type { SelectProps } from '@mantine/core'
+import type { SelectProps } from '@appser/ui'
 import type { FC } from 'react'
 
 interface LanguageSelectProps extends Omit<SelectProps, 'data'> {

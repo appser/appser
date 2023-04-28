@@ -1,5 +1,5 @@
 import { colors as appserColors } from '@appser/ui'
-import { useMantineTheme } from '@mantine/core'
+import { useMantineTheme } from '@appser/ui'
 
 import type { Theme } from '@glideapps/glide-data-grid'
 

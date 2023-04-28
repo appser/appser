@@ -1,4 +1,4 @@
-import { Box, Title } from '@mantine/core'
+import { Box, Title } from '@appser/ui'
 
 import { ColumnInput } from '../column/ColumnInput'
 

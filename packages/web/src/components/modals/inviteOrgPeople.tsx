@@ -1,7 +1,7 @@
-import { Box, Button, Group } from '@mantine/core'
-import { useForm } from '@mantine/form'
-import { useClipboard } from '@mantine/hooks'
-import { openContextModal } from '@mantine/modals'
+import { Box, Button, Group } from '@appser/ui'
+import { useForm } from '@appser/ui'
+import { useClipboard } from '@appser/ui'
+import { openContextModal } from '@appser/ui'//modals
 import { useTranslation } from 'react-i18next'
 import { useActivatedOrg } from 'web/hooks/useActivatedOrg'
 import { useCreateOrgInvitation } from 'web/servers/org/useCreateOrgInvitation'
@@ -11,7 +11,7 @@ import i18n from 'web/vendor/i18n'
 import { FormSection } from '../common/FormSection'
 import { RoleSelect } from '../role/RoleSelect'
 
-import type { ContextModalProps } from '@mantine/modals'
+import type { ContextModalProps } from '@appser/ui'//modals
 
 export function InviteOrgPeopleModal({ context, id, innerProps }: ContextModalProps) {
   const { t } = useTranslation()

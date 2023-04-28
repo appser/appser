@@ -1,4 +1,4 @@
-import { Flex, Group, Menu, Text, UnstyledButton } from '@mantine/core'
+import { Flex, Group, Menu, Text, UnstyledButton } from '@appser/ui'
 import { useNavigate } from 'react-router-dom'
 import { IconSelector } from 'web/components/icons/IconSelector'
 import { OrgLogo } from 'web/components/org/OrgLogo'

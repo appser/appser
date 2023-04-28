@@ -1,5 +1,5 @@
-import { Flex } from '@mantine/core'
-import { useClickOutside } from '@mantine/hooks'
+import { Flex } from '@appser/ui'
+import { useClickOutside } from '@appser/ui'
 import { useRef, useState } from 'react'
 import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
 import { useActivatedView } from 'web/hooks/useActivatedView'

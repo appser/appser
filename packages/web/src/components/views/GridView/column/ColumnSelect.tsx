@@ -1,11 +1,11 @@
-import { Group, Select, Text } from '@mantine/core'
+import { Group, Select, Text } from '@appser/ui'
 import { forwardRef, useMemo } from 'react'
 
 import { FieldIcon } from '../field/FieldIcon'
 import { useColumns } from '../hooks/useColumns'
 
 import type { Column } from './Column'
-import type { SelectProps } from '@mantine/core'
+import type { SelectProps } from '@appser/ui'
 import type { FC } from 'react'
 
 interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {

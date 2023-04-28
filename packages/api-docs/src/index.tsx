@@ -1,5 +1,5 @@
-import { Accordion, Box, Flex, Group, NavLink, Navbar, Tabs, Text, Title } from '@mantine/core'
-import { Prism } from '@mantine/prism'
+import { Accordion, Box, Flex, Group, NavLink, Navbar, Tabs, Text, Title } from '@appser/ui'
+import { Prism } from '@appser/ui'
 import { useEffect, useState } from 'react'
 
 import openapiJson from '../admin.openapi.json'

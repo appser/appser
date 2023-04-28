@@ -10,6 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@appser/ui": "workspace:0.0.1",
     "@mantine/prism": "^6.0.4"
   },
   "devDependencies": {

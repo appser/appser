@@ -1,6 +1,6 @@
 import { colors } from '@appser/ui'
-import { Flex, Tabs, Text, createStyles } from '@mantine/core'
-import { openContextModal } from '@mantine/modals'
+import { Flex, Tabs, Text, createStyles } from '@appser/ui'
+import { openContextModal } from '@appser/ui'//modals
 import { IconMonitor } from 'web/components/icons/IconMonitor'
 import { IconShield } from 'web/components/icons/IconShield'
 import { IconUser } from 'web/components/icons/IconUser'
@@ -10,7 +10,7 @@ import { UserSettingsAccount } from './UserSettingsAccount'
 import { UserSettingsAppearance } from './UserSettingsAppearance'
 import { UserSettingsProfile } from './UserSettingsProfile'
 
-import type { ContextModalProps } from '@mantine/modals'
+import type { ContextModalProps } from '@appser/ui'//modals
 
 export const useStyles = createStyles((theme) => ({
   root: {

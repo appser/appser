@@ -1,4 +1,4 @@
-import { ActionIcon, Popover } from '@mantine/core'
+import { ActionIcon, Popover } from '@appser/ui'
 
 import { AppNavbar } from './AppNavbar'
 import { IconChevronDown } from '../icons/IconChevronDown'

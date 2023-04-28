@@ -1,5 +1,5 @@
 import { GridCellKind } from '@glideapps/glide-data-grid'
-import { ActionIcon, Flex } from '@mantine/core'
+import { ActionIcon, Flex } from '@appser/ui'
 import { IconEdit2 } from 'web/components/icons/IconEdit2'
 import useAccess from 'web/hooks/useAccess'
 import { useActivatedApp } from 'web/hooks/useActivatedApp'

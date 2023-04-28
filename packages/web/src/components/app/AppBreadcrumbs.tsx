@@ -1,4 +1,4 @@
-import { ActionIcon, Breadcrumbs, Flex, Group, Text } from '@mantine/core'
+import { ActionIcon, Breadcrumbs, Flex, Group, Text } from '@appser/ui'
 
 import { AppLogo } from './AppLogo'
 import { IconTable } from '../icons/IconTable'

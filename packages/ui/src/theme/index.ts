@@ -1,5 +1,6 @@
 import { em, rem } from '@mantine/core'
 
+import components from './components'
 import { color } from './other'
 
 import type { DefaultMantineColor, MantineThemeOverride, Tuple } from '@mantine/core'
@@ -66,6 +67,7 @@ export const mantineTheme: MantineThemeOverride = {
       h6: { fontSize: rem(14), lineHeight: 1.5, fontWeight: undefined }
     }
   },
+  components,
   other: {
     color
   }

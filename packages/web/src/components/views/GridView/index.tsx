@@ -1,6 +1,6 @@
 import { DataEditor } from '@glideapps/glide-data-grid'
 import '@glideapps/glide-data-grid/dist/index.css'
-import { Flex } from '@mantine/core'
+import { Flex } from '@appser/ui'
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { openCreateRecord } from 'web/components/modals/createRecord'
 import useAccess from 'web/hooks/useAccess'

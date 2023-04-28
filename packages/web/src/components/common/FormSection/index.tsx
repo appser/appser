@@ -1,5 +1,5 @@
 import { useInputSubtleVariantStyles } from '@appser/ui'
-import { Box, Paper, TextInput, Title, createStyles } from '@mantine/core'
+import { Box, Paper, TextInput, Title, createStyles } from '@appser/ui'
 
 import { FormSectionDivider } from './FormSectionDivider'
 import { FormSectionItem } from './FormSectionItem'
@@ -9,7 +9,7 @@ import { FormSectionSwitch } from './FormSectionSwitch'
 import { Background } from '../Background'
 
 import type { FormSectionItemProps } from './FormSectionItem'
-import type { BoxProps, NumberInputProps, SelectProps, TextInputProps } from '@mantine/core'
+import type { BoxProps, NumberInputProps, SelectProps, TextInputProps } from '@appser/ui'
 
 export const useStyles = createStyles((theme) => ({
   title: {

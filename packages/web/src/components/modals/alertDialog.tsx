@@ -1,7 +1,7 @@
-import { Box, Button, Flex, SimpleGrid, Stack, Text } from '@mantine/core'
-import { openContextModal } from '@mantine/modals'
+import { Box, Button, Flex, SimpleGrid, Stack, Text } from '@appser/ui'
+import { openContextModal } from '@appser/ui'//modals
 
-import type { ContextModalProps } from '@mantine/modals'
+import type { ContextModalProps } from '@appser/ui'//modals
 
 export type AlertDialogProps = {
   icon?: React.ReactNode

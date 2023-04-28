@@ -1,5 +1,5 @@
-import { Button, Card, Group } from '@mantine/core'
-import { hasLength, useForm } from '@mantine/form'
+import { Button, Card, Group } from '@appser/ui'
+import { hasLength, useForm } from '@appser/ui'
 import { FormSection } from 'web/components/common/FormSection'
 
 import { FieldSelect } from '../field/FieldSelect'

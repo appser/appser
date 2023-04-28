@@ -1,7 +1,7 @@
-import { Flex, Text, TextInput, createStyles } from '@mantine/core'
+import { Flex, Text, TextInput, createStyles } from '@appser/ui'
 import { useEffect, useRef, useState } from 'react'
 
-import type { DefaultProps, Selectors, TextProps } from '@mantine/core'
+import type { DefaultProps, Selectors, TextProps } from '@appser/ui'
 
 interface EditableTextProps extends DefaultProps<EditableTextStylesNames, EditableTextStylesParams> {
   children?: string

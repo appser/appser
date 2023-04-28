@@ -1,6 +1,6 @@
-import { Box, Button, Group } from '@mantine/core'
-import { isNotEmpty, useForm } from '@mantine/form'
-import { openContextModal } from '@mantine/modals'
+import { Box, Button, Group } from '@appser/ui'
+import { isNotEmpty, useForm } from '@appser/ui'
+import { openContextModal } from '@appser/ui'//modals
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAddAppPeople } from 'web/servers/app/useAddAppPeople'
@@ -14,7 +14,7 @@ import { IconSelector } from '../icons/IconSelector'
 import { OrgUserSelect } from '../org/OrgUserSelect'
 import { RoleSelect } from '../role/RoleSelect'
 
-import type { ContextModalProps } from '@mantine/modals'
+import type { ContextModalProps } from '@appser/ui'//modals
 import type { TApp } from 'web/servers/app/types'
 
 export type AddAppMemberModalProps = {

@@ -1,6 +1,6 @@
-import { Avatar } from '@mantine/core'
+import { Avatar } from '@appser/ui'
 
-import type { AvatarProps } from '@mantine/core'
+import type { AvatarProps } from '@appser/ui'
 import type { FC } from 'react'
 
 interface Props extends AvatarProps {

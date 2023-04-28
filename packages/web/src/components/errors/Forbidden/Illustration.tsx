@@ -1,4 +1,4 @@
-import { useMantineTheme } from '@mantine/core'
+import { useMantineTheme } from '@appser/ui'
 
 export function Illustration(props: React.ComponentPropsWithoutRef<'svg'>) {
   const theme = useMantineTheme()

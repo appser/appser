@@ -1,4 +1,4 @@
-import { Radio, Stack } from '@mantine/core'
+import { Radio, Stack } from '@appser/ui'
 import { useActivatedOrg } from 'web/hooks/useActivatedOrg'
 import { useChangeOrgPeopleRole } from 'web/servers/org/useChangeOrgPeopleRole'
 import { useListOrgRole } from 'web/servers/org/useListOrgRole'

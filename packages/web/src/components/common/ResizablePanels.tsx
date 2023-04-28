@@ -1,8 +1,8 @@
 import { colors } from '@appser/ui'
-import { Box, Divider, createStyles, getStylesRef } from '@mantine/core'
+import { Box, Divider, createStyles, getStylesRef } from '@appser/ui'
 import { useEffect, useRef, useState } from 'react'
 
-import type { DefaultProps, Selectors } from '@mantine/core'
+import type { DefaultProps, Selectors } from '@appser/ui'
 import type { PropsWithChildren } from 'react'
 
 interface StylesParams {

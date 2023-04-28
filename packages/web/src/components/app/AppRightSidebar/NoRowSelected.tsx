@@ -1,4 +1,4 @@
-import { Text } from '@mantine/core'
+import { Text } from '@appser/ui'
 
 import type { FC } from 'react'
 

@@ -1,4 +1,4 @@
-import { Loader } from '@mantine/core'
+import { Loader } from '@appser/ui'
 import React, { Suspense, forwardRef, useImperativeHandle, useState } from 'react'
 
 import type { FieldCellEditorProps, FieldCellEditorRef } from '..'

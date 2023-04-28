@@ -1,4 +1,4 @@
-import { TextInput } from '@mantine/core'
+import { TextInput } from '@appser/ui'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 
 import type { FieldCellEditorProps, FieldCellEditorRef } from '..'
