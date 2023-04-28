@@ -29,7 +29,7 @@ export const User = Model.define('user', {
     }
   },
   account: { field: 'account', options: { grantRoleId: roles.system.user.id }, isRequired: true },
-  settings: custom(settingsSchema, 'jsonb'),
+  settings: custom(settingsSchema.optional(), 'jsonb'),
   createdAt: { field: 'date', options: { dynamicDefault: 'now' }, isRequired: true },
   updatedAt: { field: 'date', options: { dynamicDefault: 'now' }, isRequired: true }
 })

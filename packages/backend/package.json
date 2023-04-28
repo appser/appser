@@ -18,6 +18,7 @@
   "scripts": {
     "dev": "tsx watch ./scripts/dev.ts",
     "test": "vitest",
+    "check:ts": "tsc --noEmit",
     "knex": "knex --knexfile src/db/knex/knexfile.ts"
   },
   "dependencies": {

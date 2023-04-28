@@ -17,7 +17,7 @@ export const updateDataset = new Controller(
 
     await Dataset.query.where({ id: datasetId, appId }).update({
       name,
-      updatedAt: new Date()
+      updatedAt: new Date().toISOString()
     })
 
     ctx.status = HttpStatusCode.NotContent

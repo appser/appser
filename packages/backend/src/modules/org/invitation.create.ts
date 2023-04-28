@@ -9,14 +9,13 @@ import { createInvitationToken } from '../invitation/utils/invitationToken'
 export const createOrgInvitation = new Controller(
   async (ctx, next) => {
     const {
-      access: { can },
+      access: { guard },
       auth: { currentUser: user }
     } = ctx.state
     const { orgId } = ctx.params
     const { roleId } = ctx.request.body
-    const { deny } = can('org:invitation:create', { orgId })
 
-    if (deny) return ctx.throw(serverError('accessForbidden'))
+    guard('org:invitation:create', { orgId })
 
     await checkRoleInOrg({ roleId, orgId })
 

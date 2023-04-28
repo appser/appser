@@ -11,7 +11,7 @@ export const updateAccountSettings = new Controller(
     const { timezone, firstDayOfWeek } = ctx.request.body
     const settings = merge(user.settings, { timezone, firstDayOfWeek })
 
-    await User.query.where({ id: user.id }).update('settings', JSON.stringify(settings))
+    await User.query.where({ id: user.id }).update('settings', settings)
 
     ctx.status = HttpStatusCode.NotContent
 

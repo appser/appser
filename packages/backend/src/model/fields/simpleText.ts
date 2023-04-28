@@ -3,4 +3,4 @@ import { z } from 'zod'
 
 export default Field
   .define('simpleText', 'text')
-  .useSchema(z.number())
+  .useSchema(z.string().max(2000).trim())

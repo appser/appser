@@ -33,7 +33,7 @@ export const updateViewRecord = new Controller(
       .update({
         extra,
         lastEditor: currentUser.id,
-        updatedAt: new Date()
+        updatedAt: new Date().toISOString()
       })
 
     ctx.status = 204

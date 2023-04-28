@@ -2,9 +2,10 @@ import EventEmitter from 'node:events'
 
 import { createLogger } from 'backend/logger'
 import { modelError } from 'backend/model/model.error'
+import { z } from 'zod'
 
 import type { Knex } from 'knex'
-import type { Schema, z } from 'zod'
+import type { Schema } from 'zod'
 
 const log = createLogger('model:field')
 
@@ -74,6 +75,10 @@ export class Field< S extends Schema, O extends Schema> extends EventEmitter {
     if (!schema) throw new Error('Schema not defined')
 
     return typeof schema === 'function' ? schema(this.options = {}) : schema
+  }
+
+  get optionSchema() {
+    return this.#config.optionSchema ?? z.never()
   }
 
   useOptionSchema<_O extends O>(schema: _O) {
