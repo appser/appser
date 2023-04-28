@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 export default Field
   .define('multipleSelect', 'jsonb')
-  .optionSchema(
+  .useOptionSchema(
     z.object({
       items: z.object({
         id: z.coerce.number().int().max(30000).min(-30000).optional(),
@@ -20,10 +20,8 @@ export default Field
       })
     })
   )
-  .schema(
-    opts => z.coerce.number()
-      .refine(d => opts.items.find(item => item.id === d) !== undefined, {
-        message: 'Invalid option selected'
-      })
-      .array()
+  .useSchema(
+    opts => z.coerce.number().refine(d => opts.items.find(item => item.id === d) !== undefined, {
+      message: 'Invalid option selected'
+    }).array()
   )

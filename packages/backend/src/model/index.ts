@@ -8,6 +8,7 @@ import { z } from 'zod'
 import { Column, CustomColumn } from './column'
 import { Validator } from './validator'
 
+import type { SomeColumn } from './column'
 import type { ResolveFieldSchema } from './field'
 import type { fields } from './fields'
 import type { Columns } from './schemas/column.config.schema'
@@ -35,7 +36,8 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
     super()
 
     this.columns = this.compileColumns(columns)
-    this.schema = this.getSchema()
+    this.schema = this.compileSchema()
+    this.init()
   }
 
   static define<T extends string, C extends Columns = Columns>(tableName: T, column: C) {
@@ -60,6 +62,12 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
     if (!this.#dbConfig?.table) throw modelError('missingTableWName')
 
     return this.#dbConfig?.table as keyof Models
+  }
+
+  get dbSchemaBuilder() {
+    if (!this.#dbConfig?.db) throw new Error('model db without knex')
+
+    return this.#dbConfig.db.schema
   }
 
   get query() {
@@ -94,29 +102,8 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
     return this.columns[columnName]
   }
 
-  hasColumn(name: string) {
-    return Boolean(this.columns[name])
-  }
-
-  getSchema() {
-    return Object.entries(this.columns).reduce((acc, [name, column]) => {
-      return acc.extend({
-        [name]: column.schema
-      })
-    }, z.object({})) as ResolveModelSchema<C>
-  }
-
-  toTableBuilder(t: Knex.TableBuilder) {
-    Object.values(this.columns).forEach(column => column.toColumnBuilder?.(t))
-
-    if (this.#dbConfig.index) t.index(...this.#dbConfig.index)
-    if (this.#dbConfig.primary) t.primary(this.#dbConfig.primary)
-
-    return t
-  }
-
   createTable() {
-    const schemaBuilder = this.knex.schema.createTable(this.tableName, t => this.toTableBuilder(t))
+    const schemaBuilder = this.dbSchemaBuilder.createTable(this.tableName, t => this.toTableBuilder(t))
 
     this.emit('createTable', schemaBuilder)
 
@@ -124,17 +111,27 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
   }
 
   dropTable() {
-    return this.knex.schema.dropTableIfExists(this.tableName)
+    return this.dbSchemaBuilder.dropTableIfExists(this.tableName)
   }
 
-  private get knex() {
-    if (!this.#dbConfig?.db) throw new Error('model db without knex')
+  private init() {
+    this
+      .on('query', queryBuilder => {
+        log.debug('start query')
+        Object.values(this.columns).forEach(column => column instanceof Column && column.field.emit('query', queryBuilder))
+      })
+  }
 
-    return this.#dbConfig.db
+  private compileSchema() {
+    return Object.entries(this.columns).reduce((acc, [name, column]) => {
+      return acc.extend({
+        [name]: column.schema
+      })
+    }, z.object({})) as ResolveModelSchema<C>
   }
 
   private compileColumns(columns: Columns) {
-    return Object.entries(columns).reduce<Record<string, Column | CustomColumn>>((acc, [name, columnObj]) => {
+    return Object.entries(columns).reduce<Record<string, SomeColumn>>((acc, [name, columnObj]) => {
       if (columnObj instanceof CustomColumn) {
         columnObj.name = name
         acc[name] = columnObj
@@ -146,13 +143,22 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
       return acc
     }, {})
   }
+
+  private toTableBuilder(t: Knex.TableBuilder) {
+    Object.values(this.columns).forEach(column => column.toColumnBuilder?.(t))
+
+    if (this.#dbConfig.index) t.index(...this.#dbConfig.index)
+    if (this.#dbConfig.primary) t.primary(this.#dbConfig.primary)
+
+    return t
+  }
 }
 
 type ResolveModelSchema<T extends Columns> = ZodObject<{
   [K in keyof T]-?: T[K] extends { field: infer F extends keyof typeof fields; isRequired?: infer R; schema?: infer S }
     ? R extends true
-      ? S extends ZodSchema ? S : ResolveFieldSchema<ReturnType<typeof fields[F]['getSchema']>>
-      : ZodOptional<S extends ZodSchema ? S : ResolveFieldSchema<ReturnType<typeof fields[F]['getSchema']>>>
+      ? S extends ZodSchema ? S : ResolveFieldSchema<typeof fields[F]['schema']>
+      : ZodOptional<S extends ZodSchema ? S : ResolveFieldSchema<typeof fields[F]['schema']>>
     : T[K] extends CustomColumn ? T[K]['schema'] : ZodUnknown
 }>
 
@@ -165,6 +171,7 @@ export declare interface Model<T, C> {
 
 type EventName =
   | 'createTable'
+  | 'query'
   // | 'insert'
   // | 'update'
   // | 'delete'
@@ -172,7 +179,8 @@ type EventName =
 
 type EventArgs<T extends Columns, E extends EventName> =
 E extends 'createTable' ? [Knex.SchemaBuilder] :
-  never
+  E extends 'query' ? [Knex.QueryBuilder] :
+    never
 
 export interface Models {}
 

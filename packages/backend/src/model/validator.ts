@@ -1,10 +1,11 @@
 import flattenObject from 'backend/utils/flattenObject'
 import { merge, pick, set } from 'lodash'
 
+import { Column, CustomColumn } from './column'
 import { modelError } from './model.error'
 
 import type { Model } from '.'
-import type { Column } from './column'
+import type { SomeColumn } from './column'
 
 export class Validator {
   #model
@@ -81,15 +82,11 @@ export class Validator {
     }
 
     Object.entries(record).forEach(([name, value]) => {
-      const field = this.#model.columns[name]?.field
+      const column = this.#model.columns[name]
+      const field = (column instanceof Column) && column.field
 
-      if (field) {
-        Object.defineProperty(record, name, {
-          value: field.onResponse(value) ?? value,
-          enumerable: true,
-          writable: true
-        })
-      }
+      // TODO: fix using alias select like `select('id as user_id')`
+      field && field.emit('response', value as any, field.options)
     })
 
     return record
@@ -100,7 +97,9 @@ export class Validator {
   // https://github.com/knex/knex/issues/5430
   private fixTopLevelArrayJSONData(data: Record<string, unknown>) {
     Object.entries(this.#model.columns).forEach(([name, column]) => {
-      if (column.field.baseType === 'jsonb' && Array.isArray(data[name])) {
+      const dataType = column instanceof Column ? column.field.dataType : column.dataType
+
+      if (dataType === 'jsonb' && Array.isArray(data[name])) {
         data[name] = JSON.stringify(data[name])
       }
     })
@@ -130,8 +129,8 @@ export class Validator {
     })
   }
 
-  private pickColumns(data: Record<string, Column>) {
-    return Object.keys(this.#updateableColumns).reduce((acc, columnName) => {
+  private pickColumns(data: Record<string, SomeColumn>) {
+    return Object.keys(data).reduce((acc, columnName) => {
       acc[columnName] = true
 
       return acc
@@ -142,23 +141,23 @@ export class Validator {
     return Object
       .entries(this.#model.columns)
       .reduce((acc, [name, column]) => {
-        if (!column.config.deletedAt) {
+        if (column instanceof CustomColumn || !column.config.deletedAt) {
           acc[name] = column
         }
 
         return acc
-      }, {} as Record<string, Column>)
+      }, {} as Record<string, SomeColumn>)
   }
 
   private getUpdateableColumns() {
     return Object
       .entries(this.#model.columns)
       .reduce((acc, [name, column]) => {
-        if (!column.config.isLocked && !column.config.deletedAt) {
+        if (column instanceof CustomColumn || (!column.config.isLocked && !column.config.deletedAt)) {
           acc[name] = column
         }
 
         return acc
-      }, {} as Record<string, Column>)
+      }, {} as Record<string, SomeColumn>)
   }
 }

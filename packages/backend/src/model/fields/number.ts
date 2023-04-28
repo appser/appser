@@ -3,13 +3,13 @@ import { z } from 'zod'
 
 export default Field
   .define('number', 'bigint')
-  .optionSchema(
+  .useOptionSchema(
     z.object({
       precision: z.number().int().gte(0).lte(8).default(0),
       allowNegative: z.boolean().default(false)
     })
   )
-  .schema(
+  .useSchema(
     (opts) => {
       let s = z.number()
 

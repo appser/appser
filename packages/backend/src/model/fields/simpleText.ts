@@ -3,4 +3,4 @@ import { z } from 'zod'
 
 export default Field
   .define('simpleText', 'text')
-  .schema(z.number())
+  .useSchema(z.number())

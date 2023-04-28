@@ -1,17 +1,19 @@
 import { Field } from 'backend/model/field'
 import { z } from 'zod'
 
-// TODO:
+// TODO
 export default Field
   .define('relation', 'jsonb')
-  .optionSchema(z.object({
+  .useOptionSchema(z.object({
     table: z.string(),
     select: z.string().array(),
     referenceKey: z.string().optional().default('id'),
     isMultiple: z.boolean().optional()
   }))
-  .schema(
+  .useSchema(
     opts => z.string().array().nonempty().max(opts?.isMultiple ? 500 : 1)
+  )
+  .on('query', queryBuilder => {
     /*
     onQuery({ queryBuilder, column, model }, { select, table, referenceKey, isMultiple }) {
       if (!queryBuilder || !isSelect(queryBuilder, column.name)) return
@@ -30,11 +32,4 @@ export default Field
       )
     },
     */
-
-  )
-  .on('response', (data, opts) => {
-    const table = opts?.table
-
-    if (!table) throw new Error('option table required')
-    //    return Model.get(table).transformResponse(data)
   })

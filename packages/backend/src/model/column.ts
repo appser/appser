@@ -23,14 +23,14 @@ export class Column {
 
     this.name = name
     this.config = parser.data
-    this.field = Field.create(config.field).options(this.config.options)
+    this.field = Field.create(config.field).withOptions(this.config.options)
   }
 
   get schema() {
     let s
 
     s = z.object({
-      [this.name]: this.field.getSchema()
+      [this.name]: this.field.schema
     }).partial()
 
     if (this.config.isRequired) s = s.required()
@@ -41,7 +41,7 @@ export class Column {
   toColumnBuilder(t: Knex.TableBuilder) {
     const field = this.field
 
-    return t[field.config.dataType](this.name)
+    return t[field.dataType](this.name)
   }
 }
 
@@ -63,3 +63,5 @@ export class CustomColumn<S extends Schema = Schema> {
 export function custom<S extends Schema, D extends DataType>(schema: S, dataType: D) {
   return new CustomColumn<S>(schema, dataType)
 }
+
+export type SomeColumn = Column | CustomColumn

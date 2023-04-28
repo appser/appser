@@ -3,4 +3,4 @@ import { z } from 'zod'
 
 export default Field
   .define('email', 'text')
-  .schema(z.string().email().max(255))
+  .useSchema(z.string().email().max(255))

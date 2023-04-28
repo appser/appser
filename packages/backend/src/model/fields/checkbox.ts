@@ -3,4 +3,4 @@ import { z } from 'zod'
 
 export default Field
   .define('checkbox', 'boolean')
-  .schema(z.boolean())
+  .useSchema(z.boolean())

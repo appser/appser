@@ -3,4 +3,4 @@ import { z } from 'zod'
 
 export default Field
   .define('richText', 'text')
-  .schema(z.string().max(65_535))
+  .useSchema(z.string().max(65_535))

@@ -1,8 +1,9 @@
 import { Field } from 'backend/model/field'
 import { z } from 'zod'
 
-export default Field.define('date', 'timestamp')
-  .optionSchema(
+export default Field
+  .define('date', 'timestamp')
+  .useOptionSchema(
     z.object({
       dynamicDefault: z.literal('now'),
       // format on client
@@ -11,7 +12,7 @@ export default Field.define('date', 'timestamp')
       timeStyle: z.enum(['full', 'long', 'medium', 'short'])
     }).partial().optional()
   )
-  .schema(
+  .useSchema(
     (opts) => {
       let s
       s = z.string().refine((v) => !isNaN(Date.parse(v)), { message: 'Invalid date' })

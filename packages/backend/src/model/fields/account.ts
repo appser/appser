@@ -5,12 +5,12 @@ import { Field } from '../field'
 
 export default Field
   .define('account', 'jsonb')
-  .optionSchema(
+  .useOptionSchema(
     z.object({
       grantRoleId: z.string()
     })
   )
-  .schema(
+  .useSchema(
     opts => z.object({
       email: z.string().email().optional(),
       password: z.string().min(6).optional().transform((v) => v && hashSync(v)),

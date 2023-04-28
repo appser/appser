@@ -4,12 +4,12 @@ import { z } from 'zod'
 
 export default Field
   .define('numId', 'bigint')
-  .optionSchema(
+  .useOptionSchema(
     z.object({
       dynamicDefault: z.literal('snowflakeId')
     }).partial().optional()
   )
-  .schema(
+  .useSchema(
     (opts) => {
       let s
       // when use `z.coerce.string()`, the zodToJsonSchema will missing that property in the required
