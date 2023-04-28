@@ -1,10 +1,10 @@
 import { Record } from 'backend/models/record'
 import { Controller } from 'backend/server/controller'
-import jsonSchema from 'backend/utils/json.schema'
+import jsonSchema from 'backend/utils/jsonSchema'
 
 import { datasetError } from './dataset.error'
 
-import type { TJson } from 'backend/utils/json.schema'
+import type { TJson } from 'backend/utils/jsonSchema'
 
 export const addViewRecord = new Controller(
   async (ctx, next) => {

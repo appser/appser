@@ -8,20 +8,20 @@ export const Org = Model.define('org', {
   id: {
     field: 'numId',
     options: { dynamicDefault: 'snowflakeId' },
-    isRequired: true
+    required: true
   },
-  name: { field: 'simpleText', isRequired: true },
+  name: { field: 'simpleText', required: true },
   image: { field: 'url' },
-  creatorId: { field: 'numId', isRequired: true },
+  creatorId: { field: 'numId', required: true },
   createdAt: {
     field: 'date',
     options: { dynamicDefault: 'now' },
-    isRequired: true
+    required: true
   },
   updatedAt: {
     field: 'date',
     options: { dynamicDefault: 'now' },
-    isRequired: true
+    required: true
   }
 })
   .primary('id')

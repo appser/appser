@@ -1,6 +1,6 @@
 import db from 'backend/db'
+import { Column } from 'backend/model/column'
 import { publicFieldTypes } from 'backend/model/fields'
-import { columnConfigSchema } from 'backend/model/schemas/column.config.schema'
 import { Dataset } from 'backend/models/dataset'
 import { Controller } from 'backend/server/controller'
 import merge from 'lodash/merge'
@@ -16,25 +16,23 @@ export const updateColumn = new Controller(
       getDatasetColumn: { column }
     } = ctx.state
     const { appId, id: datasetId } = dataset
-    const { title, field } = ctx.request.body
+    const { title, field: fieldType, options } = ctx.request.body
 
     guard('app:dataset:column:update', { appId, datasetId, columnName: column.name })
 
-    if (column.config.isLocked && field) return ctx.throw(datasetError('columnIsLocked'))
+    if (column.config.locked && (fieldType || options)) return ctx.throw(datasetError('columnIsLocked'))
 
-    const newColumnConfig = merge(column.config, { title, field })
-    const parser = columnConfigSchema.safeParse(newColumnConfig)
-
-    if (!parser.success) return ctx.throw(datasetError('invalidColumn', parser.error.formErrors))
+    const updatedColumn = new Column(column.name, merge(column.config, { title, field: fieldType, options }))
 
     // TODO: cast type
-    if (field?.type && field.type !== column.config.field) {
+    if (column.dataType !== updatedColumn.dataType) {
+      console.log(fieldType)
       //
     }
 
     await Dataset.query
       .where({ id: datasetId, appId })
-      .update('column', db.jsonSet('column', `$.${column.name}`, JSON.stringify(parser.data)))
+      .update('column', db.jsonSet('column', `$.${column.name}`, JSON.stringify(updatedColumn.config)))
 
     ctx.status = 204
 
@@ -44,9 +42,8 @@ export const updateColumn = new Controller(
     state: ['auth', 'access', 'getDataset', 'getDatasetColumn'],
     body: z.object({
       title: z.string().max(50).trim(),
-      field: z.object({
-        type: z.enum(publicFieldTypes)
-      }).catchall(z.unknown())
+      field: z.enum(publicFieldTypes),
+      options: z.unknown()
     }).partial(),
     response: {
       204: null

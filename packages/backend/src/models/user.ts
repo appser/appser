@@ -1,6 +1,6 @@
 import { roles } from '@appser/access'
 import { Model } from 'backend/model'
-import { custom } from 'backend/model/column'
+import { column } from 'backend/model/column'
 import { z } from 'zod'
 
 import type { Optional } from '@appser/shared'
@@ -16,9 +16,9 @@ const settingsSchema = z.object({
 }).partial()
 
 export const User = Model.define('user', {
-  id: { field: 'numId', options: { dynamicDefault: 'snowflakeId' }, isRequired: true },
+  id: { field: 'numId', options: { dynamicDefault: 'snowflakeId' }, required: true },
   avatar: { field: 'url' },
-  name: { field: 'simpleText', isRequired: true },
+  name: { field: 'simpleText', required: true },
   status: {
     field: 'singleSelect',
     options: {
@@ -28,10 +28,10 @@ export const User = Model.define('user', {
       ]
     }
   },
-  account: { field: 'account', options: { grantRoleId: roles.system.user.id }, isRequired: true },
-  settings: custom(settingsSchema.optional(), 'jsonb'),
-  createdAt: { field: 'date', options: { dynamicDefault: 'now' }, isRequired: true },
-  updatedAt: { field: 'date', options: { dynamicDefault: 'now' }, isRequired: true }
+  account: { field: 'account', options: { grantRoleId: roles.system.user.id }, required: true },
+  settings: column(settingsSchema.optional(), 'jsonb'),
+  createdAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true },
+  updatedAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true }
 })
   .primary('id')
   .on('createTable', sb => {

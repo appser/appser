@@ -7,10 +7,10 @@ import { Model } from 'backend/model'
 import type { z } from 'zod'
 
 export const Token = Model.define('token', {
-  id: { field: 'numId', isRequired: true },
-  audience: { field: 'numId', isRequired: true },
-  isRevoke: { field: 'checkbox', isRequired: true },
-  expiredAt: { field: 'date', isRequired: true }
+  id: { field: 'numId', required: true },
+  audience: { field: 'numId', required: true },
+  isRevoke: { field: 'checkbox', required: true },
+  expiredAt: { field: 'date', required: true }
 })
   .primary('id')
 

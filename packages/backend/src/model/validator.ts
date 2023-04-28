@@ -153,7 +153,7 @@ export class Validator {
     return Object
       .entries(this.#model.columns)
       .reduce((acc, [name, column]) => {
-        if (column instanceof CustomColumn || (!column.config.isLocked && !column.config.deletedAt)) {
+        if (column instanceof CustomColumn || (!column.config.locked && !column.config.deletedAt)) {
           acc[name] = column
         }
 

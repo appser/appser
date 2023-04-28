@@ -19,13 +19,13 @@ const {
 
 const columnBaseConfigSchema = z.object({
   title: z.string().max(255).trim(),
-  isRequired: z.boolean(),
+  required: z.boolean(),
   /**
-   * When set to true, the column can only be updated its title.
+   * When set to true, the column can only be updated its title
    */
-  isLocked: z.boolean(),
-  deletedAt: z.coerce.date()
-}).partial()
+  locked: z.boolean(),
+  deletedAt: z.string()
+}).strict().partial()
 
 export const publicColumnConfigSchema = z.discriminatedUnion('field', [
   z.object({ field: z.literal('checkbox'), options: checkbox.optionSchema }),
@@ -45,6 +45,6 @@ export const privateColumnConfigSchema = z.discriminatedUnion('field', [
 ]).and(columnBaseConfigSchema)
 
 export const columnConfigSchema = publicColumnConfigSchema.or(privateColumnConfigSchema)
-const columnsSchema = z.record(columnConfigSchema.or(z.instanceof(CustomColumn)))
 
+const columnsSchema = z.record(columnConfigSchema.or(z.instanceof(CustomColumn)))
 export type Columns = z.infer<typeof columnsSchema>

@@ -1,8 +1,9 @@
-import db from 'backend/db'
 import { Model } from 'backend/model'
 import { Dataset } from 'backend/models/dataset'
+import { publicRecordColumns } from 'backend/models/record'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
+import { merge } from 'lodash'
 import { z } from 'zod'
 
 import { getDatasetById } from './utils/getDatasetById'
@@ -19,7 +20,8 @@ export const getDataset = new Controller(
 
     guard('app:dataset:get', { appId: dataset.appId, datasetId })
 
-    const recordModel = new Model(dataset.column)
+    dataset.record = merge(dataset.record, publicRecordColumns)
+    const recordModel = new Model(dataset.record)
 
     Object.assign(ctx.state, {
       getDataset: {

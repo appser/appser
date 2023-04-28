@@ -21,21 +21,19 @@ export const deleteColumn = new Controller(
 
     guard('app:dataset:column:delete', { appId, datasetId, columnName: name })
 
-    if (column.config.isLocked) return ctx.throw(datasetError('columnIsLocked'))
+    if (column.config.locked) return ctx.throw(datasetError('columnIsLocked'))
 
-    dataset.column[name].deletedAt = new Date()
+    dataset.record[name].deletedAt = new Date().toISOString()
     dataset.views.forEach(view => cleanColumnFromView(name, view))
 
     await Dataset.query
       .where({ id: datasetId })
-    // TODO: test
       .update({
-        column: dataset.column,
+        record: dataset.record,
         views: dataset.views
       })
 
     ctx.status = 204
-    ctx.body = null
 
     await next()
   },

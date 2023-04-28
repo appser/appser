@@ -5,13 +5,13 @@ import type { Knex } from 'knex'
 import type { z } from 'zod'
 
 export const App = Model.define('app', {
-  id: { field: 'numId', options: { dynamicDefault: 'snowflakeId' }, isRequired: true },
-  orgId: { field: 'numId', isRequired: true },
+  id: { field: 'numId', options: { dynamicDefault: 'snowflakeId' }, required: true },
+  orgId: { field: 'numId', required: true },
   name: { field: 'simpleText' },
-  tintColor: { field: 'simpleText', isRequired: true },
-  icon: { field: 'simpleText', isRequired: true },
-  createdAt: { field: 'date', options: { dynamicDefault: 'now' }, isRequired: true },
-  updatedAt: { field: 'date', options: { dynamicDefault: 'now' }, isRequired: true }
+  tintColor: { field: 'simpleText', required: true },
+  icon: { field: 'simpleText', required: true },
+  createdAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true },
+  updatedAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true }
 })
   .primary('id')
 

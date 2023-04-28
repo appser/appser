@@ -8,8 +8,15 @@ import type { DataType } from './field'
 import type { Knex } from 'knex'
 import type { Schema } from 'zod'
 
-export class Column {
+interface BaseColumn {
+  dataType: DataType
+  schema: z.Schema
+  toColumnBuilder: (t: Knex.TableBuilder) => Knex.ColumnBuilder
+}
+
+export class Column implements BaseColumn {
   field
+  dataType
   config
 
   readonly name: string
@@ -24,6 +31,7 @@ export class Column {
     this.name = name
     this.config = parser.data
     this.field = Field.create(config.field).withOptions(this.config.options)
+    this.dataType = this.field.dataType
   }
 
   get schema() {
@@ -33,19 +41,17 @@ export class Column {
       [this.name]: this.field.schema
     }).partial()
 
-    if (this.config.isRequired) s = s.required()
+    if (this.config.required) s = s.required()
 
     return s
   }
 
   toColumnBuilder(t: Knex.TableBuilder) {
-    const field = this.field
-
-    return t[field.dataType](this.name)
+    return t[this.dataType](this.name)
   }
 }
 
-export class CustomColumn<S extends Schema = Schema> {
+export class CustomColumn<S extends Schema = Schema> implements BaseColumn {
   name?: string
 
   constructor(public schema: S, public dataType: DataType) {
@@ -60,7 +66,7 @@ export class CustomColumn<S extends Schema = Schema> {
   }
 }
 
-export function custom<S extends Schema, D extends DataType>(schema: S, dataType: D) {
+export function column<S extends Schema, D extends DataType>(schema: S, dataType: D) {
   return new CustomColumn<S>(schema, dataType)
 }
 

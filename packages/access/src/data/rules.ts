@@ -33,7 +33,6 @@ export const rules = {
   'app:dataset:column:get': ['appId', 'datasetId', 'columnName'],
   'app:dataset:column:update': ['appId', 'datasetId', 'columnName'],
   'app:dataset:column:delete': ['appId', 'datasetId', 'columnName'],
-  'app:dataset:column:reset': ['appId', 'datasetId', 'columnName'],
   'app:dataset:view:get': ['appId', 'datasetId', 'viewId'],
   'app:dataset:view:update': ['appId', 'datasetId', 'viewId'],
   'app:dataset:view:delete': ['appId', 'datasetId', 'viewId'],

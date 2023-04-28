@@ -15,7 +15,7 @@ export default Field
   .useSchema(
     (opts) => {
       let s
-      s = z.string().refine((v) => !isNaN(Date.parse(v)), { message: 'Invalid date' })
+      s = z.string().datetime()
 
       if (opts?.dynamicDefault === 'now') s = s.default(() => new Date().toISOString())
 

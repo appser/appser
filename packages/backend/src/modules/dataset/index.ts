@@ -4,7 +4,6 @@ import { Module } from 'backend/server/module'
 import { addColumn } from './column.add'
 import { deleteColumn } from './column.delete'
 import { getColumn } from './column.get'
-import { resetColumn } from './column.reset'
 import { updateColumn } from './column.update'
 import { getDataset } from './get'
 import { deleteRecord } from './record.delete'
@@ -43,11 +42,6 @@ export default new Module(({ get, post, del, patch, put }) => {
   patch('/datasets/:datasetId/columns/:columnName').access(getDataset, getColumn, updateColumn).openapi({
     tags: 'dataset',
     operationId: 'updateColumn'
-  })
-
-  put('/datasets/:datasetId/columns/:columnName').access(getDataset, getColumn, resetColumn).openapi({
-    tags: 'dataset',
-    operationId: 'resetColumn'
   })
 
   /** view */

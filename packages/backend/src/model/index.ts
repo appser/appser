@@ -40,7 +40,7 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
     this.init()
   }
 
-  static define<T extends string, C extends Columns = Columns>(tableName: T, column: C) {
+  static define<T extends string, C extends Columns>(tableName: T, column: C) {
     const model = new Model<T, C>(column).connect({ table: tableName })
 
     Object.assign(Model.store, { [tableName]: model })
@@ -155,7 +155,7 @@ export class Model<T = unknown, C extends Columns = Columns> extends EventEmitte
 }
 
 type ResolveModelSchema<T extends Columns> = ZodObject<{
-  [K in keyof T]-?: T[K] extends { field: infer F extends keyof typeof fields; isRequired?: infer R; schema?: infer S }
+  [K in keyof T]-?: T[K] extends { field: infer F extends keyof typeof fields; required?: infer R; schema?: infer S }
     ? R extends true
       ? S extends ZodSchema ? S : ResolveFieldSchema<typeof fields[F]['schema']>
       : ZodOptional<S extends ZodSchema ? S : ResolveFieldSchema<typeof fields[F]['schema']>>

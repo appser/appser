@@ -1,12 +1,12 @@
 import db from 'backend/db'
 import { Dataset } from 'backend/models/dataset'
-import { safeDatasetSchema } from 'backend/models/dataset/dataset.schema'
 import { viewColumnSchema } from 'backend/models/dataset/view.column.schema'
 import { viewSchema } from 'backend/models/dataset/view.schema'
 import { Controller } from 'backend/server/controller'
 import merge from 'lodash/merge'
 
 import { datasetError } from './dataset.error'
+import { validateViewColumns } from './utils/validateViewColumns'
 
 export const updateView = new Controller(
   async (ctx, next) => {
@@ -29,13 +29,13 @@ export const updateView = new Controller(
       columns,
       stickyColumn
     })
-    const parser = safeDatasetSchema.safeParse(Object.assign({}, dataset, { views: [freshView] }))
+    const validated = validateViewColumns(freshView, Object.keys(dataset.record))
 
-    if (!parser.success) return ctx.throw(datasetError('invalidView', parser.error.formErrors))
+    if (!validated) return ctx.throw(datasetError('invalidView'))
 
     await Dataset.query
       .where({ id: datasetId, appId })
-      .update('views', db.jsonSet('views', `$.${viewIndex}`, JSON.stringify(parser.data.views[0])))
+      .update('views', db.jsonSet('views', `$.${viewIndex}`, JSON.stringify(freshView)))
 
     ctx.status = 204
 

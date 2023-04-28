@@ -1,6 +1,6 @@
 import { Record } from 'backend/models/record'
 import { Controller } from 'backend/server/controller'
-import jsonSchema from 'backend/utils/json.schema'
+import jsonSchema from 'backend/utils/jsonSchema'
 import { rNumId } from 'backend/utils/regex'
 import { merge } from 'lodash'
 import { z } from 'zod'
