@@ -2,6 +2,7 @@ import EventEmitter from 'node:events'
 
 import { createLogger } from 'backend/logger'
 import { modelError } from 'backend/model/model.error'
+import { cloneDeep } from 'lodash'
 import { z } from 'zod'
 
 import type { Knex } from 'knex'
@@ -28,15 +29,16 @@ interface Config<S, O extends Schema> {
   optionSchema?: O
 }
 
-export class Field< S extends Schema, O extends Schema> extends EventEmitter {
-  static store: { [T in string]?: any } = {}
+export class Field<S extends Schema, O extends Schema> extends EventEmitter {
+  static store: { [T in string]?: Field<any, any> } = {}
 
   options?: z.infer<O>
-  #config
+
+  config
 
   constructor(config: Config< S, O>) {
     super()
-    this.#config = config
+    this.config = config
   }
 
   static define<T extends string, D extends DataType>(type: T, dataType: D) {
@@ -51,56 +53,56 @@ export class Field< S extends Schema, O extends Schema> extends EventEmitter {
     return field
   }
 
-  static create(type: string): Field<any, any> {
+  static create(type: string) {
     const field = this.store[type]
 
     if (!field) {
       throw new Error(`Field type '${type}' not stored, define it first.`)
     }
 
-    return Object.create(Object.getPrototypeOf(field))
+    return cloneDeep(field)
   }
 
   get type() {
-    return this.#config.type
+    return this.config.type
   }
 
   get dataType() {
-    return this.#config.dataType
+    return this.config.dataType
   }
 
   get schema() {
-    const { schema } = this.#config
+    const { schema } = this.config
 
     if (!schema) throw new Error('Schema not defined')
 
-    return typeof schema === 'function' ? schema(this.options = {}) : schema
+    return typeof schema === 'function' ? schema(this.options) : schema
   }
 
   get optionSchema() {
-    return this.#config.optionSchema ?? z.never()
+    return this.config.optionSchema ?? z.undefined()
   }
 
   useOptionSchema<_O extends O>(schema: _O) {
-    this.#config.optionSchema = schema
+    this.config.optionSchema = schema
 
     return this as unknown as Field<S, _O>
   }
 
   useSchema<_S extends S>(schema: _S | ((o: z.infer<O>) => _S)) {
-    this.#config.schema = schema
+    this.config.schema = schema
 
     return this as unknown as Field<_S, O>
   }
 
   withOptions(opt: unknown = {}) {
-    const parser = this.#config.optionSchema?.safeParse(opt)
+    const parser = this.config.optionSchema?.safeParse(opt)
 
     if (parser && !parser.success) {
       throw modelError('invalidFieldOptions')
     }
 
-    this.options = parser?.data
+    this.options = parser?.data ?? opt
 
     return this
   }

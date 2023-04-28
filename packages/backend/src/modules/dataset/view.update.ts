@@ -1,6 +1,5 @@
 import db from 'backend/db'
 import { Dataset } from 'backend/models/dataset'
-import { viewColumnSchema } from 'backend/models/dataset/view.column.schema'
 import { viewSchema } from 'backend/models/dataset/view.schema'
 import { Controller } from 'backend/server/controller'
 import merge from 'lodash/merge'
@@ -48,9 +47,8 @@ export const updateView = new Controller(
       sorts: true,
       filter: true,
       stickyColumn: true,
+      column: true,
       columns: true
-    }).extend({
-      column: viewColumnSchema
     }).deepPartial(),
     response: {
       204: null

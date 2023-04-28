@@ -22,7 +22,7 @@ export const getViewRecord = new Controller(
 
     const selects = Object.keys(view.column).filter(column => view.column[column].selected)
     // TODO: bugfix selects
-    const record = await Record.query.select(selects).where({
+    const record = await Record.query.select().where({
       datasetId: dataset.id,
       id: recordId
     }).first()

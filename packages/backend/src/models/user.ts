@@ -1,6 +1,6 @@
 import { roles } from '@appser/access'
 import { Model } from 'backend/model'
-import { column } from 'backend/model/column'
+import { custom } from 'backend/model/column'
 import { z } from 'zod'
 
 import type { Optional } from '@appser/shared'
@@ -29,7 +29,7 @@ export const User = Model.define('user', {
     }
   },
   account: { field: 'account', options: { grantRoleId: roles.system.user.id }, required: true },
-  settings: column(settingsSchema.optional(), 'jsonb'),
+  settings: custom(settingsSchema.optional(), 'jsonb'),
   createdAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true },
   updatedAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true }
 })

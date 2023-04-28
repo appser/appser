@@ -7,8 +7,11 @@ import { merge } from 'lodash'
 import { z } from 'zod'
 
 import { getDatasetById } from './utils/getDatasetById'
+import { pickInsertableColumns } from './utils/pickInsertableColumns'
+import { pickUpdateableColumns } from './utils/pickUpdateableColumns'
 
 import type { TDataset } from 'backend/models/dataset'
+import type { TDatasetColumnConfig, TDatasetRecord } from 'backend/models/dataset/dataset.record.schema'
 
 export const getDataset = new Controller(
   async (ctx, next) => {
@@ -20,13 +23,25 @@ export const getDataset = new Controller(
 
     guard('app:dataset:get', { appId: dataset.appId, datasetId })
 
-    dataset.record = merge(dataset.record, publicRecordColumns)
-    const recordModel = new Model(dataset.record)
+    const defaultRecordConfigs = Object.entries(publicRecordColumns).reduce((acc, [name, config]) => {
+      acc[name] = {
+        ...config,
+        locked: true
+      }
+
+      return acc
+    }, {} as Record<string, TDatasetColumnConfig>)
+
+    dataset.record = merge(dataset.record, defaultRecordConfigs)
 
     Object.assign(ctx.state, {
       getDataset: {
         dataset,
-        recordModel
+        record: {
+          model: new Model<TDatasetRecord>(dataset.record),
+          insertableColumns: pickInsertableColumns(dataset.record),
+          updateableColumns: pickUpdateableColumns(dataset.record)
+        }
       }
     })
 
@@ -54,7 +69,11 @@ declare module 'backend/server/controller' {
   interface State {
     getDataset: {
       dataset: TDataset
-      recordModel: Model
+      record: {
+        model: Model<TDatasetRecord>
+        insertableColumns: Record<string, true>
+        updateableColumns: Record<string, true>
+      }
     }
   }
 }

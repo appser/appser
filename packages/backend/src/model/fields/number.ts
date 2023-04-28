@@ -7,7 +7,7 @@ export default Field
     z.object({
       precision: z.number().int().gte(0).lte(8).default(0),
       allowNegative: z.boolean().default(false)
-    })
+    }).partial()
   )
   .useSchema(
     (opts) => {

@@ -1,21 +1,16 @@
 import flattenObject from 'backend/utils/flattenObject'
-import { merge, pick, set } from 'lodash'
+import { merge, set } from 'lodash'
 
-import { Column, CustomColumn } from './column'
+import { FieldColumn } from './column'
 import { modelError } from './model.error'
 
 import type { Model } from '.'
-import type { SomeColumn } from './column'
 
 export class Validator {
   #model
-  #updateableColumns
-  #insertableColumns
 
   constructor(model: Model) {
     this.#model = model
-    this.#updateableColumns = this.getUpdateableColumns()
-    this.#insertableColumns = this.getInsertableColumns()
   }
 
   parseInsert(data: unknown) {
@@ -31,18 +26,14 @@ export class Validator {
   parseUpdate(data: unknown) {
     if (typeof data === 'object' && data !== null) {
       const { verifiableObject, unverifiableObject } = this.filterQueryData(data)
-      const picked = this.pickColumns(this.#updateableColumns)
       const parser = this.schema
         .deepPartial()
-        .pick(picked)
         .strict()
         .safeParse(verifiableObject)
 
       if (!parser.success) throw modelError('validateFail', parser.error.formErrors)
 
-      const unmergedUnverifiableObject = pick(unverifiableObject, Object.keys(picked))
-
-      return merge(this.fixTopLevelArrayJSONData(parser.data), unmergedUnverifiableObject)
+      return merge(this.fixTopLevelArrayJSONData(parser.data), unverifiableObject)
     } else {
       throw modelError('invalidUpdateType')
     }
@@ -66,8 +57,7 @@ export class Validator {
 
   private parseInsertItem(item: Record<string, unknown>) {
     // parser can remove additional properties and set default value
-    const picked = this.pickColumns(this.#insertableColumns)
-    const parser = this.schema.pick(picked).strict().safeParse(item)
+    const parser = this.schema.safeParse(item)
 
     if (!parser.success) throw modelError('validateFail', parser.error.formErrors)
 
@@ -83,7 +73,7 @@ export class Validator {
 
     Object.entries(record).forEach(([name, value]) => {
       const column = this.#model.columns[name]
-      const field = (column instanceof Column) && column.field
+      const field = (column instanceof FieldColumn) && column.field
 
       // TODO: fix using alias select like `select('id as user_id')`
       field && field.emit('response', value as any, field.options)
@@ -97,7 +87,7 @@ export class Validator {
   // https://github.com/knex/knex/issues/5430
   private fixTopLevelArrayJSONData(data: Record<string, unknown>) {
     Object.entries(this.#model.columns).forEach(([name, column]) => {
-      const dataType = column instanceof Column ? column.field.dataType : column.dataType
+      const dataType = column instanceof FieldColumn ? column.field.dataType : column.dataType
 
       if (dataType === 'jsonb' && Array.isArray(data[name])) {
         data[name] = JSON.stringify(data[name])
@@ -127,37 +117,5 @@ export class Validator {
       verifiableObject: {} as Record<string, unknown>,
       unverifiableObject: {} as Record<string, unknown>
     })
-  }
-
-  private pickColumns(data: Record<string, SomeColumn>) {
-    return Object.keys(data).reduce((acc, columnName) => {
-      acc[columnName] = true
-
-      return acc
-    }, {} as Record<string, true>)
-  }
-
-  private getInsertableColumns() {
-    return Object
-      .entries(this.#model.columns)
-      .reduce((acc, [name, column]) => {
-        if (column instanceof CustomColumn || !column.config.deletedAt) {
-          acc[name] = column
-        }
-
-        return acc
-      }, {} as Record<string, SomeColumn>)
-  }
-
-  private getUpdateableColumns() {
-    return Object
-      .entries(this.#model.columns)
-      .reduce((acc, [name, column]) => {
-        if (column instanceof CustomColumn || (!column.config.locked && !column.config.deletedAt)) {
-          acc[name] = column
-        }
-
-        return acc
-      }, {} as Record<string, SomeColumn>)
   }
 }

@@ -1,17 +1,12 @@
 import { viewSchema } from 'backend/models/dataset/view.schema'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
-import difference from 'lodash/difference'
-import merge from 'lodash/merge'
 import { z } from 'zod'
 
 import { getViewFromDatasetById } from './utils/getViewFromDatasetById'
 
 import type { TView } from 'backend/models/dataset/view.schema'
 
-/**
- * When add a new column to the dataset, the view should be updated to include the new column.
- */
 export const getView = new Controller(
   async (ctx, next) => {
     const {
@@ -25,12 +20,14 @@ export const getView = new Controller(
 
     const { view, viewIndex } = getViewFromDatasetById(viewId, dataset)
 
-    // fill all the missing column in the dataset
-    view.column = merge(dataset.column, view.column)
-    // fill view.columns
-    const differenceColumns = difference(Object.keys(view.column), view.columns)
-
-    if (differenceColumns.length > 0) view.columns.push(...differenceColumns)
+    // fill all the missing column
+    Object.entries(dataset.record).forEach(([name, config]) => {
+      view.column[name] = {
+        selected: false,
+        ...config
+      }
+      view.columns.includes(name) || view.columns.push(name)
+    })
 
     Object.assign(ctx.state, {
       getDatasetView: {

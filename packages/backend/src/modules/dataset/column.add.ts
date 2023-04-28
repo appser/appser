@@ -1,5 +1,5 @@
 import db from 'backend/db'
-import { Column } from 'backend/model/column'
+import { FieldColumn } from 'backend/model/column'
 import { publicFieldTypes } from 'backend/model/fields'
 import { Dataset } from 'backend/models/dataset'
 import { Controller } from 'backend/server/controller'
@@ -20,7 +20,7 @@ export const addColumn = new Controller(
     guard('app:dataset:column:add', { appId, datasetId })
 
     const name = nanoid(8)
-    const column = new Column(name, {
+    const column = new FieldColumn(name, {
       field: field as any,
       title,
       options

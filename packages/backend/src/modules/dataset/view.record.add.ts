@@ -11,7 +11,7 @@ export const addViewRecord = new Controller(
     const {
       access: { guard },
       auth: { currentUser },
-      getDataset: { dataset, recordModel },
+      getDataset: { dataset, record: { model, insertableColumns } },
       getDatasetView: { view }
     } = ctx.state
     const { appId, id: datasetId } = dataset
@@ -20,7 +20,7 @@ export const addViewRecord = new Controller(
 
     guard('app:dataset:view:record:add', { appId, datasetId, viewId })
 
-    const parser = recordModel.schema.safeParse(data)
+    const parser = model.schema.pick(insertableColumns).strict().safeParse(data)
 
     if (!parser.success) return ctx.throw(datasetError('invalidRecord'))
 

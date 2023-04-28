@@ -12,7 +12,7 @@ export const updateViewRecord = new Controller(
     const {
       auth: { currentUser },
       access: { guard },
-      getDataset: { dataset, recordModel },
+      getDataset: { dataset, record: { model, updateableColumns } },
       getDatasetView: { view },
       getDatasetRecord: { record }
     } = ctx.state
@@ -23,10 +23,11 @@ export const updateViewRecord = new Controller(
 
     guard('app:dataset:view:record:column:update', { appId, datasetId, viewId, recordId, columnName: '*' })
 
-    const parser = recordModel.schema.safeParse(data)
+    const parser = model.schema.pick(updateableColumns).strict().safeParse(data)
 
     if (!parser.success) return ctx.throw(datasetError('invalidRecord'))
-    const extra = merge({}, parser.data, record.extra)
+
+    const extra = merge(parser.data, record.extra)
 
     await Record.query
       .where('id', recordId)

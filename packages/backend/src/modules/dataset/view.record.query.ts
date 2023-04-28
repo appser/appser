@@ -1,6 +1,7 @@
 import db from 'backend/db'
 import { filterSchema } from 'backend/models/dataset/view.filter.schema'
 import { viewSchema } from 'backend/models/dataset/view.schema'
+import { Record } from 'backend/models/record'
 import { Controller } from 'backend/server/controller'
 import { z } from 'zod'
 
@@ -11,7 +12,7 @@ export const queryRecord = new Controller(
   async (ctx, next) => {
     const {
       access: { guard },
-      getDataset: { dataset, recordModel: model },
+      getDataset: { dataset, record: { model } },
       getDatasetView: { view },
       formula: { userFormula }
     } = ctx.state
@@ -26,14 +27,13 @@ export const queryRecord = new Controller(
     if (selects && selects.some(s => !viewSelects.includes(s))) ctx.throw(datasetError('selectOutsideColumn'))
 
     // TODO: bugfix
-    const records = await db(dataset.id)
-      .model(model)
-      .limit(pageSize)
-      .offset(cursor)
-      .select([...new Set(['id', ...selects ?? viewSelects])]) // always select `id` column
+    const records = await Record.query
+      // .select([...new Set(['id', ...selects ?? viewSelects])]) // always select `id` column
       .filter(userFormula.parse(filter))
       .filter(userFormula.parse(view.filter))
       .sort(sorts ?? view.sorts)
+      .limit(pageSize)
+      .offset(cursor)
 
     ctx.body = {
       records,

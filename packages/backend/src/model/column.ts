@@ -1,10 +1,16 @@
+/**
+ * There are two methods to define column:
+ * 1. FieldColumn: a column that is defined by a field
+ * 2. CustomColumn: a column that is defined by a custom column builder
+ */
 import { modelError } from 'backend/model/model.error'
 import { z } from 'zod'
 
 import { Field } from './field'
-import { columnConfigSchema } from './schemas/column.config.schema'
+import { fieldColumnConfigSchema } from './schemas/column.config.schema'
 
 import type { DataType } from './field'
+import type { TFieldColumnConfig } from './schemas/column.config.schema'
 import type { Knex } from 'knex'
 import type { Schema } from 'zod'
 
@@ -14,22 +20,24 @@ interface BaseColumn {
   toColumnBuilder: (t: Knex.TableBuilder) => Knex.ColumnBuilder
 }
 
-export class Column implements BaseColumn {
+export class FieldColumn<C extends TFieldColumnConfig = TFieldColumnConfig> implements BaseColumn {
   field
   dataType
   config
 
   readonly name: string
 
-  constructor(name: string, config: z.infer<typeof columnConfigSchema>) {
-    const parser = columnConfigSchema.safeParse(config)
+  constructor(name: string, config: C) {
+    const parser = fieldColumnConfigSchema.safeParse(config)
 
     if (!parser.success) {
+      console.log(parser.error.formErrors, config)
+
       throw modelError('invalidColumnConfig', parser.error.formErrors)
     }
 
     this.name = name
-    this.config = parser.data
+    this.config = parser.data as C
     this.field = Field.create(config.field).withOptions(this.config.options)
     this.dataType = this.field.dataType
   }
@@ -53,8 +61,10 @@ export class Column implements BaseColumn {
 
 export class CustomColumn<S extends Schema = Schema> implements BaseColumn {
   name?: string
+  schema
+  dataType
 
-  constructor(public schema: S, public dataType: DataType) {
+  constructor(schema: S, dataType: DataType) {
     this.schema = schema
     this.dataType = dataType
   }
@@ -66,8 +76,8 @@ export class CustomColumn<S extends Schema = Schema> implements BaseColumn {
   }
 }
 
-export function column<S extends Schema, D extends DataType>(schema: S, dataType: D) {
+export function custom<S extends Schema, D extends DataType>(schema: S, dataType: D) {
   return new CustomColumn<S>(schema, dataType)
 }
 
-export type SomeColumn = Column | CustomColumn
+export type TSomeColumn = FieldColumn | CustomColumn
