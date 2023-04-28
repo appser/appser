@@ -22,9 +22,6 @@ export const AppserUIProvider: FC<AppserUIProviderProps> = ({ children, toggleCo
         withNormalizeCSS
       >
         {children}
-        {/* <ModalsProvider modals={modals}>
-            <Notifications position='top-center' zIndex={2077} />
-          </ModalsProvider> */}
       </MantineProvider>
     </ColorSchemeProvider>
   )

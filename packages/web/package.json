@@ -29,12 +29,6 @@
   },
   "devDependencies": {
     "@appser/appser-js": "workspace:0.0.1",
-    "@emotion/react": "^11.10.5",
-    "@mantine/core": "^6.0.4",
-    "@mantine/form": "^6.0.4",
-    "@mantine/hooks": "^6.0.4",
-    "@mantine/modals": "^6.0.4",
-    "@mantine/notifications": "^6.0.4",
     "@tanstack/react-query": "^4.20.9",
     "@types/debug": "^4.1.7",
     "@types/lodash": "^4.14.191",
