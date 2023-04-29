@@ -11,7 +11,7 @@ export const addViewRecord = new Controller(
     const {
       access: { guard },
       auth: { currentUser },
-      getDataset: { dataset, record: { model, insertableColumns } },
+      getDataset: { dataset, column: { model, insertableColumns } },
       getDatasetView: { view }
     } = ctx.state
     const { appId, id: datasetId } = dataset

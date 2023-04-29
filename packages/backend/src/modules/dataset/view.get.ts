@@ -21,7 +21,7 @@ export const getView = new Controller(
     const { view, viewIndex } = getViewFromDatasetById(viewId, dataset)
 
     // fill all the missing column
-    Object.entries(dataset.record).forEach(([name, config]) => {
+    Object.entries(dataset.column).forEach(([name, config]) => {
       view.column[name] = {
         selected: false,
         ...config

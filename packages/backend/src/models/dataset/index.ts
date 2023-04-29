@@ -1,7 +1,7 @@
 import { Model } from 'backend/model'
 import { custom } from 'backend/model/column'
 
-import { datasetRecordSchema } from './dataset.record.schema'
+import { datasetRecordSchema } from './dataset.column.schema'
 import { renderDefaultView, viewSchema } from './view.schema'
 
 import type { Optional } from '@appser/shared'
@@ -12,7 +12,7 @@ export const Dataset = Model.define('dataset', {
   id: { field: 'numId', options: { dynamicDefault: 'snowflakeId' }, required: true },
   appId: { field: 'numId', required: true },
   name: { field: 'simpleText' },
-  record: custom(datasetRecordSchema, 'jsonb'),
+  column: custom(datasetRecordSchema, 'jsonb'),
   views: custom(viewSchema.array().default(() => [renderDefaultView()]), 'jsonb'),
   createdAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true },
   updatedAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true }
@@ -23,6 +23,6 @@ export type TDataset = z.infer<typeof Dataset.schema>
 
 declare module 'backend/model' {
   interface Models {
-    dataset: Knex.CompositeTableType<TDataset, Optional<TDataset, 'id' | 'record' | 'views' | 'createdAt' | 'updatedAt'>>
+    dataset: Knex.CompositeTableType<TDataset, Optional<TDataset, 'id' | 'column' | 'views' | 'createdAt' | 'updatedAt'>>
   }
 }

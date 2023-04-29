@@ -11,7 +11,8 @@ import { pickInsertableColumns } from './utils/pickInsertableColumns'
 import { pickUpdateableColumns } from './utils/pickUpdateableColumns'
 
 import type { TDataset } from 'backend/models/dataset'
-import type { TDatasetColumnConfig, TDatasetRecord } from 'backend/models/dataset/dataset.record.schema'
+import type { TDatasetColumnConfig, TDatasetRecord } from 'backend/models/dataset/dataset.column.schema'
+import type { State } from 'backend/server/controller'
 
 export const getDataset = new Controller(
   async (ctx, next) => {
@@ -32,15 +33,15 @@ export const getDataset = new Controller(
       return acc
     }, {} as Record<string, TDatasetColumnConfig>)
 
-    dataset.record = merge(dataset.record, defaultRecordConfigs)
+    dataset.column = merge(dataset.column, defaultRecordConfigs)
 
     Object.assign(ctx.state, {
       getDataset: {
         dataset,
-        record: {
-          model: new Model<TDatasetRecord>(dataset.record),
-          insertableColumns: pickInsertableColumns(dataset.record),
-          updateableColumns: pickUpdateableColumns(dataset.record)
+        column: {
+          model: new Model<TDatasetRecord>(dataset.column),
+          insertableColumns: pickInsertableColumns(dataset.column),
+          updateableColumns: pickUpdateableColumns(dataset.column)
         }
       }
     })
@@ -69,7 +70,7 @@ declare module 'backend/server/controller' {
   interface State {
     getDataset: {
       dataset: TDataset
-      record: {
+      column: {
         model: Model<TDatasetRecord>
         insertableColumns: Record<string, true>
         updateableColumns: Record<string, true>

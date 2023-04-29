@@ -12,7 +12,7 @@ export const updateViewRecord = new Controller(
     const {
       auth: { currentUser },
       access: { guard },
-      getDataset: { dataset, record: { model, updateableColumns } },
+      getDataset: { dataset, column: { model, updateableColumns } },
       getDatasetView: { view },
       getDatasetRecord: { record }
     } = ctx.state

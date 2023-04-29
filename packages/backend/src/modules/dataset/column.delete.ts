@@ -23,13 +23,13 @@ export const deleteColumn = new Controller(
 
     if (column.config.locked) return ctx.throw(datasetError('columnIsLocked'))
 
-    dataset.record[name].deletedAt = new Date().toISOString()
+    dataset.column[name].deletedAt = new Date().toISOString()
     dataset.views.forEach(view => cleanColumnFromView(name, view))
 
     await Dataset.query
       .where({ id: datasetId })
       .update({
-        record: dataset.record,
+        column: dataset.column,
         views: dataset.views
       })
 

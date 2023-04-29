@@ -4,7 +4,7 @@ import { z } from 'zod'
 export const datasetColumnConfigSchema = publicFieldColumnConfigSchema.and(z.object({
   title: z.string().max(255).trim(),
   /**
-   * When set to true, the column can only be updated its title
+   * Shared to client, the server does not care about this
    */
   locked: z.boolean(),
   deletedAt: z.string()

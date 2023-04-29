@@ -12,7 +12,7 @@ export const queryRecord = new Controller(
   async (ctx, next) => {
     const {
       access: { guard },
-      getDataset: { dataset, record: { model } },
+      getDataset: { dataset, column: { model } },
       getDatasetView: { view },
       formula: { userFormula }
     } = ctx.state

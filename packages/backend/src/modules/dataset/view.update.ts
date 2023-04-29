@@ -28,7 +28,7 @@ export const updateView = new Controller(
       columns,
       stickyColumn
     })
-    const validated = validateViewColumns(freshView, Object.keys(dataset.record))
+    const validated = validateViewColumns(freshView, Object.keys(dataset.column))
 
     if (!validated) return ctx.throw(datasetError('invalidView'))
 

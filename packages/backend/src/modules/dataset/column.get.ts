@@ -8,7 +8,7 @@ export const getColumn = new Controller(
   async (ctx, next) => {
     const {
       access: { guard },
-      getDataset: { record, dataset }
+      getDataset: { column: record, dataset }
     } = ctx.state
     const { appId, id: datasetId } = dataset
     const { columnName } = ctx.params

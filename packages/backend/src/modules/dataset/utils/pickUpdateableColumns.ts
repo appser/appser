@@ -1,4 +1,4 @@
-import type { TDatasetColumnConfig } from 'backend/models/dataset/dataset.record.schema'
+import type { TDatasetColumnConfig } from 'backend/models/dataset/dataset.column.schema'
 
 export function pickUpdateableColumns(datasetRecord: Record<string, TDatasetColumnConfig>) {
   return Object
