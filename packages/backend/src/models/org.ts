@@ -1,30 +1,18 @@
-import { Model } from 'backend/model'
+import { Model, column } from 'backend/model'
+import { genSnowflakeId } from 'backend/vendors/snowflakeId'
+import { z } from 'zod'
 
 import type { Optional } from '@appser/shared'
 import type { Knex } from 'knex'
-import type { z } from 'zod'
 
 export const Org = Model.define('org', {
-  id: {
-    field: 'numId',
-    options: { dynamicDefault: 'snowflakeId' },
-    required: true
-  },
-  name: { field: 'simpleText', required: true },
-  image: { field: 'url' },
-  creatorId: { field: 'numId', required: true },
-  createdAt: {
-    field: 'date',
-    options: { dynamicDefault: 'now' },
-    required: true
-  },
-  updatedAt: {
-    field: 'date',
-    options: { dynamicDefault: 'now' },
-    required: true
-  }
+  id: column('bigint', z.string().default(() => genSnowflakeId().toString())).primary(),
+  name: column('text', z.string().trim()),
+  image: column('text', z.string().url().optional()),
+  creatorId: column('bigint', z.string()).relation('user', 'id', ['name', 'id']),
+  createdAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString())),
+  updatedAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString()))
 })
-  .primary('id')
 
 export type TOrg = z.infer<typeof Org.schema>
 

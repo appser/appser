@@ -1,5 +1,5 @@
 import { HttpStatusCode } from '@appser/shared'
-import { Record } from 'backend/models/record'
+import { Record } from 'backend/models/Record'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'

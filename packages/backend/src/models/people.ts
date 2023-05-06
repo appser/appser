@@ -1,28 +1,28 @@
 import { Model } from 'backend/model'
+import { column } from 'backend/model/column'
+import { rNumId } from 'backend/utils/regex'
+import { z } from 'zod'
 
-import type { Optional, ValuesType } from '@appser/shared'
+import type { Optional } from '@appser/shared'
 import type { Knex } from 'knex'
-import type { z } from 'zod'
 
-export const PersonStatus = {
-  PENDING: 'pending',
-  ACTIVE: 'active',
-  FAILED: 'failed'
-} as const
-
-export const personStatus = Object.values(PersonStatus) as [ValuesType<typeof PersonStatus>, ...ValuesType<typeof PersonStatus>[]]
+export enum PersonStatus {
+  PENDING = 0,
+  ACTIVE = 1,
+  FAILED = 2
+}
 
 export const People = Model.define('people', {
-  userId: { field: 'numId', required: true },
-  orgId: { field: 'numId', required: true },
-  appId: { field: 'numId', required: true },
-  roleId: { field: 'numId', required: true },
-  status: { field: 'simpleText', required: true },
-  inviterId: { field: 'numId' },
-  invitedAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true },
-  joinedAt: { field: 'date', required: true },
-  failedAt: { field: 'date' },
-  failedReason: { field: 'simpleText' }
+  userId: column('bigint', z.string().regex(rNumId)),
+  orgId: column('bigint', z.string().regex(rNumId)),
+  appId: column('bigint', z.string().regex(rNumId)),
+  roleId: column('bigint', z.string().regex(rNumId)),
+  status: column('smallint', z.number().int().gte(0).lte(2)),
+  inviterId: column('bigint', z.string().regex(rNumId).optional()),
+  invitedAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString())),
+  joinedAt: column('timestamp', z.string().datetime().optional()),
+  failedAt: column('timestamp', z.string().datetime().optional()),
+  failedReason: column('text', z.string().optional())
 })
   .primary(['userId', 'orgId', 'appId'])
 

@@ -1,3 +1,3 @@
 import './knex.filter'
-import './knex.model'
+import '../../model/knex.model'
 import './knex.sort'

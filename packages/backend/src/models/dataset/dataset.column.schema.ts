@@ -1,4 +1,4 @@
-import { publicFieldColumnConfigSchema } from 'backend/model/schemas/column.config.schema'
+import { publicFieldColumnConfigSchema } from 'backend/modules/dataset/helpers/model/schemas/column.config.schema'
 import { z } from 'zod'
 
 export const datasetColumnConfigSchema = publicFieldColumnConfigSchema.and(z.object({

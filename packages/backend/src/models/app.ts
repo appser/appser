@@ -1,19 +1,20 @@
 import { Model } from 'backend/model'
+import { column } from 'backend/model/column'
+import { genSnowflakeId } from 'backend/vendors/snowflakeId'
+import { z } from 'zod'
 
 import type { Optional } from '@appser/shared'
 import type { Knex } from 'knex'
-import type { z } from 'zod'
 
 export const App = Model.define('app', {
-  id: { field: 'numId', options: { dynamicDefault: 'snowflakeId' }, required: true },
-  orgId: { field: 'numId', required: true },
-  name: { field: 'simpleText' },
-  tintColor: { field: 'simpleText', required: true },
-  icon: { field: 'simpleText', required: true },
-  createdAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true },
-  updatedAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true }
+  id: column('bigint', z.string().default(() => genSnowflakeId().toString())).primary(),
+  orgId: column('bigint', z.string()),
+  name: column('text', z.string().optional()),
+  tintColor: column('text', z.string()),
+  icon: column('text', z.string()),
+  createdAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString())),
+  updatedAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString()))
 })
-  .primary('id')
 
 export type TApp = z.infer<typeof App.schema>
 

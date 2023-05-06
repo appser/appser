@@ -1,8 +1,8 @@
 import flattenObject from 'backend/utils/flattenObject'
 import { merge, set } from 'lodash'
-import { fromZodError } from 'zod-validation-error'
 
-import { modelError } from './errors'
+import { FieldColumn } from './column'
+import { modelError } from './model.error'
 
 import type { Model } from '.'
 
@@ -31,7 +31,7 @@ export class Validator {
         .strict()
         .safeParse(verifiableObject)
 
-      if (!parser.success) throw modelError('validateFail', fromZodError(parser.error))
+      if (!parser.success) throw modelError('validateFail', parser.error.formErrors)
 
       return merge(this.fixTopLevelArrayJSONData(parser.data), unverifiableObject)
     } else {
@@ -59,7 +59,7 @@ export class Validator {
     // parser can remove additional properties and set default value
     const parser = this.schema.safeParse(item)
 
-    if (!parser.success) throw modelError('validateFail', fromZodError(parser.error))
+    if (!parser.success) throw modelError('validateFail', parser.error.formErrors)
 
     const ret = parser.data
 
@@ -71,7 +71,13 @@ export class Validator {
       return record
     }
 
-    this.#model.emit('response', record)
+    Object.entries(record).forEach(([name, value]) => {
+      const column = this.#model.columns[name]
+      const field = (column instanceof FieldColumn) && column.field
+
+      // TODO: fix using alias select like `select('id as user_id')`
+      field && field.emit('response', value as any, field.options)
+    })
 
     return record
   }
@@ -81,7 +87,7 @@ export class Validator {
   // https://github.com/knex/knex/issues/5430
   private fixTopLevelArrayJSONData(data: Record<string, unknown>) {
     Object.entries(this.#model.columns).forEach(([name, column]) => {
-      const dataType = column.dataType
+      const dataType = column instanceof FieldColumn ? column.field.dataType : column.dataType
 
       if (dataType === 'jsonb' && Array.isArray(data[name])) {
         data[name] = JSON.stringify(data[name])

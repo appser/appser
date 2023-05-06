@@ -1,4 +1,4 @@
-import { Token } from 'backend/models/token'
+import { Token } from 'backend/models/Token'
 import { Controller } from 'backend/server/controller'
 
 export const revokeToken = new Controller(

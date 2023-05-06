@@ -1,4 +1,4 @@
-import { User } from 'backend/models/user'
+import { User } from 'backend/models/User'
 import { Controller } from 'backend/server/controller'
 
 export const getAccount = new Controller(
@@ -14,6 +14,7 @@ export const getAccount = new Controller(
       avatar: user.avatar,
       settings: user.settings
     }
+    ctx.body = user
 
     return next()
   },

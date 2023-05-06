@@ -1,83 +1,144 @@
-/**
- * There are two methods to define column:
- * 1. FieldColumn: a column that is defined by a field
- * 2. CustomColumn: a column that is defined by a custom column builder
- */
-import { modelError } from 'backend/model/model.error'
-import { z } from 'zod'
+import db from 'backend/db'
+import { createLogger } from 'backend/logger'
+import { Schema, z } from 'zod'
 
-import { Field } from './field'
-import { fieldColumnConfigSchema } from './schemas/column.config.schema'
+import { Path } from './path'
 
-import type { DataType } from './field'
-import type { TFieldColumnConfig } from './schemas/column.config.schema'
+import type { Columns, Models } from 'backend/model'
 import type { Knex } from 'knex'
-import type { Schema } from 'zod'
+import type { ZodNever, ZodObject } from 'zod'
 
-interface BaseColumn {
-  dataType: DataType
-  schema: z.Schema
-  toColumnBuilder: (t: Knex.TableBuilder) => Knex.ColumnBuilder
-}
+type DataType = 'smallint' | 'integer' | 'bigint' | 'decimal' | 'text' | 'boolean' |
+'date' | 'datetime' | 'timestamp' | 'geometry' | 'geography' | 'jsonb'
 
-export class FieldColumn<C extends TFieldColumnConfig = TFieldColumnConfig> implements BaseColumn {
-  field
-  dataType
-  config
+type RelationType = 'oneToOne' | 'oneToMany'
 
-  readonly name: string
-
-  constructor(name: string, config: C) {
-    const parser = fieldColumnConfigSchema.safeParse(config)
-
-    if (!parser.success) {
-      console.log(parser.error.formErrors, config)
-
-      throw modelError('invalidColumnConfig', parser.error.formErrors)
-    }
-
-    this.name = name
-    this.config = parser.data as C
-    this.field = Field.create(config.field).withOptions(this.config.options)
-    this.dataType = this.field.dataType
-  }
-
-  get schema() {
-    let s
-
-    s = z.object({
-      [this.name]: this.field.schema
-    }).partial()
-
-    if (this.config.required) s = s.required()
-
-    return s
-  }
-
-  toColumnBuilder(t: Knex.TableBuilder) {
-    return t[this.dataType](this.name)
+interface Config {
+  index?: Parameters<Knex.ColumnBuilder['index']>
+  primary?: Parameters<Knex.ColumnBuilder['primary']>
+  unique?: Parameters<Knex.ColumnBuilder['unique']>
+  relation?: {
+    type: RelationType
+    table: string
+    referenceKey: unknown
+    selects: unknown
   }
 }
 
-export class CustomColumn<S extends Schema = Schema> implements BaseColumn {
+const log = createLogger('model:column')
+
+export class Column<S extends Schema = Schema> {
   name?: string
   schema
   dataType
+  config: Config = {}
 
-  constructor(schema: S, dataType: DataType) {
+  constructor(dataType: DataType, schema: S) {
     this.schema = schema
     this.dataType = dataType
   }
 
-  toColumnBuilder(t: Knex.TableBuilder) {
-    if (!this.name) throw new Error('CustomColumn name is required')
+  relation<T extends keyof Models, R extends Columns<T>, S extends Columns<T>[]>(
+    table: T,
+    referenceKey: R,
+    selects: S,
+    type: RelationType = 'oneToOne'
+  ) {
+    this.config.relation = {
+      type,
+      table,
+      referenceKey,
+      selects
+    }
 
-    return t[this.dataType](this.name)
+    return this
+  }
+
+  index(...args: NonNullable<Config['index']>) {
+    this.config.index = args
+
+    return this
+  }
+
+  primary(...args: NonNullable<Config['primary']>) {
+    this.config.primary = args
+
+    return this
+  }
+
+  unique(...args: NonNullable<Config['unique']>) {
+    this.config.unique = args
+
+    return this
+  }
+
+  appendRelationQuery(qb: Knex.QueryBuilder, fromTable: string) {
+    if (!this.name) throw new Error('column name required')
+
+    if (this.config.relation) {
+      const { table, referenceKey, selects, type } = this.config.relation
+
+      log.debug('append relation query:', table, referenceKey, selects, type)
+
+      if (type === 'oneToMany') {
+        qb.select(
+          db.raw('(select json_agg(t) from (select ?? from ?? where ?? = ??) t) as ??', [
+            selects,
+            table,
+            referenceKey,
+            `${fromTable}.${this.name}`,
+            this.name
+          ])
+        )
+      }
+
+      if (type === 'oneToOne') {
+        qb.select(
+          db.raw('(select json_agg(t)->0 from (select ?? from ?? where ?? = ?? limit ?) t) as ??', [
+            selects,
+            table,
+            referenceKey,
+            `${fromTable}.${this.name}`,
+            1,
+            this.name
+          ])
+        )
+      }
+    }
+  }
+
+  buildTableBuilder(t: Knex.TableBuilder) {
+    if (!this.name) throw new Error('Column name is required')
+
+    const _t = t[this.dataType](this.name)
+
+    if (this.config.index) _t.index(...this.config.index)
+    if (this.config.primary) _t.primary(...this.config.primary)
+    if (this.config.unique) _t.unique(...this.config.unique)
+
+    return _t
   }
 }
 
-export function custom<S extends Schema, D extends DataType>(schema: S, dataType: D) {
-  return new CustomColumn<S>(schema, dataType)
+export function column<S extends ColumnType>(dataType: DataType, schema: S) {
+  const _schema: Schema = schema instanceof Schema
+    ? schema
+    : Object.entries(schema).reduce((acc, [name, subSchema]) => {
+      return acc.extend({
+        [name]: subSchema instanceof Path ? subSchema.schema : subSchema
+      })
+    }, z.object({}))
+
+  // @ts-expect-error TODO: fix type error
+  return new Column<ResolveColumnSchema<S>>(dataType, _schema)
 }
 
-export type TSomeColumn = FieldColumn | CustomColumn
+type ColumnType = Schema | Record<string, Schema | Path>
+
+type ResolveColumnSchema<T extends ColumnType> = T extends Schema
+  ? T
+  : T extends Record<string, infer S>
+    ? ZodObject<{
+      [K in keyof T]-?: T[K] extends Schema ? T[K] : T[K] extends Path ? T[K]['schema'] : ZodNever
+    }>
+    : ZodNever

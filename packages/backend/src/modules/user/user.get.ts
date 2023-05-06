@@ -1,11 +1,11 @@
-import { User } from 'backend/models/user'
+import { User } from 'backend/models/User'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
 import { getUserById } from './utils/getUserById'
 
-import type { TUser } from 'backend/models/user'
+import type { TUser } from 'backend/models/User'
 
 export const getUser = new Controller(
   async (ctx, next) => {

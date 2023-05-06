@@ -1,11 +1,11 @@
 import db from 'backend/db'
-import { Token } from 'backend/models/token'
+import { Token } from 'backend/models/Token'
 import { authError } from 'backend/modules/auth/auth.error'
 import { parseAccessToken } from 'backend/modules/auth/utils/accessToken'
 
 import { getAccessToken } from '../utils/getAccessToken'
 
-import type { TUser } from 'backend/models/user'
+import type { TUser } from 'backend/models/User'
 import type { Payload } from 'backend/modules/auth/utils/accessToken'
 import type { Middleware } from 'koa'
 

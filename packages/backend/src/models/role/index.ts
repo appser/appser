@@ -1,24 +1,24 @@
 import { Model } from 'backend/model'
-import { custom } from 'backend/model/column'
+import { column } from 'backend/model/column'
+import { genSnowflakeId } from 'backend/vendors/snowflakeId'
+import { z } from 'zod'
 
 import { policySchema } from './policy.schema'
 
 import type { Optional } from '@appser/shared'
 import type { Knex } from 'knex'
-import type { z } from 'zod'
 
 export const Role = Model.define('role', {
-  id: { field: 'numId', options: { dynamicDefault: 'snowflakeId' }, required: true },
-  name: { field: 'simpleText', required: true },
-  description: { field: 'simpleText' },
-  policies: custom(policySchema.array(), 'jsonb'),
-  creatorId: { field: 'numId' },
-  orgId: { field: 'numId' },
-  appId: { field: 'numId' },
-  createdAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true },
-  updatedAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true }
+  id: column('bigint', z.string().default(() => genSnowflakeId().toString())).primary(),
+  name: column('text', z.string()),
+  description: column('text', z.string().optional()),
+  policies: column('jsonb', policySchema.array()),
+  creatorId: column('bigint', z.string().optional()),
+  orgId: column('bigint', z.string().optional()),
+  appId: column('bigint', z.string().optional()),
+  createdAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString())),
+  updatedAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString()))
 })
-  .primary('id')
 
 export type TRole = z.infer<typeof Role.schema>
 

@@ -1,9 +1,9 @@
 import knex from 'knex'
 import './extend'
 
+import { processResponse } from './helpers/processResponse'
+import { snakeCase } from './helpers/snakeCase'
 import knexfile from './knexfile'
-import { processResponse } from './utils/processResponse'
-import { snakeCase } from './utils/snakeCase'
 
 import type { Tables } from 'knex/types/tables'
 

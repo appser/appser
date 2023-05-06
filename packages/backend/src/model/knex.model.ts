@@ -12,6 +12,8 @@ function handler(this: KnexOriginal.QueryBuilder, _model?: Model) {
       const { insert: insertData, update: updateData } = builder._single
       const method = builder._method
 
+      model.emit('query', builder)
+
       if (method === 'insert' && insertData) {
         builder._single.insert = model.validator.parseInsert(insertData)
       }

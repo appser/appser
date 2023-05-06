@@ -1,4 +1,4 @@
-import { User } from 'backend/models/user'
+import { User } from 'backend/models/User'
 import { signupError } from 'backend/modules/signup/signup.error'
 import { Controller } from 'backend/server/controller'
 import { z } from 'zod'

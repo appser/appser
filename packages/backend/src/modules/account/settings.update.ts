@@ -1,5 +1,5 @@
 import { HttpStatusCode } from '@appser/shared'
-import { User } from 'backend/models/user'
+import { User } from 'backend/models/User'
 import { Controller } from 'backend/server/controller'
 import merge from 'lodash/merge'
 

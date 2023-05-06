@@ -1,5 +1,5 @@
-import { Org } from 'backend/models/org'
-import { User } from 'backend/models/user'
+import { Org } from 'backend/models/Org'
+import { User } from 'backend/models/User'
 import { Controller } from 'backend/server/controller'
 import { getAccessToken } from 'backend/server/utils/getAccessToken'
 import { z } from 'zod'

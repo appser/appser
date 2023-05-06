@@ -3,16 +3,15 @@
  */
 
 import { Model } from 'backend/model'
-
-import type { z } from 'zod'
+import { column } from 'backend/model/column'
+import { z } from 'zod'
 
 export const Token = Model.define('token', {
-  id: { field: 'numId', required: true },
-  audience: { field: 'numId', required: true },
-  isRevoke: { field: 'checkbox', required: true },
-  expiredAt: { field: 'date', required: true }
+  id: column('bigint', z.string()).primary(),
+  audience: column('bigint', z.string()),
+  isRevoke: column('boolean', z.boolean()),
+  updatedAt: column('timestamp', z.string().datetime())
 })
-  .primary('id')
 
 export type TToken = z.infer<typeof Token.schema>
 

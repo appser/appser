@@ -1,15 +1,15 @@
 // TODO: when the role id < SYSTEM_ROLE_MAX_ID, the policies can be combined.
 import Access, { roles } from '@appser/access'
 import db from 'backend/db'
-import { App } from 'backend/models/app'
-import { People, PersonStatus } from 'backend/models/people'
+import { App } from 'backend/models/App'
+import { People, PersonStatus } from 'backend/models/People'
 import { Role } from 'backend/models/role'
 import { authError } from 'backend/modules/auth/auth.error'
 import jsonTemplate from 'backend/utils/jsonTemplate'
 
 import { serverError } from '../server.error'
 
-import type { TPeople } from 'backend/models/people'
+import type { TPeople } from 'backend/models/People'
 import type { TRole } from 'backend/models/role'
 import type { Middleware } from 'koa'
 

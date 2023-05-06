@@ -1,4 +1,4 @@
-import { People, PersonStatus, personStatus } from 'backend/models/people'
+import { People, PersonStatus, personStatus } from 'backend/models/People'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'

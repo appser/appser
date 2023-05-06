@@ -1,21 +1,22 @@
 import { Model } from 'backend/model'
-import { custom } from 'backend/model/column'
+import { column } from 'backend/model/column'
+import { genSnowflakeId } from 'backend/vendors/snowflakeId'
+import { z } from 'zod'
 
 import { datasetRecordSchema } from './dataset.column.schema'
 import { renderDefaultView, viewSchema } from './view.schema'
 
 import type { Optional } from '@appser/shared'
 import type { Knex } from 'knex'
-import type { z } from 'zod'
 
 export const Dataset = Model.define('dataset', {
-  id: { field: 'numId', options: { dynamicDefault: 'snowflakeId' }, required: true },
-  appId: { field: 'numId', required: true },
-  name: { field: 'simpleText' },
-  column: custom(datasetRecordSchema, 'jsonb'),
-  views: custom(viewSchema.array().default(() => [renderDefaultView()]), 'jsonb'),
-  createdAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true },
-  updatedAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true }
+  id: column('bigint', z.string().default(() => genSnowflakeId().toString())).primary(),
+  appId: column('bigint', z.string()),
+  name: column('text', z.string().optional()),
+  // column: column('jsonb', datasetRecordSchema),
+  views: column('jsonb', viewSchema.array().default(() => [renderDefaultView()])),
+  createdAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString())),
+  updatedAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString()))
 })
   .primary(['appId', 'id'])
 

@@ -6,7 +6,7 @@ import { z } from 'zod'
 
 import { getAppById } from './utils/geAppById'
 
-import type { TApp } from 'backend/models/app'
+import type { TApp } from 'backend/models/App'
 
 export const getApp = new Controller(
   async (ctx, next) => {

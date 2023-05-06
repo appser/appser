@@ -1,7 +1,7 @@
 import EventEmitter from 'node:events'
 
 import { createLogger } from 'backend/logger'
-import { modelError } from 'backend/model/model.error'
+import { modelError } from 'backend/model/errors'
 import { cloneDeep } from 'lodash'
 import { z } from 'zod'
 

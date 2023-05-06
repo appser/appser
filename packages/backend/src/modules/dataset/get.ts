@@ -1,6 +1,6 @@
 import { Model } from 'backend/model'
 import { Dataset } from 'backend/models/dataset'
-import { publicRecordColumns } from 'backend/models/record'
+import { publicRecordColumns } from 'backend/models/Record'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
 import { merge } from 'lodash'
