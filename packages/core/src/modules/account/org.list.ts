@@ -1,5 +1,5 @@
 import { roles } from '@appser/access'
-import { People, PersonStatus, personStatus } from 'backend/models/people'
+import { People, PersonStatus } from 'backend/models/people'
 import { Controller } from 'backend/server/controller'
 import { z } from 'zod'
 
@@ -29,7 +29,7 @@ export const listAccountOrg = new Controller(
     response: {
       200: z.object({
         id: z.string(),
-        status: z.enum(personStatus),
+        status: z.number(),
         name: z.string()
       }).array()
     }

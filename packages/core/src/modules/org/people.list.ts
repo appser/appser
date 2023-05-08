@@ -1,5 +1,5 @@
 import { roles } from '@appser/access'
-import { People, PersonStatus, personStatus } from 'backend/models/people'
+import { People, PersonStatus } from 'backend/models/people'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
@@ -64,7 +64,7 @@ export const listOrgPeople = new Controller(
     response: {
       200: z.object({
         orgId: z.string(),
-        status: z.enum(personStatus),
+        status: z.number().int(),
         user: z.object({
           id: z.string(),
           name: z.string(),

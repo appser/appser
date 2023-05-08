@@ -9,7 +9,7 @@ describe('func cleanViewField', () => {
     view = {
       id: '1',
       name: 'View 1',
-      type: 'grid',
+      type: 'sheet',
       field: {
         field1: {
           width: 100,

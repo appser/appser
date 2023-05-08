@@ -3,7 +3,7 @@ import { datasetIconIds, datasetTintColors } from '@appser/common'
 import db from 'backend/db'
 import { App } from 'backend/models/app'
 import { Dataset } from 'backend/models/dataset'
-import { People } from 'backend/models/people'
+import { People, PersonStatus } from 'backend/models/people'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
@@ -48,7 +48,7 @@ export const createOrgApp = new Controller(
           appId: app.id,
           userId: user.id,
           roleId: roles.app.admin.id,
-          status: 'active',
+          status: PersonStatus.ACTIVE,
           inviterId: user.id,
           joinedAt: new Date().toISOString()
         })

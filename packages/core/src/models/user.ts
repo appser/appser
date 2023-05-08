@@ -38,6 +38,8 @@ export type TUser = z.infer<typeof User.schema>
 
 declare module 'backend/model' {
   interface Models {
-    user: Knex.CompositeTableType<TUser, Optional<Omit<TUser, 'account'> & { account: Partial<TUser['account']> }, 'id' | 'createdAt' | 'updatedAt'>>
+    user: Knex.CompositeTableType<
+      TUser,
+      Optional<Omit<TUser, 'account'> & { account: Partial<TUser['account']> }, 'id' | 'status' | 'createdAt' | 'updatedAt'>>
   }
 }

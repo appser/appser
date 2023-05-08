@@ -10,7 +10,7 @@ export const Token = Model.define('token', {
   id: column('bigint', z.string()).primary(),
   audience: column('bigint', z.string()),
   isRevoke: column('boolean', z.boolean()),
-  updatedAt: column('timestamp', z.string().datetime())
+  expiredAt: column('timestamp', z.string().datetime())
 })
 
 export type TToken = z.infer<typeof Token.schema>
