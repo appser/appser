@@ -24,7 +24,7 @@ export function useCheckboxField(): FieldConfig<BooleanCell> {
       datasetId: dataset?.id ?? '',
       viewId: view?.id ?? '',
       recordId: row?.record.id ?? '',
-      columnName: column.name
+      fieldName: column.name
     })
 
     return {

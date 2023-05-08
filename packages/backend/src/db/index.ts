@@ -24,7 +24,7 @@ export default db
 declare module 'knex' {
   namespace Knex {
     interface QueryInterface<TRecord extends {} = any, TResult = any> {
-      _method: 'insert' | 'update' | 'select' | 'del' | 'first' | 'pluck' | 'truncate' | 'columnInfo'
+      _method: 'insert' | 'update' | 'select' | 'del' | 'first' | 'pluck' | 'truncate' | 'fieldInfo'
       _single: {
         limit?: number
         table: keyof Tables

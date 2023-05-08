@@ -41,7 +41,7 @@ export interface GridViewProps {
 const GridView: FC<GridViewProps> = ({ view }) => {
   const { can } = useAccess()
   const { datasetId, appId } = view
-  const { allow: allowCreateColumn } = can('app:dataset:column:add', { datasetId, appId })
+  const { allow: allowCreateColumn } = can('app:dataset:field:add', { datasetId, appId })
   const gridRef = useRef<DataEditorRef | null>(null)
   const [showMenu, setShowMenu] = useState<ShowMenu>()
   const [activatedCell] = useActivatedCell()
@@ -116,7 +116,7 @@ const GridView: FC<GridViewProps> = ({ view }) => {
           showColumnMenu(col, bounds)
         }}
         // column
-        freezeColumns={view.stickyColumn}
+        freezeColumns={view.stickyField}
         {...resizeColumnHandler}
         // cell
         {...editCellHandler}

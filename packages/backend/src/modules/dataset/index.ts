@@ -1,10 +1,10 @@
 import { useFormula } from 'backend/formula/useFormula'
 import { Module } from 'backend/server/module'
 
-import { addColumn } from './column.add'
-import { deleteColumn } from './column.delete'
-import { getColumn } from './column.get'
-import { updateColumn } from './column.update'
+import { addField } from './field.add'
+import { deleteField } from './field.delete'
+import { getField } from './field.get'
+import { updateField } from './field.update'
 import { getDataset } from './get'
 import { deleteRecord } from './record.delete'
 import { updateDataset } from './update'
@@ -28,20 +28,20 @@ export default new Module(({ get, post, del, patch, put }) => {
     operationId: 'updateDataset'
   })
 
-  /** column */
-  post('/datasets/:datasetId/columns').access(getDataset, addColumn).openapi({
+  /** field */
+  post('/datasets/:datasetId/fields').access(getDataset, addField).openapi({
     tags: 'dataset',
-    operationId: 'addColumn'
+    operationId: 'addField'
   })
 
-  del('/datasets/:datasetId/columns/:columnName').access(getDataset, getColumn, deleteColumn).openapi({
+  del('/datasets/:datasetId/fields/:fieldName').access(getDataset, getField, deleteField).openapi({
     tags: 'dataset',
-    operationId: 'deleteColumn'
+    operationId: 'deleteField'
   })
 
-  patch('/datasets/:datasetId/columns/:columnName').access(getDataset, getColumn, updateColumn).openapi({
+  patch('/datasets/:datasetId/fields/:fieldName').access(getDataset, getField, updateField).openapi({
     tags: 'dataset',
-    operationId: 'updateColumn'
+    operationId: 'updateField'
   })
 
   /** view */

@@ -58,7 +58,7 @@ export const ToolbarColumnButton: FC = () => {
       children: 'Are you sure you want to delete this column?',
       labels: { confirm: 'Delete', cancel: 'Cancel' },
       confirmProps: { loading: deleteColumn.isLoading },
-      onConfirm: () => deleteColumn.mutate({ columnName: column.name })
+      onConfirm: () => deleteColumn.mutate({ fieldName: column.name })
     })
   }
 

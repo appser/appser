@@ -1,30 +1,26 @@
 import { Model } from 'backend/model'
-import { custom } from 'backend/model/column'
-import jsonSchema from 'backend/utils/jsonSchema'
+import { column } from 'backend/model/column'
+import { genSnowflakeId } from 'backend/vendors/snowflakeId'
+import { z } from 'zod'
 
 import type { Optional } from '@appser/shared'
 import type { Knex } from 'knex'
-import type { z } from 'zod'
-
-export const publicRecordColumns = {
-  id: { field: 'numId', options: { dynamicDefault: 'snowflakeId' }, required: true },
-  creator: { field: 'numId', required: true },
-  lastEditor: { field: 'numId', required: true, locked: true },
-  createdAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true },
-  updatedAt: { field: 'date', options: { dynamicDefault: 'now' }, required: true }
-} as const
 
 export const Record = Model.define('record', {
-  datasetId: { field: 'numId', required: true },
-  ...publicRecordColumns,
-  extra: custom(jsonSchema, 'jsonb')
+  datasetId: column('bigint', z.string()),
+  id: column('bigint', z.string().default(() => genSnowflakeId().toString())),
+  creator: column('bigint', z.string()).relation('user', 'id', ['id', 'name', 'avatar']),
+  lastEditor: column('bigint', z.string()).relation('user', 'id', ['id', 'name', 'avatar']),
+  createdAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString())),
+  updatedAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString())),
+  data: column('jsonb', z.any())
 })
   .primary(['datasetId', 'id'])
 
 export type TRecord = z.infer<typeof Record.schema>
 
-// declare module 'backend/model' {
-//   interface Models {
-//     record: Knex.CompositeTableType<TRecord, Optional<TRecord, 'id' | 'createdAt' | 'updatedAt'>>
-//   }
-// }
+declare module 'backend/model' {
+  interface Models {
+    record: Knex.CompositeTableType<TRecord, Optional<TRecord, 'id' | 'createdAt' | 'updatedAt'>>
+  }
+}

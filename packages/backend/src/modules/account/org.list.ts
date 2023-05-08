@@ -1,5 +1,5 @@
 import { roles } from '@appser/access'
-import { People, PersonStatus, personStatus } from 'backend/models/People'
+import { People, PersonStatus, personStatus } from 'backend/models/people'
 import { Controller } from 'backend/server/controller'
 import { z } from 'zod'
 

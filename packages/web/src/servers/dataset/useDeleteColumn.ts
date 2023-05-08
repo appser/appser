@@ -14,7 +14,7 @@ export const useDeleteColumn = () => {
   if (!dataset?.id) throw new Error('Dataset ID is required to delete a column')
 
   return useMutation({
-    mutationFn: (p: Pick<DeleteColumnParams, 'columnName'>) => db.dataset.deleteColumn({
+    mutationFn: (p: Pick<DeleteColumnParams, 'fieldName'>) => db.dataset.deleteColumn({
       ...p,
       datasetId: dataset.id
     }),

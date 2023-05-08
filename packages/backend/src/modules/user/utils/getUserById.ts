@@ -1,4 +1,4 @@
-import { User } from 'backend/models/User'
+import { User } from 'backend/models/user'
 
 import { userError } from '../user.error'
 

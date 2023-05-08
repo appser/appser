@@ -2,7 +2,7 @@ import flattenObject from 'backend/utils/flattenObject'
 import { merge, set } from 'lodash'
 import { fromZodError } from 'zod-validation-error'
 
-import { modelError } from './errors'
+import { modelError } from './mode.error'
 
 import type { Model } from '.'
 

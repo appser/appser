@@ -51,7 +51,7 @@ export const ColumnMenu: FC<ColumnMenuProps> = ({ datasetId, bounds, column, onC
       : updateColumn.mutate(
         {
           datasetId,
-          columnName: column.name,
+          fieldName: column.name,
           requestBody: {
             title: newColumn.title,
             options: 'options' in newColumn ? newColumn.options : undefined

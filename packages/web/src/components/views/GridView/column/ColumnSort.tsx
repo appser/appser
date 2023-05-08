@@ -20,15 +20,15 @@ interface Props {
 export const ColumnSort: FC<Props> = ({ sort, columns, onChange }) => {
   const { visibleColumns } = useColumns()
   const fields = useFields()
-  const [_columnName, _direction] = sort
-  const [columnName, setColumnName] = useState(_columnName)
+  const [_fieldName, _direction] = sort
+  const [fieldName, setColumnName] = useState(_fieldName)
   const [direction, setDirection] = useState(_direction)
   const innerColumns = columns ?? visibleColumns
-  const column = innerColumns.find(c => c.name === columnName)
+  const column = innerColumns.find(c => c.name === fieldName)
 
   useEffect(() => {
-    onChange?.([columnName, direction])
-  }, [columnName, direction])
+    onChange?.([fieldName, direction])
+  }, [fieldName, direction])
 
   if (!column) return null
 
@@ -41,7 +41,7 @@ export const ColumnSort: FC<Props> = ({ sort, columns, onChange }) => {
     <Group>
       <ColumnSelect
         columns={innerColumns}
-        defaultColumnName={columnName}
+        defaultColumnName={fieldName}
         onChange={column => setColumnName(column.name)}
       />
       <FieldSort

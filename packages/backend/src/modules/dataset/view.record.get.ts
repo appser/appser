@@ -1,11 +1,11 @@
-import { Record } from 'backend/models/Record'
+import { Record } from 'backend/models/record'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
 import { datasetError } from './dataset.error'
 
-import type { TRecord } from 'backend/models/Record'
+import type { TRecord } from 'backend/models/record'
 
 export const getViewRecord = new Controller(
   async (ctx, next) => {
@@ -20,7 +20,7 @@ export const getViewRecord = new Controller(
 
     guard('app:dataset:view:record:get', { appId, datasetId, viewId, recordId })
 
-    const selects = Object.keys(view.column).filter(column => view.column[column].selected)
+    const selects = Object.keys(view.field).filter(field => view.field[field].selected)
     // TODO: bugfix selects
     const record = await Record.query.select().where({
       datasetId: dataset.id,

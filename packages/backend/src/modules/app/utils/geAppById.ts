@@ -1,4 +1,4 @@
-import { App } from 'backend/models/App'
+import { App } from 'backend/models/app'
 
 import { appError } from '../app.error'
 

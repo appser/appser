@@ -1,18 +1,14 @@
-import { Record } from 'backend/models/Record'
 import { Controller } from 'backend/server/controller'
 import jsonSchema from 'backend/utils/jsonSchema'
 import { rNumId } from 'backend/utils/regex'
-import { merge } from 'lodash'
 import { z } from 'zod'
-
-import { datasetError } from './dataset.error'
 
 export const updateViewRecord = new Controller(
   async (ctx, next) => {
     const {
       auth: { currentUser },
       access: { guard },
-      getDataset: { dataset, column: { model, updateableColumns } },
+      getDataset: { dataset, record: { model } },
       getDatasetView: { view },
       getDatasetRecord: { record }
     } = ctx.state
@@ -21,21 +17,15 @@ export const updateViewRecord = new Controller(
     const { id: viewId } = view
     const data = ctx.request.body
 
-    guard('app:dataset:view:record:column:update', { appId, datasetId, viewId, recordId, columnName: '*' })
+    guard('app:dataset:view:record:field:update', { appId, datasetId, viewId, recordId, fieldName: '*' })
 
-    const parser = model.schema.pick(updateableColumns).strict().safeParse(data)
-
-    if (!parser.success) return ctx.throw(datasetError('invalidRecord'))
-
-    const extra = merge(parser.data, record.extra)
-
-    await Record.query
+    await model.query
       .where('id', recordId)
       .update({
-        extra,
+        data,
         lastEditor: currentUser.id,
         updatedAt: new Date().toISOString()
-      })
+      } as never)
 
     ctx.status = 204
 

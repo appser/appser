@@ -1,5 +1,5 @@
 import { HttpStatusCode, datasetIconIds, datasetTintColors } from '@appser/shared'
-import { App } from 'backend/models/App'
+import { App } from 'backend/models/app'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'

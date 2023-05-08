@@ -1,5 +1,5 @@
 import { roles } from '@appser/access'
-import { People } from 'backend/models/People'
+import { People } from 'backend/models/people'
 
 import { orgError } from '../org.error'
 

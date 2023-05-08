@@ -21,15 +21,15 @@ export function useEditCell() {
   const onCellEdited: NonNullable<DataEditorProps['onCellEdited']> = useCallback(([columnIndex, rowIndex], cell) => {
     const row = getRow(rowIndex)
     const column = getColumn(columnIndex)
-    const columnName = column?.name
+    const fieldName = column?.name
 
-    if (!row || !columnName) return
+    if (!row || !fieldName) return
 
     const data = cell.data
 
     row.record = {
       id: row.record.id,
-      [columnName]: data
+      [fieldName]: data
     }
 
     mutate(row)

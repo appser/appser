@@ -37,11 +37,11 @@ export const RecordSortButton: FC = () => {
   }
 
   const items = form.values.sorts.map((sort, index) => {
-    const columnName = sort[0]
-    const columns = visibleColumns.filter(c => c.name === columnName || unSelectedColumns.some(c2 => c2.name === c.name))
+    const fieldName = sort[0]
+    const columns = visibleColumns.filter(c => c.name === fieldName || unSelectedColumns.some(c2 => c2.name === c.name))
 
     return (
-      <Draggable key={columnName} index={index} draggableId={columnName}>
+      <Draggable key={fieldName} index={index} draggableId={fieldName}>
         {(provided) => (
           <Group spacing="xs" ref={provided.innerRef} mt="xs" {...provided.draggableProps}>
             <Center {...provided.dragHandleProps}>

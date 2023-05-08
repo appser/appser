@@ -133,7 +133,7 @@ export function column<S extends ColumnType>(dataType: DataType, schema: S) {
   return new Column<ResolveColumnSchema<S>>(dataType, _schema)
 }
 
-type ColumnType = Schema | Record<string, Schema | Path>
+export type ColumnType = Schema | Record<string, Schema | Path>
 
 type ResolveColumnSchema<T extends ColumnType> = T extends Schema
   ? T

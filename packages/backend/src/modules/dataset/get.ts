@@ -1,18 +1,24 @@
 import { Model } from 'backend/model'
 import { Dataset } from 'backend/models/dataset'
-import { publicRecordColumns } from 'backend/models/Record'
+import { Record } from 'backend/models/record'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
 import { merge } from 'lodash'
 import { z } from 'zod'
 
-import { getDatasetById } from './utils/getDatasetById'
-import { pickInsertableColumns } from './utils/pickInsertableColumns'
-import { pickUpdateableColumns } from './utils/pickUpdateableColumns'
+import { convertFieldsToColumn } from './helpers/convertFieldsToColumn'
+import { getDatasetById } from './helpers/getDatasetById'
 
 import type { TDataset } from 'backend/models/dataset'
-import type { TDatasetColumnConfig, TDatasetRecord } from 'backend/models/dataset/dataset.column.schema'
-import type { State } from 'backend/server/controller'
+import type { FieldConfig } from 'backend/models/dataset/field.schema'
+
+export const defaultFields: Record<string, FieldConfig> = {
+  id: { type: 'numId', locked: true },
+  creator: { type: 'numId', required: true },
+  lastEditor: { type: 'numId', locked: true },
+  createdAt: { type: 'date', locked: true },
+  updatedAt: { type: 'date', locked: true }
+}
 
 export const getDataset = new Controller(
   async (ctx, next) => {
@@ -24,27 +30,21 @@ export const getDataset = new Controller(
 
     guard('app:dataset:get', { appId: dataset.appId, datasetId })
 
-    const defaultRecordConfigs = Object.entries(publicRecordColumns).reduce((acc, [name, config]) => {
-      acc[name] = {
-        ...config,
-        locked: true
-      }
-
-      return acc
-    }, {} as Record<string, TDatasetColumnConfig>)
-
-    dataset.column = merge(dataset.column, defaultRecordConfigs)
+    const model = new Model({
+      ...Record.columns,
+      data: convertFieldsToColumn(dataset.fields)
+    }).connect({ tableName: 'record' })
 
     Object.assign(ctx.state, {
       getDataset: {
         dataset,
-        column: {
-          model: new Model<TDatasetRecord>(dataset.column),
-          insertableColumns: pickInsertableColumns(dataset.column),
-          updateableColumns: pickUpdateableColumns(dataset.column)
+        record: {
+          model
         }
       }
     })
+
+    dataset.fields = merge(dataset.fields, defaultFields)
 
     ctx.body = dataset
 
@@ -70,10 +70,8 @@ declare module 'backend/server/controller' {
   interface State {
     getDataset: {
       dataset: TDataset
-      column: {
-        model: Model<TDatasetRecord>
-        insertableColumns: Record<string, true>
-        updateableColumns: Record<string, true>
+      record: {
+        model: Model
       }
     }
   }

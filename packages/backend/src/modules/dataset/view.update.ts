@@ -5,7 +5,7 @@ import { Controller } from 'backend/server/controller'
 import merge from 'lodash/merge'
 
 import { datasetError } from './dataset.error'
-import { validateViewColumns } from './utils/validateViewColumns'
+import { validateViewFields } from './helpers/validateViewFields'
 
 export const updateView = new Controller(
   async (ctx, next) => {
@@ -16,19 +16,19 @@ export const updateView = new Controller(
     } = ctx.state
     const { appId, id: datasetId } = dataset
     const viewId = view.id
-    const { name, sorts, column, filter, columns, stickyColumn } = ctx.request.body
+    const { name, sorts, field, filter, fields, stickyField } = ctx.request.body
 
     guard('app:dataset:view:update', { appId, datasetId, viewId })
 
     const freshView = merge(view, {
       name,
       sorts,
-      column,
+      field,
       filter,
-      columns,
-      stickyColumn
+      fields,
+      stickyField
     })
-    const validated = validateViewColumns(freshView, Object.keys(dataset.column))
+    const validated = validateViewFields(freshView, Object.keys(dataset.fields))
 
     if (!validated) return ctx.throw(datasetError('invalidView'))
 
@@ -46,9 +46,9 @@ export const updateView = new Controller(
       name: true,
       sorts: true,
       filter: true,
-      stickyColumn: true,
-      column: true,
-      columns: true
+      field: true,
+      fields: true,
+      stickyField: true
     }).deepPartial(),
     response: {
       204: null

@@ -1,5 +1,5 @@
 import { HttpStatusCode } from '@appser/shared'
-import { User } from 'backend/models/User'
+import { User } from 'backend/models/user'
 import { Controller } from 'backend/server/controller'
 import { z } from 'zod'
 

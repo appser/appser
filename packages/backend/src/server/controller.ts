@@ -10,7 +10,7 @@ export interface RequestSchema {
   header?: ObjectSchema
   params?: ObjectSchema
   query?: ObjectSchema
-  body?: ObjectSchema
+  body?: Schema
 }
 export interface ResponseSchema {
   200?: Schema | null
@@ -34,7 +34,7 @@ export class Controller<
   HeaderS extends ObjectSchema,
   ParamsS extends ObjectSchema,
   QueryS extends ObjectSchema,
-  BodyS extends ObjectSchema,
+  BodyS extends Schema,
   ResponseS extends ResponseSchema
 > {
   constructor(

@@ -11,10 +11,10 @@ type Sort = string[]
 function handler(this: KnexOriginal.QueryBuilder, sort: Sort = []) {
   const orderBy = sort?.map(s => {
     const sort = s.startsWith('-') ? [s.slice(1), 'desc'] : [s, 'asc']
-    const [columnName, direction] = sort
+    const [fieldName, direction] = sort
 
     return {
-      column: columnName,
+      field: fieldName,
       order: direction
     }
   })

@@ -1,17 +1,12 @@
-import { Record } from 'backend/models/Record'
 import { Controller } from 'backend/server/controller'
 import jsonSchema from 'backend/utils/jsonSchema'
-
-import { datasetError } from './dataset.error'
-
-import type { TJson } from 'backend/utils/jsonSchema'
 
 export const addViewRecord = new Controller(
   async (ctx, next) => {
     const {
       access: { guard },
       auth: { currentUser },
-      getDataset: { dataset, column: { model, insertableColumns } },
+      getDataset: { dataset, record: { model } },
       getDatasetView: { view }
     } = ctx.state
     const { appId, id: datasetId } = dataset
@@ -20,17 +15,12 @@ export const addViewRecord = new Controller(
 
     guard('app:dataset:view:record:add', { appId, datasetId, viewId })
 
-    const parser = model.schema.pick(insertableColumns).strict().safeParse(data)
-
-    if (!parser.success) return ctx.throw(datasetError('invalidRecord'))
-
-    await Record.query.insert({
+    await model.query.insert({
       datasetId,
-      extra: parser.data as TJson,
-      // ...data, // TODO: omit private columns
+      data,
       creator: currentUser.id,
       lastEditor: currentUser.id
-    })
+    } as never)
 
     ctx.status = 201
 

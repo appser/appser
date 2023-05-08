@@ -3,7 +3,7 @@ import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
-import { getViewFromDatasetById } from './utils/getViewFromDatasetById'
+import { getViewFromDatasetById } from './helpers/getViewFromDatasetById'
 
 import type { TView } from 'backend/models/dataset/view.schema'
 
@@ -18,15 +18,15 @@ export const getView = new Controller(
 
     guard('app:dataset:view:get', { appId, datasetId, viewId })
 
-    const { view, viewIndex } = getViewFromDatasetById(viewId, dataset)
+    const { view, viewIndex } = getViewFromDatasetById(dataset, viewId)
 
-    // fill all the missing column
-    Object.entries(dataset.column).forEach(([name, config]) => {
-      view.column[name] = {
+    // fill all the missing field
+    Object.entries(dataset.fields).forEach(([name, config]) => {
+      view.field[name] = {
         selected: false,
         ...config
       }
-      view.columns.includes(name) || view.columns.push(name)
+      view.fields.includes(name) || view.fields.push(name)
     })
 
     Object.assign(ctx.state, {

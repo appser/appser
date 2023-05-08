@@ -25,7 +25,7 @@ export const CellEditFloatingIcon: FC<Props> = ({ bounds, cell, row, column, loc
     datasetId: dataset?.id ?? '',
     viewId: view?.id ?? '',
     recordId: row.record.id,
-    columnName: column.name
+    fieldName: column.name
   })
   const [activatedCell, setActivatedCell] = useActivatedCell()
   const CellEditor = fields[column.field].CellEditor

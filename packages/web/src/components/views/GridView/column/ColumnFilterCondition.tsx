@@ -17,8 +17,8 @@ interface Props {
 export const ColumnFilterCondition: FC<Props> = ({ condition = [], onChange }) => {
   const fields = useFields()
   const { visibleColumns } = useColumns()
-  const [columnName, _conditionValue] = Object.entries(condition)[0]
-  const initialColumn = visibleColumns.find(c => c.name === columnName)
+  const [fieldName, _conditionValue] = Object.entries(condition)[0]
+  const initialColumn = visibleColumns.find(c => c.name === fieldName)
   const [column, setColumn] = useState(initialColumn)
   const [conditionValue, setConditionValue] = useState(_conditionValue)
   const conditionValueDetail = useMemo<FilterConditionValueDetail>(() => {
@@ -47,7 +47,7 @@ export const ColumnFilterCondition: FC<Props> = ({ condition = [], onChange }) =
       <ColumnSelect
         w={160}
         size='sm'
-        defaultColumnName={columnName}
+        defaultColumnName={fieldName}
         onChange={column => setColumn(column)}
       />
       <FieldFilter

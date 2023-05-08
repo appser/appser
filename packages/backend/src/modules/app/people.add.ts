@@ -1,5 +1,5 @@
 import { HttpStatusCode } from '@appser/shared'
-import { People, PersonStatus } from 'backend/models/People'
+import { People, PersonStatus } from 'backend/models/people'
 import { Controller } from 'backend/server/controller'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'

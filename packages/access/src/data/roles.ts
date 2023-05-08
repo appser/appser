@@ -8,7 +8,7 @@ export const ORG_BUILD_IN_ROLE_ID_RANGE = [2000, 3000]
 export const APP_BUILD_IN_ROLE_ID_RANGE = [3000, 4000]
 
 export const fullAppResource = {
-  appId: '*', datasetId: '*', viewId: '*', recordId: '*', columnName: '*'
+  appId: '*', datasetId: '*', viewId: '*', recordId: '*', fieldName: '*'
 } as const
 
 export const roles = Object.freeze({

@@ -2,7 +2,7 @@ import EventEmitter from 'node:events'
 
 import db from 'backend/db'
 import { createLogger } from 'backend/logger'
-import { modelError } from 'backend/model/errors'
+import { modelError } from 'backend/model/mode.error'
 import { z } from 'zod'
 
 import { isQuerySelect } from './helpers/isQuerySelect'

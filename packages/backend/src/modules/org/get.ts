@@ -1,10 +1,10 @@
-import { Org } from 'backend/models/Org'
+import { Org } from 'backend/models/org'
 import { Controller } from 'backend/server/controller'
 import { serverError } from 'backend/server/server.error'
 import { rNumId } from 'backend/utils/regex'
 import { z } from 'zod'
 
-import type { TOrg } from 'backend/models/Org'
+import type { TOrg } from 'backend/models/org'
 
 export const getOrg = new Controller(
   async (ctx, next) => {

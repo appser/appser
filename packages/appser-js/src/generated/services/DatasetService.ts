@@ -144,17 +144,17 @@ export class DatasetService {
    */
   public deleteColumn({
     datasetId,
-    columnName,
+    fieldName,
   }: {
     datasetId: string,
-    columnName: string,
+    fieldName: string,
   }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: 'DELETE',
-      url: '/datasets/{datasetId}/columns/{columnName}',
+      url: '/datasets/{datasetId}/columns/{fieldName}',
       path: {
         'datasetId': datasetId,
-        'columnName': columnName,
+        'fieldName': fieldName,
       },
     });
   }
@@ -165,11 +165,11 @@ export class DatasetService {
    */
   public updateColumn({
     datasetId,
-    columnName,
+    fieldName,
     requestBody,
   }: {
     datasetId: string,
-    columnName: string,
+    fieldName: string,
     requestBody: {
       title?: string;
       options?: Record<string, any>;
@@ -177,10 +177,10 @@ export class DatasetService {
   }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: 'PATCH',
-      url: '/datasets/{datasetId}/columns/{columnName}',
+      url: '/datasets/{datasetId}/columns/{fieldName}',
       path: {
         'datasetId': datasetId,
-        'columnName': columnName,
+        'fieldName': fieldName,
       },
       body: requestBody,
       mediaType: 'application/json',
@@ -193,11 +193,11 @@ export class DatasetService {
    */
   public resetColumn({
     datasetId,
-    columnName,
+    fieldName,
     requestBody,
   }: {
     datasetId: string,
-    columnName: string,
+    fieldName: string,
     requestBody: {
       title?: string;
       field?: any;
@@ -206,10 +206,10 @@ export class DatasetService {
   }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: 'PUT',
-      url: '/datasets/{datasetId}/columns/{columnName}',
+      url: '/datasets/{datasetId}/columns/{fieldName}',
       path: {
         'datasetId': datasetId,
-        'columnName': columnName,
+        'fieldName': fieldName,
       },
       body: requestBody,
       mediaType: 'application/json',
@@ -270,7 +270,7 @@ export class DatasetService {
         notNull?: boolean;
       }>>;
     };
-    stickyColumn: number;
+    stickyField: number;
     appId: string;
     datasetId: string;
   }> {
@@ -332,7 +332,7 @@ export class DatasetService {
           notNull?: boolean;
         }>>;
       };
-      stickyColumn?: number;
+      stickyField?: number;
       columns?: Array<string>;
       column?: Record<string, {
         width?: number;

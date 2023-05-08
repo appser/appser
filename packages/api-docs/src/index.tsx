@@ -40,7 +40,7 @@ export function ApiDocs() {
           ))}
         </Navbar.Section>
       </Navbar>
-      <Flex sx={{ flex: 1, overflow: 'auto' }} direction='column' p='lg'>
+      <Flex sx={{ flex: 1, overflow: 'auto' }} direction='field' p='lg'>
         <Title mb='lg'>{activeOperation.operationId}</Title>
         <Text>{activeOperation.description}</Text>
         <Tabs defaultValue='rest-api' mb='xl'>
