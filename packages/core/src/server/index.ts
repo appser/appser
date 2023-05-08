@@ -3,7 +3,6 @@ import bodyParser from 'koa-bodyparser'
 
 import errorHandler from './errorHandler'
 import { useLogger } from './middlewares/useLogger'
-import { useQs } from './middlewares/useQs'
 import { useSleep } from './middlewares/useSleep'
 import doc from './openapi'
 import { createLogger } from '../logger'
@@ -24,7 +23,6 @@ export class Server {
 
     this.#koa
       .use(useLogger)
-      .use(useQs)
       .use(bodyParser())
       .on('error', errorHandler)
   }
