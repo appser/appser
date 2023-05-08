@@ -1,5 +1,5 @@
-import { Model, column } from 'backend/model'
-import { genSnowflakeId } from 'backend/vendors/snowflakeId'
+import { Model, column } from 'core/model'
+import { genSnowflakeId } from 'core/vendors/snowflakeId'
 import { z } from 'zod'
 
 import type { Optional } from '@appser/common'
@@ -16,7 +16,7 @@ export const Org = Model.define('org', {
 
 export type TOrg = z.infer<typeof Org.schema>
 
-declare module 'backend/model' {
+declare module 'core/model' {
   interface Models {
     org: Knex.CompositeTableType<TOrg, Optional<TOrg, 'id' | 'createdAt' | 'updatedAt'>>
   }

@@ -1,7 +1,7 @@
 import { HttpStatusCode } from '@appser/common'
-import db from 'backend/db'
-import { Controller } from 'backend/server/controller'
-import { compareSync, hashSync } from 'backend/vendors/bcrypt'
+import db from 'core/db'
+import { Controller } from 'core/server/controller'
+import { compareSync, hashSync } from 'core/vendors/bcrypt'
 import { z } from 'zod'
 
 import { accountError } from './account.error'

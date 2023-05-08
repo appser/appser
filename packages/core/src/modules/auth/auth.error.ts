@@ -1,4 +1,4 @@
-import { createErrors, t } from 'backend/error'
+import { createErrors, t } from 'core/error'
 
 export const authError = createErrors('auth', {
   'token.notFound': ['Unauthorized', t('auth.token.notFound')],

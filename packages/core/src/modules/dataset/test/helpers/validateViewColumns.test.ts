@@ -1,6 +1,6 @@
 import { validateViewFields } from '../../helpers/validateViewFields'
 
-import type { TView } from 'backend/models/dataset/view.schema'
+import type { TView } from 'core/models/dataset/view.schema'
 
 describe('validateView', () => {
   const validView: TView = {

@@ -1,4 +1,4 @@
-import { Module } from 'backend/server/module'
+import { Module } from 'core/server/module'
 
 import { createOrgApp } from './app.create'
 import { listOrgApp } from './app.list'

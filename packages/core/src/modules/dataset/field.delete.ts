@@ -1,5 +1,5 @@
-import { Dataset } from 'backend/models/dataset'
-import { Controller } from 'backend/server/controller'
+import { Dataset } from 'core/models/dataset'
+import { Controller } from 'core/server/controller'
 
 import { datasetError } from './dataset.error'
 import cleanFieldFromView from './helpers/cleanFieldFromView'

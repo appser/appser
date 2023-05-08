@@ -1,7 +1,7 @@
-import { Org } from 'backend/models/org'
-import { User } from 'backend/models/user'
-import { Controller } from 'backend/server/controller'
-import { getAccessToken } from 'backend/server/utils/getAccessToken'
+import { Org } from 'core/models/org'
+import { User } from 'core/models/user'
+import { Controller } from 'core/server/controller'
+import { getAccessToken } from 'core/server/utils/getAccessToken'
 import { z } from 'zod'
 
 import { invitationError } from './invitation.error'

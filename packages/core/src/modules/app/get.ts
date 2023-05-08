@@ -1,12 +1,12 @@
-import { Dataset } from 'backend/models/dataset'
-import { viewSchema } from 'backend/models/dataset/view.schema'
-import { Controller } from 'backend/server/controller'
-import { rNumId } from 'backend/utils/regex'
+import { Dataset } from 'core/models/dataset'
+import { viewSchema } from 'core/models/dataset/view.schema'
+import { Controller } from 'core/server/controller'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 import { getAppById } from './utils/geAppById'
 
-import type { TApp } from 'backend/models/app'
+import type { TApp } from 'core/models/app'
 
 export const getApp = new Controller(
   async (ctx, next) => {
@@ -62,7 +62,7 @@ export const getApp = new Controller(
   }
 )
 
-declare module 'backend/server/controller' {
+declare module 'core/server/controller' {
   interface State {
     getApp: {
       app: TApp

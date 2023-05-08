@@ -1,5 +1,5 @@
-import { Field } from 'backend/modules/dataset/helpers/field'
-import { Controller } from 'backend/server/controller'
+import { Field } from 'core/modules/dataset/helpers/field'
+import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 
 import { datasetError } from './dataset.error'
@@ -37,7 +37,7 @@ export const getField = new Controller(
   }
 )
 
-declare module 'backend/server/controller' {
+declare module 'core/server/controller' {
   interface State {
     getDatasetField: {
       field: Field

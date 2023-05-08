@@ -1,7 +1,7 @@
-import db from 'backend/db'
-import { Dataset } from 'backend/models/dataset'
-import { fieldOptionSchema } from 'backend/models/dataset/field.schema'
-import { Controller } from 'backend/server/controller'
+import db from 'core/db'
+import { Dataset } from 'core/models/dataset'
+import { fieldOptionSchema } from 'core/models/dataset/field.schema'
+import { Controller } from 'core/server/controller'
 import { nanoid } from 'nanoid'
 import { z } from 'zod'
 

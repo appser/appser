@@ -1,11 +1,11 @@
-import { viewSchema } from 'backend/models/dataset/view.schema'
-import { Controller } from 'backend/server/controller'
-import { rNumId } from 'backend/utils/regex'
+import { viewSchema } from 'core/models/dataset/view.schema'
+import { Controller } from 'core/server/controller'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 import { getViewFromDatasetById } from './helpers/getViewFromDatasetById'
 
-import type { TView } from 'backend/models/dataset/view.schema'
+import type { TView } from 'core/models/dataset/view.schema'
 
 export const getView = new Controller(
   async (ctx, next) => {
@@ -58,7 +58,7 @@ export const getView = new Controller(
   }
 )
 
-declare module 'backend/server/controller' {
+declare module 'core/server/controller' {
   interface State {
     getDatasetView: {
       view: TView

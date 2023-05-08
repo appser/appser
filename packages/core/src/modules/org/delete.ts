@@ -1,10 +1,10 @@
-import db from 'backend/db'
-import { App } from 'backend/models/app'
-import { Dataset } from 'backend/models/dataset'
-import { Org } from 'backend/models/org'
-import { People } from 'backend/models/people'
-import { Controller } from 'backend/server/controller'
-import { rNumId } from 'backend/utils/regex'
+import db from 'core/db'
+import { App } from 'core/models/app'
+import { Dataset } from 'core/models/dataset'
+import { Org } from 'core/models/org'
+import { People } from 'core/models/people'
+import { Controller } from 'core/server/controller'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 export const deleteOrg = new Controller(

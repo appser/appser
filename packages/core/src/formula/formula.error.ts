@@ -1,4 +1,4 @@
-import { createErrors, t } from 'backend/error'
+import { createErrors, t } from 'core/error'
 
 /**
  * hot-formula-parser error code

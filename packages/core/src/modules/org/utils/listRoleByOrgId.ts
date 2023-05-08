@@ -1,5 +1,5 @@
 import { ORG_BUILD_IN_ROLE_ID_RANGE, roles as defaultRoles } from '@appser/access'
-import { Role } from 'backend/models/role'
+import { Role } from 'core/models/role'
 
 const [minOrgRoleId, maxOrgRoleId] = ORG_BUILD_IN_ROLE_ID_RANGE
 

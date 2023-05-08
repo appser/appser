@@ -1,8 +1,8 @@
 import { roles } from '@appser/access'
-import { Model } from 'backend/model'
-import { column } from 'backend/model/column'
-import { hashSync } from 'backend/vendors/bcrypt'
-import { genSnowflakeId } from 'backend/vendors/snowflakeId'
+import { Model } from 'core/model'
+import { column } from 'core/model/column'
+import { hashSync } from 'core/vendors/bcrypt'
+import { genSnowflakeId } from 'core/vendors/snowflakeId'
 import { z } from 'zod'
 
 import type { Optional } from '@appser/common'
@@ -36,7 +36,7 @@ export const User = Model.define('user', {
 
 export type TUser = z.infer<typeof User.schema>
 
-declare module 'backend/model' {
+declare module 'core/model' {
   interface Models {
     user: Knex.CompositeTableType<
       TUser,

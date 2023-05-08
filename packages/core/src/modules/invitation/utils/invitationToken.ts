@@ -1,4 +1,4 @@
-import config from 'backend/config'
+import config from 'core/config'
 import jwt, { NotBeforeError, TokenExpiredError } from 'jsonwebtoken'
 
 import { invitationError } from '../invitation.error'

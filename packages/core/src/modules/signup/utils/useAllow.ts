@@ -1,6 +1,6 @@
-import { parseInvitationToken } from 'backend/modules/invitation/utils/invitationToken'
-import { signupError } from 'backend/modules/signup/signup.error'
-import { Controller } from 'backend/server/controller'
+import { parseInvitationToken } from 'core/modules/invitation/utils/invitationToken'
+import { signupError } from 'core/modules/signup/signup.error'
+import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 
 import { getAllowSignup } from './getAllowSignup'

@@ -1,5 +1,5 @@
-import { Controller } from 'backend/server/controller'
-import jsonSchema from 'backend/utils/jsonSchema'
+import { Controller } from 'core/server/controller'
+import jsonSchema from 'core/utils/jsonSchema'
 
 export const addViewRecord = new Controller(
   async (ctx, next) => {

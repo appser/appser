@@ -2,7 +2,7 @@
  * All excel formulas defined in https://github.com/handsontable/formula-parser/blob/develop/src/supported-formulas.js
  */
 
-import dayjs from 'backend/vendors/dayjs'
+import dayjs from 'core/vendors/dayjs'
 
 import type { Config } from './config'
 import type { ManipulateType } from 'dayjs'

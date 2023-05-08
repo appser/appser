@@ -1,5 +1,5 @@
 import KoaRouter from '@koa/router'
-import { serverError } from 'backend/server/server.error'
+import { serverError } from 'core/server/server.error'
 import compose from 'koa-compose'
 import cloneDeep from 'lodash/cloneDeep'
 import isEmpty from 'lodash/isEmpty'

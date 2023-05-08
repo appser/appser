@@ -2,8 +2,8 @@
  * only save revoked token
  */
 
-import { Model } from 'backend/model'
-import { column } from 'backend/model/column'
+import { Model } from 'core/model'
+import { column } from 'core/model/column'
 import { z } from 'zod'
 
 export const Token = Model.define('token', {
@@ -15,7 +15,7 @@ export const Token = Model.define('token', {
 
 export type TToken = z.infer<typeof Token.schema>
 
-declare module 'backend/model' {
+declare module 'core/model' {
   interface Models {
     token: TToken
   }

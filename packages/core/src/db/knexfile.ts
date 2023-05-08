@@ -1,6 +1,6 @@
 import { extname, join } from 'node:path'
 
-import config from 'backend/config'
+import config from 'core/config'
 
 import type { Knex } from 'knex'
 

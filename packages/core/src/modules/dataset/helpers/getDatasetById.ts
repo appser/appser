@@ -1,4 +1,4 @@
-import { Dataset } from 'backend/models/dataset'
+import { Dataset } from 'core/models/dataset'
 
 import { datasetError } from '../dataset.error'
 

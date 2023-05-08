@@ -1,6 +1,6 @@
-import config from 'backend/config'
-import { authError } from 'backend/modules/auth/auth.error'
-import { genSnowflakeId } from 'backend/vendors/snowflakeId'
+import config from 'core/config'
+import { authError } from 'core/modules/auth/auth.error'
+import { genSnowflakeId } from 'core/vendors/snowflakeId'
 import jwt, { NotBeforeError, TokenExpiredError } from 'jsonwebtoken'
 
 export function createAccessToken({ roleId, audience }: Options) {

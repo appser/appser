@@ -1,10 +1,10 @@
-import { column } from 'backend/model/column'
+import { column } from 'core/model/column'
 
 import { Field } from './field'
 
-import type { Column } from 'backend/model/column'
-import type { Path } from 'backend/model/path'
-import type { TDataset } from 'backend/models/dataset'
+import type { Column } from 'core/model/column'
+import type { Path } from 'core/model/path'
+import type { TDataset } from 'core/models/dataset'
 import type { Schema } from 'zod'
 
 export function convertFieldsToColumn(field: TDataset['fields']): Column {

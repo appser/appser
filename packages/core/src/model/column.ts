@@ -1,10 +1,10 @@
-import db from 'backend/db'
-import { createLogger } from 'backend/logger'
+import db from 'core/db'
+import { createLogger } from 'core/logger'
 import { Schema, z } from 'zod'
 
 import { Path } from './path'
 
-import type { Columns, Models } from 'backend/model'
+import type { Columns, Models } from 'core/model'
 import type { Knex } from 'knex'
 import type { ZodNever, ZodObject } from 'zod'
 

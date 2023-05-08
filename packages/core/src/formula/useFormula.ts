@@ -1,4 +1,4 @@
-import { Controller } from 'backend/server/controller'
+import { Controller } from 'core/server/controller'
 
 import { Formula } from '.'
 
@@ -26,7 +26,7 @@ export const useFormula = new Controller(
   }
 )
 
-declare module 'backend/server/controller' {
+declare module 'core/server/controller' {
   interface State {
     formula: {
       userFormula: Formula

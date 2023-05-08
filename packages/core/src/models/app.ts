@@ -1,6 +1,6 @@
-import { Model } from 'backend/model'
-import { column } from 'backend/model/column'
-import { genSnowflakeId } from 'backend/vendors/snowflakeId'
+import { Model } from 'core/model'
+import { column } from 'core/model/column'
+import { genSnowflakeId } from 'core/vendors/snowflakeId'
 import { z } from 'zod'
 
 import type { Optional } from '@appser/common'
@@ -18,7 +18,7 @@ export const App = Model.define('app', {
 
 export type TApp = z.infer<typeof App.schema>
 
-declare module 'backend/model' {
+declare module 'core/model' {
   interface Models {
     app: Knex.CompositeTableType<TApp, Optional<TApp, 'id' | 'createdAt' | 'updatedAt'>>
   }

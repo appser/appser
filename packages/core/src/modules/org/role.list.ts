@@ -1,6 +1,6 @@
-import { Role } from 'backend/models/role'
-import { Controller } from 'backend/server/controller'
-import { rNumId } from 'backend/utils/regex'
+import { Role } from 'core/models/role'
+import { Controller } from 'core/server/controller'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 import { listRoleByOrgId } from './utils/listRoleByOrgId'

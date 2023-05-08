@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto'
 
-import { createLogger } from 'backend/logger'
-import { serverError } from 'backend/server/server.error'
+import { createLogger } from 'core/logger'
+import { serverError } from 'core/server/server.error'
 
 import type { Context, Middleware } from 'koa'
 import type { Logger } from 'pino'

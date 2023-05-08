@@ -1,4 +1,4 @@
-import { Module } from 'backend/server/module'
+import { Module } from 'core/server/module'
 
 import { signupWithEmail } from './email.with'
 import { useAllow } from './utils/useAllow'

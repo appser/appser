@@ -1,5 +1,5 @@
-import { Field } from 'backend/modules/dataset/helpers/field'
-import { genSnowflakeId } from 'backend/vendors/snowflakeId'
+import { Field } from 'core/modules/dataset/helpers/field'
+import { genSnowflakeId } from 'core/vendors/snowflakeId'
 import { z } from 'zod'
 
 export default Field.define('numId', {

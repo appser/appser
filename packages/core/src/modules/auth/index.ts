@@ -1,4 +1,4 @@
-import { Module } from 'backend/server/module'
+import { Module } from 'core/server/module'
 
 import { getAuthConfig } from './config.get'
 import { authWithEmail } from './email.with'

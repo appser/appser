@@ -1,4 +1,4 @@
-import { server } from 'backend/index'
+import { server } from 'core/index'
 import request from 'supertest'
 
 const a = request(server.callback())

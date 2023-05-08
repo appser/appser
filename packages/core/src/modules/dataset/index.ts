@@ -1,5 +1,5 @@
-import { useFormula } from 'backend/formula/useFormula'
-import { Module } from 'backend/server/module'
+import { useFormula } from 'core/formula/useFormula'
+import { Module } from 'core/server/module'
 
 import { addField } from './field.add'
 import { deleteField } from './field.delete'

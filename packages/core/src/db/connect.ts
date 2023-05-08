@@ -1,5 +1,5 @@
-import db from 'backend/db'
-import { Model } from 'backend/model'
+import db from 'core/db'
+import { Model } from 'core/model'
 
 export default async function connect() {
   await db.raw("SELECT 'test connection';")

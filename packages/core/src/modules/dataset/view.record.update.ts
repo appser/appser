@@ -1,6 +1,6 @@
-import { Controller } from 'backend/server/controller'
-import jsonSchema from 'backend/utils/jsonSchema'
-import { rNumId } from 'backend/utils/regex'
+import { Controller } from 'core/server/controller'
+import jsonSchema from 'core/utils/jsonSchema'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 export const updateViewRecord = new Controller(

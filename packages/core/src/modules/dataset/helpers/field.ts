@@ -1,7 +1,7 @@
-import { createLogger } from 'backend/logger'
+import { createLogger } from 'core/logger'
 import { z } from 'zod'
 
-import type { FieldConfig } from 'backend/models/dataset/field.schema'
+import type { FieldConfig } from 'core/models/dataset/field.schema'
 import type { Schema } from 'zod'
 
 const log = createLogger('dataset:field')

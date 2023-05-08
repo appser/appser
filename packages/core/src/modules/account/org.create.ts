@@ -1,8 +1,8 @@
 import { roles } from '@appser/access'
-import db from 'backend/db'
-import { Org } from 'backend/models/org'
-import { People, PersonStatus } from 'backend/models/people'
-import { Controller } from 'backend/server/controller'
+import db from 'core/db'
+import { Org } from 'core/models/org'
+import { People, PersonStatus } from 'core/models/people'
+import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 
 export const createAccountOrg = new Controller(

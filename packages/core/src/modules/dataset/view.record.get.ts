@@ -1,11 +1,11 @@
-import { Record } from 'backend/models/record'
-import { Controller } from 'backend/server/controller'
-import { rNumId } from 'backend/utils/regex'
+import { Record } from 'core/models/record'
+import { Controller } from 'core/server/controller'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 import { datasetError } from './dataset.error'
 
-import type { TRecord } from 'backend/models/record'
+import type { TRecord } from 'core/models/record'
 
 export const getViewRecord = new Controller(
   async (ctx, next) => {
@@ -47,7 +47,7 @@ export const getViewRecord = new Controller(
   }
 )
 
-declare module 'backend/server/controller' {
+declare module 'core/server/controller' {
   interface State {
     getDatasetRecord: {
       record: TRecord

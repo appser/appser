@@ -1,6 +1,6 @@
 import { roles } from '@appser/access'
-import { People, PersonStatus } from 'backend/models/people'
-import { Controller } from 'backend/server/controller'
+import { People, PersonStatus } from 'core/models/people'
+import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 
 export const listAccountOrg = new Controller(

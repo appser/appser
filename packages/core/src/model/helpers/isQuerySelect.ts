@@ -1,4 +1,4 @@
-import { createLogger } from 'backend/logger'
+import { createLogger } from 'core/logger'
 import intersection from 'lodash/intersection'
 
 import type { Knex } from 'knex'

@@ -1,6 +1,6 @@
-import config, { configSchema } from 'backend/config'
-import db from 'backend/db'
-import { Controller } from 'backend/server/controller'
+import config, { configSchema } from 'core/config'
+import db from 'core/db'
+import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 
 export const getAuthConfig = new Controller(

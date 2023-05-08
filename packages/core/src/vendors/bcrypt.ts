@@ -1,4 +1,4 @@
-import config from 'backend/config'
+import config from 'core/config'
 
 const bcrypt = require('bcryptjs')
 

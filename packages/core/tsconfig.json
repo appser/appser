@@ -4,7 +4,7 @@
     "outDir": "lib",
     "baseUrl": ".",
     "paths": {
-      "backend/*": ["src/*"]
+      "core/*": ["src/*"]
     }
   }
 }

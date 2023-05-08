@@ -1,4 +1,4 @@
-import { createErrors, t } from 'backend/error'
+import { createErrors, t } from 'core/error'
 
 export const appError = createErrors('app', {
   notFound: ['NotFound', t('app.notFound')],

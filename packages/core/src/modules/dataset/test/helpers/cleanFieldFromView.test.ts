@@ -1,6 +1,6 @@
 import cleanFieldFromView from '../../helpers/cleanFieldFromView'
 
-import type { TView } from 'backend/models/dataset/view.schema'
+import type { TView } from 'core/models/dataset/view.schema'
 
 describe('func cleanViewField', () => {
   let view: TView

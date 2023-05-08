@@ -1,4 +1,4 @@
-import { Module } from 'backend/server/module'
+import { Module } from 'core/server/module'
 
 import { getAccount } from './get'
 import { createAccountOrg } from './org.create'

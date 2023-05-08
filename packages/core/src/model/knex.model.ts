@@ -1,4 +1,4 @@
-import { Model } from 'backend/model'
+import { Model } from 'core/model'
 import { type Knex as KnexOriginal, knex } from 'knex'
 
 knex.QueryBuilder.extend('model', handler)

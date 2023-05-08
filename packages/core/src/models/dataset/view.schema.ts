@@ -1,5 +1,5 @@
-import { filterSchema } from 'backend/models/dataset/view.filter.schema'
-import { genSnowflakeId } from 'backend/vendors/snowflakeId'
+import { filterSchema } from 'core/models/dataset/view.filter.schema'
+import { genSnowflakeId } from 'core/vendors/snowflakeId'
 import { z } from 'zod'
 
 const viewFieldSchema = z.record(z.object({

@@ -1,5 +1,5 @@
-import { User } from 'backend/models/user'
-import { Controller } from 'backend/server/controller'
+import { User } from 'core/models/user'
+import { Controller } from 'core/server/controller'
 
 export const getAccount = new Controller(
   (ctx, next) => {

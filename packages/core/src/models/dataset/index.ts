@@ -1,6 +1,6 @@
-import { Model } from 'backend/model'
-import { column } from 'backend/model/column'
-import { genSnowflakeId } from 'backend/vendors/snowflakeId'
+import { Model } from 'core/model'
+import { column } from 'core/model/column'
+import { genSnowflakeId } from 'core/vendors/snowflakeId'
 import { z } from 'zod'
 
 import { fieldConfigSchema } from './field.schema'
@@ -24,7 +24,7 @@ export const Dataset = Model.define('dataset', {
 
 export type TDataset = z.infer<typeof Dataset.schema>
 
-declare module 'backend/model' {
+declare module 'core/model' {
   interface Models {
     dataset: Knex.CompositeTableType<TDataset, Optional<TDataset, 'id' | 'fields' | 'views' | 'createdAt' | 'updatedAt'>>
   }

@@ -1,6 +1,6 @@
-import { User } from 'backend/models/user'
-import { signupError } from 'backend/modules/signup/signup.error'
-import { Controller } from 'backend/server/controller'
+import { User } from 'core/models/user'
+import { signupError } from 'core/modules/signup/signup.error'
+import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 
 export const signupWithEmail = new Controller(

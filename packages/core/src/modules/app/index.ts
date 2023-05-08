@@ -1,4 +1,4 @@
-import { Module } from 'backend/server/module'
+import { Module } from 'core/server/module'
 
 import { createAppDataset } from './dataset.create'
 import { deleteApp } from './delete'

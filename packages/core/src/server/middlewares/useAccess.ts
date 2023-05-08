@@ -1,16 +1,16 @@
 // TODO: when the role id < SYSTEM_ROLE_MAX_ID, the policies can be combined.
 import Access, { roles } from '@appser/access'
-import db from 'backend/db'
-import { App } from 'backend/models/app'
-import { People, PersonStatus } from 'backend/models/people'
-import { Role } from 'backend/models/role'
-import { authError } from 'backend/modules/auth/auth.error'
-import jsonTemplate from 'backend/utils/jsonTemplate'
+import db from 'core/db'
+import { App } from 'core/models/app'
+import { People, PersonStatus } from 'core/models/people'
+import { Role } from 'core/models/role'
+import { authError } from 'core/modules/auth/auth.error'
+import jsonTemplate from 'core/utils/jsonTemplate'
 
 import { serverError } from '../server.error'
 
-import type { TPeople } from 'backend/models/people'
-import type { TRole } from 'backend/models/role'
+import type { TPeople } from 'core/models/people'
+import type { TRole } from 'core/models/role'
 import type { Middleware } from 'koa'
 
 export const useAccess: Middleware = async (ctx, next) => {
@@ -99,7 +99,7 @@ export const useAccess: Middleware = async (ctx, next) => {
   await next()
 }
 
-declare module 'backend/server/controller' {
+declare module 'core/server/controller' {
   interface State {
     access: {
       ac: Access

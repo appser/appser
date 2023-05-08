@@ -1,4 +1,4 @@
-import { People } from 'backend/models/people'
+import { People } from 'core/models/people'
 
 import { orgError } from '../org.error'
 

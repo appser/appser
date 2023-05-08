@@ -1,8 +1,8 @@
 import { HttpStatusCode } from '@appser/common'
-import db from 'backend/db'
-import { Dataset } from 'backend/models/dataset'
-import { viewSchema } from 'backend/models/dataset/view.schema'
-import { Controller } from 'backend/server/controller'
+import db from 'core/db'
+import { Dataset } from 'core/models/dataset'
+import { viewSchema } from 'core/models/dataset/view.schema'
+import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 
 export const addView = new Controller(

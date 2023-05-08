@@ -1,4 +1,4 @@
-import { Field } from 'backend/modules/dataset/helpers/field'
+import { Field } from 'core/modules/dataset/helpers/field'
 import { z } from 'zod'
 
 export default Field.define('date', {

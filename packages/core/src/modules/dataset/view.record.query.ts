@@ -1,6 +1,6 @@
-import { filterSchema } from 'backend/models/dataset/view.filter.schema'
-import { viewSchema } from 'backend/models/dataset/view.schema'
-import { Controller } from 'backend/server/controller'
+import { filterSchema } from 'core/models/dataset/view.filter.schema'
+import { viewSchema } from 'core/models/dataset/view.schema'
+import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 
 import { datasetError } from './dataset.error'

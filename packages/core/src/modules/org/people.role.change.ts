@@ -1,8 +1,8 @@
 import { roles } from '@appser/access'
 import { HttpStatusCode } from '@appser/common'
-import { People } from 'backend/models/people'
-import { Controller } from 'backend/server/controller'
-import { rNumId } from 'backend/utils/regex'
+import { People } from 'core/models/people'
+import { Controller } from 'core/server/controller'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 import { orgError } from './org.error'

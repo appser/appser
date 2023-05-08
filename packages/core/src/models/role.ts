@@ -1,6 +1,6 @@
-import { Model } from 'backend/model'
-import { column } from 'backend/model/column'
-import { genSnowflakeId } from 'backend/vendors/snowflakeId'
+import { Model } from 'core/model'
+import { column } from 'core/model/column'
+import { genSnowflakeId } from 'core/vendors/snowflakeId'
 import { z } from 'zod'
 
 import type { Policy } from '@appser/access'
@@ -30,7 +30,7 @@ export const Role = Model.define('role', {
 
 export type TRole = z.infer<typeof Role.schema>
 
-declare module 'backend/model' {
+declare module 'core/model' {
   interface Models {
     role: Knex.CompositeTableType<TRole, Optional<TRole, 'id' | 'createdAt' | 'updatedAt'>>
   }

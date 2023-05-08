@@ -1,4 +1,4 @@
-import type { TView } from 'backend/models/dataset/view.schema'
+import type { TView } from 'core/models/dataset/view.schema'
 
 export default function cleanFieldFromView(fieldName: string, view: TView) {
   delete view.field[fieldName]

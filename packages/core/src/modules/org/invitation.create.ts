@@ -1,6 +1,6 @@
-import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
-import { rNumId } from 'backend/utils/regex'
+import { Controller } from 'core/server/controller'
+import { serverError } from 'core/server/server.error'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 import { checkRoleInOrg } from './utils/checkRoleInOrg'

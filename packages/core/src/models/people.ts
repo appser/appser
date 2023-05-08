@@ -1,6 +1,6 @@
-import { Model } from 'backend/model'
-import { column } from 'backend/model/column'
-import { rNumId } from 'backend/utils/regex'
+import { Model } from 'core/model'
+import { column } from 'core/model/column'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 import type { Optional } from '@appser/common'
@@ -28,7 +28,7 @@ export const People = Model.define('people', {
 
 export type TPeople = z.infer<typeof People.schema>
 
-declare module 'backend/model' {
+declare module 'core/model' {
   interface Models {
     people: Knex.CompositeTableType<TPeople, Optional<TPeople, 'invitedAt'>>
   }

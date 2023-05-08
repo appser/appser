@@ -3,11 +3,11 @@
  * NOW:
  * 2. No confirmation required.
  */
-import { PersonStatus } from 'backend/models/people'
-import { checkRoleInApp } from 'backend/modules/app/utils/checkRoleInApp'
-import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
-import { rNumId } from 'backend/utils/regex'
+import { PersonStatus } from 'core/models/people'
+import { checkRoleInApp } from 'core/modules/app/utils/checkRoleInApp'
+import { Controller } from 'core/server/controller'
+import { serverError } from 'core/server/server.error'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 import { invitationError } from './invitation.error'

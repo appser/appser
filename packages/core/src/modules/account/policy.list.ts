@@ -1,4 +1,4 @@
-import { Controller } from 'backend/server/controller'
+import { Controller } from 'core/server/controller'
 
 export const listAccountPolicy = new Controller(
   (ctx, next) => {

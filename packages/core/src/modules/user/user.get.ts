@@ -1,11 +1,11 @@
-import { User } from 'backend/models/user'
-import { Controller } from 'backend/server/controller'
-import { rNumId } from 'backend/utils/regex'
+import { User } from 'core/models/user'
+import { Controller } from 'core/server/controller'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 import { getUserById } from './utils/getUserById'
 
-import type { TUser } from 'backend/models/user'
+import type { TUser } from 'core/models/user'
 
 export const getUser = new Controller(
   async (ctx, next) => {
@@ -48,7 +48,7 @@ export const getUser = new Controller(
   }
 )
 
-declare module 'backend/server/controller' {
+declare module 'core/server/controller' {
   interface State {
     getUser: TUser
   }

@@ -1,11 +1,11 @@
 import { roles } from '@appser/access'
 import { datasetIconIds, datasetTintColors } from '@appser/common'
-import db from 'backend/db'
-import { App } from 'backend/models/app'
-import { Dataset } from 'backend/models/dataset'
-import { People, PersonStatus } from 'backend/models/people'
-import { Controller } from 'backend/server/controller'
-import { rNumId } from 'backend/utils/regex'
+import db from 'core/db'
+import { App } from 'core/models/app'
+import { Dataset } from 'core/models/dataset'
+import { People, PersonStatus } from 'core/models/people'
+import { Controller } from 'core/server/controller'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 const randomTintColor = () => {

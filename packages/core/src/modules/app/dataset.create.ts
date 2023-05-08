@@ -1,6 +1,6 @@
-import { Dataset } from 'backend/models/dataset'
-import { Controller } from 'backend/server/controller'
-import { rNumId } from 'backend/utils/regex'
+import { Dataset } from 'core/models/dataset'
+import { Controller } from 'core/server/controller'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 export const createAppDataset = new Controller(

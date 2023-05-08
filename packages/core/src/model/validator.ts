@@ -1,4 +1,4 @@
-import flattenObject from 'backend/utils/flattenObject'
+import flattenObject from 'core/utils/flattenObject'
 import { merge, set } from 'lodash'
 import { fromZodError } from 'zod-validation-error'
 

@@ -1,16 +1,16 @@
-import { Model } from 'backend/model'
-import { Dataset } from 'backend/models/dataset'
-import { Record } from 'backend/models/record'
-import { Controller } from 'backend/server/controller'
-import { rNumId } from 'backend/utils/regex'
+import { Model } from 'core/model'
+import { Dataset } from 'core/models/dataset'
+import { Record } from 'core/models/record'
+import { Controller } from 'core/server/controller'
+import { rNumId } from 'core/utils/regex'
 import { merge } from 'lodash'
 import { z } from 'zod'
 
 import { convertFieldsToColumn } from './helpers/convertFieldsToColumn'
 import { getDatasetById } from './helpers/getDatasetById'
 
-import type { TDataset } from 'backend/models/dataset'
-import type { FieldConfig } from 'backend/models/dataset/field.schema'
+import type { TDataset } from 'core/models/dataset'
+import type { FieldConfig } from 'core/models/dataset/field.schema'
 
 export const defaultFields: Record<string, FieldConfig> = {
   id: { type: 'numId', locked: true },
@@ -66,7 +66,7 @@ export const getDataset = new Controller(
   }
 )
 
-declare module 'backend/server/controller' {
+declare module 'core/server/controller' {
   interface State {
     getDataset: {
       dataset: TDataset

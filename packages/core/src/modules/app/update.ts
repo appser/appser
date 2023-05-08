@@ -1,7 +1,7 @@
 import { HttpStatusCode, datasetIconIds, datasetTintColors } from '@appser/common'
-import { App } from 'backend/models/app'
-import { Controller } from 'backend/server/controller'
-import { rNumId } from 'backend/utils/regex'
+import { App } from 'core/models/app'
+import { Controller } from 'core/server/controller'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 export const updateApp = new Controller(

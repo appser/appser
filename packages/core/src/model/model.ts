@@ -1,15 +1,15 @@
 import EventEmitter from 'node:events'
 
-import db from 'backend/db'
-import { createLogger } from 'backend/logger'
-import { modelError } from 'backend/model/mode.error'
+import db from 'core/db'
+import { createLogger } from 'core/logger'
+import { modelError } from 'core/model/mode.error'
 import { z } from 'zod'
 
 import { isQuerySelect } from './helpers/isQuerySelect'
 import { Validator } from './validator'
 
 import type { Column } from './column'
-import type { Models } from 'backend/model'
+import type { Models } from 'core/model'
 import type { Knex } from 'knex'
 import type { ZodObject, ZodUnknown } from 'zod'
 

@@ -1,6 +1,6 @@
 import { HttpStatusCode } from '@appser/common'
-import { User } from 'backend/models/user'
-import { Controller } from 'backend/server/controller'
+import { User } from 'core/models/user'
+import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 
 export const updateAccountProfile = new Controller(

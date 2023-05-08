@@ -1,10 +1,10 @@
-import { Org } from 'backend/models/org'
-import { Controller } from 'backend/server/controller'
-import { serverError } from 'backend/server/server.error'
-import { rNumId } from 'backend/utils/regex'
+import { Org } from 'core/models/org'
+import { Controller } from 'core/server/controller'
+import { serverError } from 'core/server/server.error'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
-import type { TOrg } from 'backend/models/org'
+import type { TOrg } from 'core/models/org'
 
 export const getOrg = new Controller(
   async (ctx, next) => {
@@ -44,7 +44,7 @@ export const getOrg = new Controller(
   }
 )
 
-declare module 'backend/server/controller' {
+declare module 'core/server/controller' {
   interface State {
     getOrg: {
       org: TOrg

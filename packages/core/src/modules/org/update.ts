@@ -1,6 +1,6 @@
-import { Org } from 'backend/models/org'
-import { Controller } from 'backend/server/controller'
-import { rNumId } from 'backend/utils/regex'
+import { Org } from 'core/models/org'
+import { Controller } from 'core/server/controller'
+import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 export const updateOrg = new Controller(

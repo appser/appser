@@ -1,12 +1,12 @@
-import db from 'backend/db'
-import { Token } from 'backend/models/token'
-import { authError } from 'backend/modules/auth/auth.error'
-import { parseAccessToken } from 'backend/modules/auth/utils/accessToken'
+import db from 'core/db'
+import { Token } from 'core/models/token'
+import { authError } from 'core/modules/auth/auth.error'
+import { parseAccessToken } from 'core/modules/auth/utils/accessToken'
 
 import { getAccessToken } from '../utils/getAccessToken'
 
-import type { TUser } from 'backend/models/user'
-import type { Payload } from 'backend/modules/auth/utils/accessToken'
+import type { TUser } from 'core/models/user'
+import type { Payload } from 'core/modules/auth/utils/accessToken'
 import type { Middleware } from 'koa'
 
 export const useAuth: Middleware = async (ctx, next) => {
@@ -42,7 +42,7 @@ export const useAuth: Middleware = async (ctx, next) => {
   await next()
 }
 
-declare module 'backend/server/controller' {
+declare module 'core/server/controller' {
   interface State {
     auth: {
       currentUser: TUser

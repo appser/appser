@@ -1,5 +1,5 @@
-import config from 'backend/config'
-import db from 'backend/db'
+import config from 'core/config'
+import db from 'core/db'
 
 import type { Context } from 'koa'
 

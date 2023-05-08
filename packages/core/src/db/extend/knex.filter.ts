@@ -5,8 +5,8 @@ import { type Knex as KnexOriginal, knex } from 'knex'
 
 import { dbError } from '../db.error'
 
-import type { Condition, ConditionBetween, Operator } from 'backend/models/dataset/view.filter.condition.schema'
-import type { Filter } from 'backend/models/dataset/view.filter.schema'
+import type { Condition, ConditionBetween, Operator } from 'core/models/dataset/view.filter.condition.schema'
+import type { Filter } from 'core/models/dataset/view.filter.schema'
 
 knex.QueryBuilder.extend('filter', handler)
 

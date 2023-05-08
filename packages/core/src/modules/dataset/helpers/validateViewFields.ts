@@ -1,4 +1,4 @@
-import type { TView } from 'backend/models/dataset/view.schema'
+import type { TView } from 'core/models/dataset/view.schema'
 
 export function validateViewFields(view: TView, availableFieldNames: string[]) {
   const viewFields = Object.keys(view.field)

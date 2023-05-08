@@ -1,4 +1,4 @@
-import config from 'backend/config'
+import config from 'core/config'
 import { Snowflake } from 'nodejs-snowflake'
 
 const snowflakeId = new Snowflake({

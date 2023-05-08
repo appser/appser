@@ -1,6 +1,6 @@
 import { HttpStatusCode } from '@appser/common'
-import { User } from 'backend/models/user'
-import { Controller } from 'backend/server/controller'
+import { User } from 'core/models/user'
+import { Controller } from 'core/server/controller'
 import merge from 'lodash/merge'
 
 export const updateAccountSettings = new Controller(

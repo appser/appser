@@ -1,4 +1,4 @@
-import { createErrors, t } from 'backend/error'
+import { createErrors, t } from 'core/error'
 
 export const modelError = createErrors('model', {
   validateFail: ['Forbidden', t('model.validateFail')],
