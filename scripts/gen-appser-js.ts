@@ -3,7 +3,7 @@ import { join } from 'node:path'
 import { generate } from 'openapi-typescript-codegen'
 import rimraf from 'rimraf'
 
-import { server } from '../packages/backend/src'
+import { server } from '../packages/core/src'
 
 import type { OpenAPIV3 } from 'openapi-types'
 

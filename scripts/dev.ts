@@ -1,5 +1,5 @@
 import { createServer } from 'vite'
 
-import { start } from '../packages/backend/src'
+import { start } from '../packages/core/src'
 
 start()

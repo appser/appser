@@ -1,4 +1,4 @@
-import { datasetIconIds, datasetTintColors } from '@appser/shared'
+import { datasetIconIds, datasetTintColors } from '@appser/common'
 import { ActionIcon, Box, ColorSwatch, Divider, Group } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useEffect } from 'react'

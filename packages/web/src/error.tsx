@@ -1,4 +1,4 @@
-import { HttpStatusCode as Http } from '@appser/shared'
+import { HttpStatusCode as Http } from '@appser/common'
 import { showNotification } from '@mantine/notifications'
 import get from 'lodash/get'
 import { Navigate, useLocation, useRouteError } from 'react-router-dom'

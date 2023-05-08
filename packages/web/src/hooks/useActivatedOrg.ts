@@ -1,7 +1,7 @@
 import { atom, useAtom } from 'jotai'
 import { setLastOrgId } from 'web/servers/org/utils'
 
-import type { Optional } from '@appser/shared'
+import type { Optional } from '@appser/common'
 import type { TOrg } from 'web/servers/org/types'
 
 const activatedOrg = atom<Optional<TOrg, 'id'>, TOrg>({

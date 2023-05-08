@@ -13,7 +13,7 @@
   },
   "scripts": {},
   "dependencies": {
-    "@appser/backend": "workspace:*",
+    "@appser/core": "workspace:*",
     "appser-web": "workspace:*"
   },
   "devDependencies": {
