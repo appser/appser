@@ -10,7 +10,7 @@ export const addViewRecord = new Controller(
       getDatasetView: { view }
     } = ctx.state
     const { appId, id: datasetId } = dataset
-    const { id: viewId } = view
+    const { id: viewId } = view.toJSON()
     const data = ctx.request.body
 
     guard('app:dataset:view:record:add', { appId, datasetId, viewId })
@@ -28,7 +28,7 @@ export const addViewRecord = new Controller(
   },
   {
     state: ['auth', 'access', 'getDataset', 'getDatasetView'],
-    body: jsonSchema as any, // TODO: fix type
+    body: jsonSchema,
     response: {
       201: null
     }

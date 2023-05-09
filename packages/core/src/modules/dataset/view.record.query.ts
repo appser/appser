@@ -1,9 +1,8 @@
-import { filterSchema } from 'core/models/dataset/view.filter.schema'
-import { viewSchema } from 'core/models/dataset/view.schema'
 import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 
-import { datasetError } from './dataset.error'
+import { viewSchema } from './helpers/view/view.schema'
+import { filterSchema } from '../../db/filter/filter.schema'
 
 // TODO: pageToken
 export const queryRecord = new Controller(
@@ -15,21 +14,19 @@ export const queryRecord = new Controller(
       formula: { userFormula }
     } = ctx.state
     const { appId, id: datasetId } = dataset
-    const { id: viewId } = view
+    const { id: viewId } = view.toJSON()
     const { pageToken: cursor = 0, filter, sorts, selects, pageSize = 50 } = ctx.request.body
 
     guard('app:dataset:view:record:query', { appId, datasetId, viewId })
 
-    const viewSelects = Object.keys(view.field).filter(field => view.field[field].selected)
+    view.validate({ filter, sorts, fields: selects })
 
-    if (selects && selects.some(s => !viewSelects.includes(s))) ctx.throw(datasetError('selectOutsideField'))
-
-    // TODO: bugfix
     const records = await model.query
-      // .select([...new Set(['id', ...selects ?? viewSelects])]) // always select `id` field
-      .filter(userFormula.parse(filter))
-      .filter(userFormula.parse(view.filter))
-      .sort(sorts ?? view.sorts)
+      .select(view.toSelect(selects))
+      .select('id')
+      .filter(view.toPathFromFilter(userFormula.parse(filter)))
+      .filter(view.toPathFromFilter(userFormula.parse(view.toJSON().filter)))
+      .orderBy(view.toOrderBy(sorts))
       .limit(pageSize)
       .offset(cursor)
 

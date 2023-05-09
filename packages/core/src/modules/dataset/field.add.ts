@@ -1,11 +1,11 @@
 import db from 'core/db'
 import { Dataset } from 'core/models/dataset'
-import { fieldOptionSchema } from 'core/models/dataset/field.schema'
+import { fieldOptionSchema } from 'core/modules/dataset/helpers/field/field.schema'
 import { Controller } from 'core/server/controller'
 import { nanoid } from 'nanoid'
 import { z } from 'zod'
 
-import { getViewFromDatasetById } from './helpers/getViewFromDatasetById'
+import { View } from './helpers/view/view'
 
 export const addField = new Controller(
   async (ctx, next) => {
@@ -29,7 +29,7 @@ export const addField = new Controller(
       .update('field', db.jsonInsert('field', `$.${name}`, config))
 
     if (appendViewId) {
-      const { view, viewIndex } = getViewFromDatasetById(dataset, appendViewId)
+      const { view, viewIndex } = View.getFromDatasetById(dataset, appendViewId)
 
       view.field[name] = {
         selected: true

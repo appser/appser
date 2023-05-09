@@ -82,7 +82,7 @@ export default new Module(({ get, post, del, patch, put }) => {
     operationId: 'getRecord'
   })
 
-  patch('/datasets/:datasetId/views/:viewId/records/:recordId').access(getDataset, getView, getViewRecord, updateViewRecord).openapi({
+  patch('/datasets/:datasetId/views/:viewId/records/:recordId').access(getDataset, getView, updateViewRecord).openapi({
     tags: 'dataset',
     operationId: 'updateRecord'
   })

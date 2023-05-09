@@ -9,7 +9,7 @@ export const deleteView = new Controller(
       getDatasetView: { view }
     } = ctx.state
     const { appId, id: datasetId } = dataset
-    const viewId = view.id
+    const { id: viewId } = view.toJSON()
 
     guard('app:dataset:view:delete', { appId, datasetId, viewId })
 

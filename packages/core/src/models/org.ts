@@ -1,4 +1,4 @@
-import { Model, column } from 'core/model'
+import { Model, column } from 'core/db/model'
 import { genSnowflakeId } from 'core/vendors/snowflakeId'
 import { z } from 'zod'
 

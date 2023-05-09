@@ -15,17 +15,19 @@ export const getViewRecord = new Controller(
       getDatasetView: { view }
     } = ctx.state
     const { appId, id: datasetId } = dataset
-    const { id: viewId } = view
+    const { id: viewId } = view.toJSON()
     const { recordId } = ctx.params
 
     guard('app:dataset:view:record:get', { appId, datasetId, viewId, recordId })
 
-    const selects = Object.keys(view.field).filter(field => view.field[field].selected)
-    // TODO: bugfix selects
-    const record = await Record.query.select().where({
-      datasetId: dataset.id,
-      id: recordId
-    }).first()
+    const record = await Record.query
+      .select(view.toSelect())
+      .select('id') // always select id column
+      .where({
+        datasetId: dataset.id,
+        id: recordId
+      })
+      .first()
 
     if (!record) return ctx.throw(datasetError('recordNotFound'))
 

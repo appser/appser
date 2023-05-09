@@ -1,5 +1,5 @@
 import { Dataset } from 'core/models/dataset'
-import { viewSchema } from 'core/models/dataset/view.schema'
+import { viewSchema } from 'core/modules/dataset/helpers/view/view.schema'
 import { Controller } from 'core/server/controller'
 import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'

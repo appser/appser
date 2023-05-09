@@ -14,5 +14,13 @@ export const datasetError = createErrors('dataset', {
   fieldNotFound: ['NotFound', t('dataset.fieldNotFound')],
   invalidFilterQuery: ['BadRequest', t('dataset.invalidFilterQuery')],
   selectOutsideField: ['BadRequest', t('dataset.selectOutsideField')],
-  invalidOperator: ['BadRequest', t('dataset.invalidOperator')]
+  invalidOperator: ['BadRequest', t('dataset.invalidOperator')],
+  //
+  invalidViewField: ['BadRequest', t('dataset.invalidViewField')],
+  invalidViewFields: ['BadRequest', t('dataset.invalidViewFields')],
+  invalidViewSorts: ['BadRequest', t('dataset.invalidViewSorts')],
+  invalidViewFilter: ['BadRequest', t('dataset.invalidViewFilter')],
+  invalidViewStickyField: ['BadRequest', t('dataset.invalidViewStickyField')],
+
+
 })

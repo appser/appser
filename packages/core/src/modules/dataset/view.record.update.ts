@@ -9,12 +9,11 @@ export const updateViewRecord = new Controller(
       auth: { currentUser },
       access: { guard },
       getDataset: { dataset, record: { model } },
-      getDatasetView: { view },
-      getDatasetRecord: { record }
+      getDatasetView: { view }
     } = ctx.state
     const { appId, id: datasetId } = dataset
     const { recordId } = ctx.params
-    const { id: viewId } = view
+    const { id: viewId } = view.toJSON()
     const data = ctx.request.body
 
     guard('app:dataset:view:record:field:update', { appId, datasetId, viewId, recordId, fieldName: '*' })
@@ -32,12 +31,12 @@ export const updateViewRecord = new Controller(
     await next()
   },
   {
-    state: ['auth', 'access', 'getDataset', 'getDatasetView', 'getDatasetRecord'],
+    state: ['auth', 'access', 'getDataset', 'getDatasetView'],
     params: z.object({
       datasetId: z.string().regex(rNumId),
       recordId: z.string().regex(rNumId)
     }),
-    body: jsonSchema as any, // TODO: fix type
+    body: jsonSchema,
     response: {
       204: null
     }

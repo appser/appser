@@ -1,6 +1,6 @@
 import { roles } from '@appser/access'
-import { Model } from 'core/model'
-import { column } from 'core/model/column'
+import { Model } from 'core/db/model'
+import { column } from 'core/db/model/column'
 import { hashSync } from 'core/vendors/bcrypt'
 import { genSnowflakeId } from 'core/vendors/snowflakeId'
 import { z } from 'zod'

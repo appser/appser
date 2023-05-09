@@ -2,7 +2,7 @@ import { Dataset } from 'core/models/dataset'
 import { Controller } from 'core/server/controller'
 
 import { datasetError } from './dataset.error'
-import cleanFieldFromView from './helpers/cleanFieldFromView'
+import { View } from './helpers/view/view'
 
 /**
  * TODO:
@@ -21,10 +21,10 @@ export const deleteField = new Controller(
 
     guard('app:dataset:field:delete', { appId, datasetId, fieldName: name })
 
-    if (field.config.locked) return ctx.throw(datasetError('fieldIsLocked'))
+    if (field.locked) return ctx.throw(datasetError('fieldIsLocked'))
 
     dataset.fields[name].deletedAt = new Date().toISOString()
-    dataset.views.forEach(view => cleanFieldFromView(name, view))
+    dataset.views = dataset.views.map(view => new View(view).cleanField(name).toJSON())
 
     await Dataset.query
       .where({ id: datasetId })

@@ -15,11 +15,11 @@ export default {
   },
   migrations: {
     tableName: 'migrations',
-    directory: join(__dirname, './migrations'),
+    directory: join(__dirname, '../migrations'),
     loadExtensions
   },
   seeds: {
-    directory: join(__dirname, './seeds'),
+    directory: join(__dirname, '../seeds'),
     loadExtensions
   }
 

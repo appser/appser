@@ -1,5 +1,5 @@
-import { Model } from 'core/model'
-import { column } from 'core/model/column'
+import { Model } from 'core/db/model'
+import { column } from 'core/db/model/column'
 import { genSnowflakeId } from 'core/vendors/snowflakeId'
 import { z } from 'zod'
 

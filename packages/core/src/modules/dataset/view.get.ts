@@ -1,11 +1,9 @@
-import { viewSchema } from 'core/models/dataset/view.schema'
+import { viewSchema } from 'core/modules/dataset/helpers/view/view.schema'
 import { Controller } from 'core/server/controller'
 import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
-import { getViewFromDatasetById } from './helpers/getViewFromDatasetById'
-
-import type { TView } from 'core/models/dataset/view.schema'
+import { View } from './helpers/view/view'
 
 export const getView = new Controller(
   async (ctx, next) => {
@@ -18,7 +16,7 @@ export const getView = new Controller(
 
     guard('app:dataset:view:get', { appId, datasetId, viewId })
 
-    const { view, viewIndex } = getViewFromDatasetById(dataset, viewId)
+    const { view, viewIndex } = View.getFromDatasetById(dataset, viewId)
 
     // fill all the missing field
     Object.entries(dataset.fields).forEach(([name, config]) => {
@@ -31,7 +29,7 @@ export const getView = new Controller(
 
     Object.assign(ctx.state, {
       getDatasetView: {
-        view,
+        view: new View(view, dataset),
         index: viewIndex
       }
     })
@@ -61,7 +59,7 @@ export const getView = new Controller(
 declare module 'core/server/controller' {
   interface State {
     getDatasetView: {
-      view: TView
+      view: View
       index: number
     }
   }

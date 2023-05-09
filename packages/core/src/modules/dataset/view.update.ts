@@ -1,11 +1,7 @@
 import db from 'core/db'
 import { Dataset } from 'core/models/dataset'
-import { viewSchema } from 'core/models/dataset/view.schema'
+import { viewSchema } from 'core/modules/dataset/helpers/view/view.schema'
 import { Controller } from 'core/server/controller'
-import merge from 'lodash/merge'
-
-import { datasetError } from './dataset.error'
-import { validateViewFields } from './helpers/validateViewFields'
 
 export const updateView = new Controller(
   async (ctx, next) => {
@@ -15,26 +11,23 @@ export const updateView = new Controller(
       getDatasetView: { view, index: viewIndex }
     } = ctx.state
     const { appId, id: datasetId } = dataset
-    const viewId = view.id
+    const { id: viewId } = view.toJSON()
     const { name, sorts, field, filter, fields, stickyField } = ctx.request.body
 
     guard('app:dataset:view:update', { appId, datasetId, viewId })
 
-    const freshView = merge(view, {
+    const config = view.update({
       name,
       sorts,
       field,
       filter,
       fields,
       stickyField
-    })
-    const validated = validateViewFields(freshView, Object.keys(dataset.fields))
-
-    if (!validated) return ctx.throw(datasetError('invalidView'))
+    }).toJSON()
 
     await Dataset.query
       .where({ id: datasetId, appId })
-      .update('views', db.jsonSet('views', `$.${viewIndex}`, JSON.stringify(freshView)))
+      .update('views', db.jsonSet('views', `$.${viewIndex}`, JSON.stringify(config)))
 
     ctx.status = 204
 

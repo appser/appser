@@ -2,8 +2,8 @@
  * only save revoked token
  */
 
-import { Model } from 'core/model'
-import { column } from 'core/model/column'
+import { Model } from 'core/db/model'
+import { column } from 'core/db/model/column'
 import { z } from 'zod'
 
 export const Token = Model.define('token', {

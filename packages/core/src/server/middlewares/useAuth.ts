@@ -1,5 +1,5 @@
-import db from 'core/db'
 import { Token } from 'core/models/token'
+import { User } from 'core/models/user'
 import { authError } from 'core/modules/auth/auth.error'
 import { parseAccessToken } from 'core/modules/auth/utils/accessToken'
 
@@ -23,7 +23,7 @@ export const useAuth: Middleware = async (ctx, next) => {
   if (unavailableToken) return ctx.throw(authError('token.revoked'))
 
   // find current user
-  const user = await db('user').where({ id: tokenPayload.aud }).first()
+  const user = await User.query.where({ id: tokenPayload.aud }).first()
 
   if (!user) return ctx.throw(authError('account.notFound'))
 

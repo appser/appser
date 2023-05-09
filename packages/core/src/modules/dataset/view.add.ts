@@ -1,7 +1,7 @@
 import { HttpStatusCode } from '@appser/common'
 import db from 'core/db'
 import { Dataset } from 'core/models/dataset'
-import { viewSchema } from 'core/models/dataset/view.schema'
+import { viewSchema } from 'core/modules/dataset/helpers/view/view.schema'
 import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 

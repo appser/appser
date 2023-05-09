@@ -1,4 +1,4 @@
-import { Model } from 'core/model'
+import { Model } from 'core/db/model'
 import { Dataset } from 'core/models/dataset'
 import { Record } from 'core/models/record'
 import { Controller } from 'core/server/controller'
@@ -6,13 +6,13 @@ import { rNumId } from 'core/utils/regex'
 import { merge } from 'lodash'
 import { z } from 'zod'
 
-import { convertFieldsToColumn } from './helpers/convertFieldsToColumn'
+import { Field } from './helpers/field/field'
 import { getDatasetById } from './helpers/getDatasetById'
 
+import type { FieldConfig } from './helpers/field/field.schema'
 import type { TDataset } from 'core/models/dataset'
-import type { FieldConfig } from 'core/models/dataset/field.schema'
 
-export const defaultFields: Record<string, FieldConfig> = {
+export const defaultDatasetFields: Record<string, FieldConfig> = {
   id: { type: 'numId', locked: true },
   creator: { type: 'numId', required: true },
   lastEditor: { type: 'numId', locked: true },
@@ -32,7 +32,7 @@ export const getDataset = new Controller(
 
     const model = new Model({
       ...Record.columns,
-      data: convertFieldsToColumn(dataset.fields)
+      data: Field.toColumnWithFields(dataset.fields)
     }).connect({ tableName: 'record' })
 
     Object.assign(ctx.state, {
@@ -44,7 +44,7 @@ export const getDataset = new Controller(
       }
     })
 
-    dataset.fields = merge(dataset.fields, defaultFields)
+    dataset.fields = merge(dataset.fields, defaultDatasetFields)
 
     ctx.body = dataset
 

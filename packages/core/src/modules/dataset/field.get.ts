@@ -1,4 +1,4 @@
-import { Field } from 'core/modules/dataset/helpers/field'
+import { Field } from 'core/modules/dataset/helpers/field/field'
 import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 

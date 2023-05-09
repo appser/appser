@@ -9,7 +9,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      backend: resolve(__dirname, 'src')
+      core: resolve(__dirname, 'src')
     }
   }
 })

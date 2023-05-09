@@ -2,7 +2,7 @@ import { User } from 'core/models/user'
 import { Controller } from 'core/server/controller'
 
 export const getAccount = new Controller(
-  (ctx, next) => {
+  async (ctx, next) => {
     const {
       auth: { currentUser: user }
     } = ctx.state
@@ -14,7 +14,6 @@ export const getAccount = new Controller(
       avatar: user.avatar,
       settings: user.settings
     }
-    ctx.body = user
 
     return next()
   },
