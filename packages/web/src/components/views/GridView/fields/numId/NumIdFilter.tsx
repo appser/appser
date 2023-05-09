@@ -1,5 +1,5 @@
-import { Group, NumberInput, Select, TextInput } from '@appser/ui'
-import { useForm } from '@appser/ui'
+import { Group, NumberInput, Select, TextInput, useForm } from '@appser/ui'
+import { useEffect } from 'react'
 
 import type { FieldFilterProps } from '..'
 import type { FC } from 'react'
@@ -12,13 +12,31 @@ export const NumIdFilter: FC<FieldFilterProps> = ({ column, onChange, condition 
     }
   })
 
+  const operatorData = [
+    { label: '等于', value: 'eq' },
+    { label: '不等于', value: 'neq' }
+  ] as const
+
+  useEffect(() => {
+    const { operator, value } = form.values
+
+    if (operator && value && form.isDirty()) {
+      onChange?.({
+        operator,
+        value
+      })
+    }
+  }, [form.values])
+
   return (
     <Group>
       <Select
-        onChange={v => v && form.setFieldValue('operator', v)}
-        data={[{ value: 'eq', label: '=' }]}
+        data={operatorData}
+        onChange={v => v && form.setFieldValue('operator', v as any)}
       />
-      <TextInput />
+      <TextInput
+        onInput={(e) => form.setFieldValue('value', e.currentTarget.value)}
+      />
     </Group>
   )
 }

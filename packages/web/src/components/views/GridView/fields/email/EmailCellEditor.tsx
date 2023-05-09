@@ -16,7 +16,7 @@ const EmailCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, FieldCel
   }
 
   useImperativeHandle(forwardedRef, () => ({
-    done: save
+    save
   }))
 
   return (

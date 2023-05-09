@@ -4,7 +4,7 @@ import { IconTrash } from '@tabler/icons'
 import { MenuButton } from 'web/components/common/MenuButton'
 import { useCurrentRecordFilter } from 'web/servers/dataset/useQueryRecord'
 
-import { ColumnFilter } from '../column/ColumnFilter'
+import { ColumnFilterCondition } from '../column/ColumnFilterCondition'
 import { useColumns } from '../hooks/useColumns'
 
 import type { FC } from 'react'
@@ -17,17 +17,19 @@ export const ToolbarFilterButton: FC = () => {
   const form = useForm<FilterContext>({
     initialValues: {
       logic: filter?.logic ?? 'and',
-      items: filter?.items ?? []
+      conditions: filter?.conditions ?? []
     }
   })
 
-  const addFilterItem = () => {
-    form.insertListItem('items', { [visibleColumns[0].name]: {} })
-  }
-
   const onSubmit = () => {
     console.log(form.values)
+    setFilter(form.values)
   }
+
+  const logicData = [
+    { label: '所有', value: 'and' },
+    { label: '任意', value: 'or' }
+  ] as const
 
   return (
     <Popover
@@ -44,45 +46,40 @@ export const ToolbarFilterButton: FC = () => {
 
       <Popover.Dropdown>
         <Flex direction="column">
+          <Group>
+            <Text>满足以下</Text>
+            <Select
+              w={100}
+              data={logicData}
+              defaultValue="and"
+              onChange={v => v && form.setFieldValue('logic', v as any)}
+            />
+            <Text>条件</Text>
+          </Group>
           <Box>
-            {form.values.items.map((item, index) => (
-              <Group key={index} spacing={0} mb='sm'>
-                {!index
-                  ? <Text w={70} mr='md' align='center'>where</Text>
-                  : (
-                    <Select
-                      styles={{
-                        input: {
-                          borderRadius: 0
-                        }
-                      }}
-                      w={70}
-                      mr='md'
-                      data={['or', 'and']}
-                      defaultValue={form.values?.logic}
-                    />
-                    )}
-                <ColumnFilter
-                  condition={item}
-                  onChange={(v) => {
-                    // form.values.filters[index] = v
-                    form.setFieldValue(`items.${index}`, v)
-                  }}
+            {form.values.conditions.map((condition, index) => (
+              <Group key={`${Object.keys(condition)[0]}${index}`} spacing={0} mb='sm'>
+                <ColumnFilterCondition
+                  condition={condition}
+                  onChange={(v) => form.setFieldValue(`conditions.${index}`, v)}
                 />
                 <ActionIcon
                   size={36}
-                  sx={{ borderRadius: 0, borderLeft: '0 none', position: 'relative', left: -2 }}
                   variant='outline'
-                  onClick={() => form.removeListItem('filters', index)}
+                  onClick={() => form.removeListItem('conditions', index)}
                 >
                   <IconTrash size={20} />
                 </ActionIcon>
               </Group>
-
             ))}
           </Box>
           <Group>
-            <Button variant='subtle' onClick={addFilterItem}>add</Button>
+            <Button
+              variant='subtle'
+              onClick={() => form.insertListItem('conditions', { [visibleColumns[0].name]: {} })}
+            >
+              add
+            </Button>
             <Button variant='subtle' onClick={onSubmit}>Filter</Button>
           </Group>
         </Flex>

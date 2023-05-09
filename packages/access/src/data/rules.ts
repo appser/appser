@@ -29,11 +29,10 @@ export const rules = {
   'app:dataset:delete': ['appId', 'datasetId'],
   'app:dataset:view:list': ['appId', 'datasetId'],
   'app:dataset:view:add': ['appId', 'datasetId'],
-  'app:dataset:column:add': ['appId', 'datasetId'],
-  'app:dataset:column:get': ['appId', 'datasetId', 'columnName'],
-  'app:dataset:column:update': ['appId', 'datasetId', 'columnName'],
-  'app:dataset:column:delete': ['appId', 'datasetId', 'columnName'],
-  'app:dataset:column:reset': ['appId', 'datasetId', 'columnName'],
+  'app:dataset:field:add': ['appId', 'datasetId'],
+  'app:dataset:field:get': ['appId', 'datasetId', 'fieldName'],
+  'app:dataset:field:update': ['appId', 'datasetId', 'fieldName'],
+  'app:dataset:field:delete': ['appId', 'datasetId', 'fieldName'],
   'app:dataset:view:get': ['appId', 'datasetId', 'viewId'],
   'app:dataset:view:update': ['appId', 'datasetId', 'viewId'],
   'app:dataset:view:delete': ['appId', 'datasetId', 'viewId'],
@@ -41,5 +40,5 @@ export const rules = {
   'app:dataset:view:record:query': ['appId', 'datasetId', 'viewId'],
   'app:dataset:record:delete': ['appId', 'datasetId', 'recordId'],
   'app:dataset:view:record:get': ['appId', 'datasetId', 'viewId', 'recordId'],
-  'app:dataset:view:record:column:update': ['appId', 'datasetId', 'viewId', 'recordId', 'columnName']
+  'app:dataset:view:record:field:update': ['appId', 'datasetId', 'viewId', 'recordId', 'fieldName']
 } as const

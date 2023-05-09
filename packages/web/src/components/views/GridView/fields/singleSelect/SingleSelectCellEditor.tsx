@@ -5,15 +5,14 @@ import type { FieldCellEditorProps, FieldCellEditorRef } from '..'
 import type { BubbleCell } from '@glideapps/glide-data-grid'
 import type { ForwardRefRenderFunction } from 'react'
 
-// TODO @tccsg
 const SingleSelectCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, FieldCellEditorProps<BubbleCell> > = (
-  { cell, column, rectangle, onDone },
+  { cell, column, rectangle, onDone: done },
   forwardedRef
 ) => {
-  const [data, setData] = useState<string>('')
+  const [data, setData] = useState<number | undefined>()
 
   const save = () => {
-    onDone(data)
+    done(data)
   }
 
   useImperativeHandle(forwardedRef, () => ({
@@ -25,7 +24,6 @@ const SingleSelectCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, F
       data={['React', 'Angular', 'Svelte', 'Vue', 'Riot', 'Next.js', 'Blitz.js']}
       placeholder="Pick all that you like"
       defaultValue="react"
-      clearButtonLabel="Clear selection"
       initiallyOpened
       clearable
       variant='unstyled'

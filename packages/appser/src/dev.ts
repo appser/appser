@@ -1,3 +1,3 @@
-import { start } from '@appser/backend'
+import { start } from '@appser/core'
 
 start()

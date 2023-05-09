@@ -1,0 +1,10 @@
+{
+  "name": "@appser/common",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "sideEffects": false,
+  "main": "src/index.ts"
+}

@@ -1,8 +1,8 @@
 import Permission from './permission'
 import { validatePolicy } from './utils/validatePolicy'
 
-import type { rules } from './data/rules'
 import type { Action } from './action'
+import type { rules } from './data/rules'
 import type { Policy } from './policy'
 
 export default class Access {

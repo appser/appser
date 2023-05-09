@@ -1,10 +1,11 @@
-import { Group, Select, TextInput } from '@appser/ui'
-import { useForm } from '@appser/ui'
+import { Group, Select, TextInput, useForm } from '@appser/ui'
+import { useEffect } from 'react'
 
 import type { FieldFilterProps } from '..'
 import type { FC } from 'react'
+import type { FilterConditionOperator } from 'web/servers/dataset/useQueryRecord'
 
-export const EmailFilter: FC<FieldFilterProps> = ({ column, onChange, condition }) => {
+export const EmailFilter: FC<FieldFilterProps> = ({ onChange, condition }) => {
   const form = useForm({
     initialValues: {
       operator: condition?.operator,
@@ -12,50 +13,33 @@ export const EmailFilter: FC<FieldFilterProps> = ({ column, onChange, condition 
     }
   })
 
+  const operatorData = [
+    { label: '等于', value: 'eq' },
+    { label: '不等于', value: 'neq' }
+  ] as const
+
+  useEffect(() => {
+    const { operator, value } = form.values
+
+    if (operator && value) {
+      onChange?.({
+        operator,
+        value
+      })
+    }
+  }, [form.values])
+
   return (
     <Group spacing={0} noWrap>
       <Select
         w={100}
-        styles={{
-          root: {
-            left: -1,
-            position: 'relative',
-            '&:focus-within': {
-              zIndex: 1
-            }
-          },
-          input: {
-            borderRadius: 0
-          }
-        }}
-        onChange={v => {
-          if (v) {
-            v && form.setFieldValue('operator', v)
-            onChange?.({ [v]: form.values.value ?? '' })
-          }
-        }}
-        data={[{ value: 'eq', label: '=' }]}
+        defaultValue={form.values.operator}
+        onChange={v => v && form.setFieldValue('operator', v as FilterConditionOperator)}
+        data={operatorData}
       />
-      <TextInput styles={{
-        root: {
-          left: -2,
-          position: 'relative',
-          '&:focus-within': {
-            zIndex: 1
-          }
-        },
-        input: {
-          borderRadius: 0
-        }
-      }}
-        onInput={(e) => {
-          form.setFieldValue('value', e.currentTarget.value)
-          const k = form.values.operator as string
-
-          if (k) {
-            onChange?.({ [k]: e.currentTarget.value })
-          }
-        }}
+      <TextInput
+        defaultValue={String(form.values.value)}
+        onInput={(e) => form.setFieldValue('value', e.currentTarget.value)}
       />
     </Group>
   )

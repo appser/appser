@@ -37,12 +37,12 @@
     "invalidInsertType": "Validate inserts must be object or array.",
     "invalidUpdateType": "Origin update must be object.",
     "notFound": "Model {{name}} is not stored",
-    "patchFieldFailed": "Prohibit patch field type, use column reset api to do that.",
-    "invalidColumnConfig": "Invalid column config",
-    "columnNotFound": "Column '{{columnId}}' not found",
-    "castFieldFailed": "Prohibit patch field type, use column reset api to do that.",
+    "patchFieldFailed": "Prohibit patch field type, use field reset api to do that.",
+    "invalidFieldConfig": "Invalid field config",
+    "fieldNotFound": "Field '{{fieldId}}' not found",
+    "castFieldFailed": "Prohibit patch field type, use field reset api to do that.",
     "invalidFieldOptions": "Invalid field option",
-    "columnIsLocked": "Column is frozen, can't be update.",
+    "fieldIsLocked": "Field is frozen, can't be update.",
     "missingTableWName": "model createTable without datasetName"
   },
   "signup": {
@@ -50,18 +50,18 @@
     "denySignup": "signup is not allowed"
   },
   "dataset": {
-    "emptyRecord": "cannot add empty record or mismatch with dataset columns",
-    "invalidColumn": "Invalid column: {{columns}}",
+    "emptyRecord": "cannot add empty record or mismatch with dataset fields",
+    "invalidField": "Invalid field: {{fields}}",
     "recordNotFound": "Record not found",
     "invalidRecord": "Invalid record: {{errors}}",
     "viewRequired": "dataset view must have at least one view",
     "viewNotFound": "dataset view not found",
-    "viewColumnNotFound": "column {{names}} not found",
+    "viewFieldNotFound": "field {{names}} not found",
     "invalidView": "Invalid view: {{errors}}",
     "notFound": "dataset not found",
-    "invalidRecordColumn": "invalid record column",
+    "invalidRecordField": "invalid record field",
     "invalidFilterQuery": "invalid filter query",
-    "selectOutsideColumn": "column outside the range",
+    "selectOutsideField": "field outside the range",
     "invalidOperator": "invalid operator"
   },
   "org": {

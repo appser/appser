@@ -50,9 +50,9 @@ describe('default roles', () => {
     }))
 
     expect(ac.can('org:delete', { orgId: '1' }).allow).toBe(true)
-    expect(ac.can('org:people:invite', { orgId: '1' }).allow).toBe(true)
+    expect(ac.can('org:invitation:create', { orgId: '1' }).allow).toBe(true)
     expect(ac.can('app:get', { appId: '2' }).allow).toBe(true)
-    expect(ac.can('app:dataset:column:add', { appId: '2', datasetId: '123' }).allow).toBe(true)
+    expect(ac.can('app:dataset:field:add', { appId: '2', datasetId: '123' }).allow).toBe(true)
 
     // deny
     expect(ac.can('account:org:create', { userId: '123' }).allow).toBe(false)
@@ -66,7 +66,7 @@ describe('default roles', () => {
     expect(ac.can('org:get', { orgId: '1' }).allow).toBe(true)
     expect(ac.can('org:app:list', { orgId: '1' }).allow).toBe(true)
     expect(ac.can('org:delete', { orgId: '1' }).allow).toBe(false)
-    expect(ac.can('org:people:invite', { orgId: '1' }).allow).toBe(false)
+    expect(ac.can('org:invitation:create', { orgId: '1' }).allow).toBe(false)
 
     // deny
     expect(ac.can('app:get', { appId: '1' }).allow).toBe(false)
@@ -116,7 +116,7 @@ describe('default roles', () => {
     expect(ac.can('app:get', { appId: '1' }).allow).toBe(true)
     expect(ac.can('app:dataset:get', { appId: '1', datasetId: '2' }).allow).toBe(true)
     expect(ac.can('app:dataset:view:list', { appId: '1', datasetId: '2' }).allow).toBe(true)
-    expect(ac.can('app:dataset:column:get', { appId: '1', datasetId: '2', columnName: '3' }).allow).toBe(true)
+    expect(ac.can('app:dataset:field:get', { appId: '1', datasetId: '2', fieldName: '3' }).allow).toBe(true)
 
     // deny
     expect(ac.can('app:update', { appId: '1' }).allow).toBe(false)

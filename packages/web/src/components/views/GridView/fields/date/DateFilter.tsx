@@ -14,11 +14,11 @@ const THIS_MONTH = 'DATE_START_OF(NOW(),"M")'
 const YESTERDAY = 'DATE_ADD(NOW(),-1,"d")'
 const TOMORROW = 'DATE_ADD(NOW(),1,"d")'
 
-export const DateFilter: FC<FieldFilterProps> = ({ onChange, conditionValueDetail }) => {
+export const DateFilter: FC<FieldFilterProps> = ({ onChange, condition }) => {
   const form = useForm({
     initialValues: {
-      operator: conditionValueDetail?.operator ?? 'between',
-      value: conditionValueDetail?.value ?? '$customDate'
+      operator: condition?.operator ?? 'between',
+      value: condition?.value ?? '$customDate'
     },
     transformValues(values) {
       if (typeof values.value === 'string' || Array.isArray(values.value)) {
@@ -58,16 +58,16 @@ export const DateFilter: FC<FieldFilterProps> = ({ onChange, conditionValueDetai
         return [
           { label: '具体日期', value: '$customDate' },
           { label: '具体时间段', value: '$customRangeDate' },
-          { label: '今天', value: `=ARG2ARRAY(TODAY(),${TOMORROW},"[)")` },
-          { label: '明天', value: `=ARG2ARRAY(${TOMORROW},DATE_ADD(TODAY(),2,"d"),"[)")` },
-          { label: '昨天', value: `=ARG2ARRAY(${YESTERDAY},TODAY(),"[)")` },
-          { label: '本周', value: `=ARG2ARRAY(${THIS_WEEK},DATE_ADD(${THIS_WEEK},1,"w"),"[)")` },
-          { label: '上周', value: `=ARG2ARRAY(DATE_ADD(${THIS_WEEK},-1,"w"),${THIS_WEEK},"[)")` },
-          { label: '本月', value: `=ARG2ARRAY(${THIS_MONTH},DATE_ADD(${THIS_MONTH},1,"M"),"[)")` },
-          { label: '上月', value: `=ARG2ARRAY(DATE_ADD(${THIS_MONTH},-1,"M"),${THIS_MONTH},"[)")` },
-          { label: '过去 7 天内', value: `=ARG2ARRAY(DATE_ADD(TODAY(),-7,"d"),TODAY(),"[)")` },
-          { label: '未来 7 天内', value: '=ARG2ARRAY(TODAY(),DATE_ADD(TODAY(),7,"d"),"[)")' },
-          { label: '过去 30 天内', value: `=ARG2ARRAY(DATE_ADD(TODAY(),-30,"d"),TODAY(),"[)")` }
+          { label: '今天', value: `=ARGS2ARRAY(TODAY(),${TOMORROW},"[)")` },
+          { label: '明天', value: `=ARGS2ARRAY(${TOMORROW},DATE_ADD(TODAY(),2,"d"),"[)")` },
+          { label: '昨天', value: `=ARGS2ARRAY(${YESTERDAY},TODAY(),"[)")` },
+          { label: '本周', value: `=ARGS2ARRAY(${THIS_WEEK},DATE_ADD(${THIS_WEEK},1,"w"),"[)")` },
+          { label: '上周', value: `=ARGS2ARRAY(DATE_ADD(${THIS_WEEK},-1,"w"),${THIS_WEEK},"[)")` },
+          { label: '本月', value: `=ARGS2ARRAY(${THIS_MONTH},DATE_ADD(${THIS_MONTH},1,"M"),"[)")` },
+          { label: '上月', value: `=ARGS2ARRAY(DATE_ADD(${THIS_MONTH},-1,"M"),${THIS_MONTH},"[)")` },
+          { label: '过去 7 天内', value: `=ARGS2ARRAY(DATE_ADD(TODAY(),-7,"d"),TODAY(),"[)")` },
+          { label: '未来 7 天内', value: '=ARGS2ARRAY(TODAY(),DATE_ADD(TODAY(),7,"d"),"[)")' },
+          { label: '过去 30 天内', value: `=ARGS2ARRAY(DATE_ADD(TODAY(),-30,"d"),TODAY(),"[)")` }
         ]
       case 'lt': case 'gt':
         return [

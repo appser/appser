@@ -318,7 +318,7 @@ export default function AppsId() {
             }
           }}
         >
-          <AppRightSidebar />
+          {/* <AppRightSidebar /> */}
         </ResizablePanels>
 
       </Flex>

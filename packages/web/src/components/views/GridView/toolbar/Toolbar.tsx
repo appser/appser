@@ -3,9 +3,9 @@ import { Button, Group, Space } from '@appser/ui'
 import { ThemeSelect } from 'web/components/common/ThemeSelect'
 import { IconPlusCircle } from 'web/components/icons/IconPlusCircle'
 
+import { ToolbarColumnButton } from './ToolbarColumnButton'
 import { ToolbarFilterButton } from './ToolbarFilterButton'
 import { ToolbarSortButton } from './ToolbarSortButton'
-import { ColumnSettingsButton } from '../column/ColumnSettingsButton'
 
 import type { FC } from 'react'
 
@@ -35,7 +35,7 @@ export const GridToolbar: FC<Props> = ({ onClickCreate }) => {
       <Space w={20} />
       <ToolbarFilterButton />
       <ToolbarSortButton />
-      <ColumnSettingsButton />
+      <ToolbarColumnButton />
       <ThemeSelect />
     </Group>
   )

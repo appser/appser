@@ -18,20 +18,20 @@ export const useColumns = () => {
     () => {
       if (!dataset || !view) return []
 
-      return view.columns.map<Column>(columnName => {
-        const columnInDataset = dataset.column[columnName]
-        const columnInView = view.column[columnName]
+      return view.columns.map<Column>(fieldName => {
+        const columnInDataset = dataset.column[fieldName]
+        const columnInView = view.column[fieldName]
 
-        if (!columnInDataset || !columnInView) throw new Error(`Column ${columnName} not found in dataset or view`)
+        if (!columnInDataset || !columnInView) throw new Error(`Column ${fieldName} not found in dataset or view`)
 
         return {
           // column
-          name: columnName,
+          name: fieldName,
           ...columnInDataset,
           ...columnInView,
           // grid column
-          id: columnName,
-          title: columnInDataset.title || t(`column.${columnName}`) || t(`field.${columnInDataset.field}`),
+          id: fieldName,
+          title: columnInDataset.title || t(`column.${fieldName}`) || t(`field.${columnInDataset.field}`),
           icon: columnInDataset.field,
           hasMenu: true,
           width: columnInView?.width

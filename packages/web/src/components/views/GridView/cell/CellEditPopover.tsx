@@ -44,7 +44,7 @@ export const CellEditPopover: FC<Props> = () => {
   }
 
   useClickOutside(() => {
-    editorRef.current?.done?.()
+    editorRef.current?.save?.()
   }, null, [ref])
 
   if (!showEditor) return null
