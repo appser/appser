@@ -1,4 +1,4 @@
-import { useForm } from '@mantine/form'
+import { useForm } from '@appser/ui'
 import { useEffect, useMemo } from 'react'
 import { FormSection } from 'web/components/common/FormSection'
 

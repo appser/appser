@@ -1,4 +1,4 @@
-import { Select } from '@mantine/core'
+import { Select } from '@appser/ui'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 
 import type { FieldCellEditorProps, FieldCellEditorRef } from '..'

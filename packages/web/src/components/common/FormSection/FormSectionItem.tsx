@@ -1,9 +1,9 @@
-import { Box, Flex, Loader, Stack, Text } from '@mantine/core'
+import { Box, Flex, Loader, Stack, Text } from '@appser/ui'
 import { IconCircleCheck } from '@tabler/icons'
 
 import { useStyles } from './index'
 
-import type { BoxProps } from '@mantine/core'
+import type { BoxProps } from '@appser/ui'
 import type { FC, ReactNode } from 'react'
 
 export interface FormSectionItemProps extends BoxProps {

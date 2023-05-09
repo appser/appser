@@ -1,11 +1,11 @@
-import { Button, Flex, Group, PasswordInput } from '@mantine/core'
-import { hasLength, useForm } from '@mantine/form'
-import { useDisclosure } from '@mantine/hooks'
+import { Button, Flex, Group, PasswordInput } from '@appser/ui'
+import { hasLength, useForm } from '@appser/ui'
+import { useDisclosure } from '@appser/ui'
 import { useTranslation } from 'react-i18next'
 import { useChangeAccountPassword } from 'web/servers/account/useChangeAccountPassword'
 import { useGetAccount } from 'web/servers/account/useGetAccount'
 
-import type { ContextModalProps } from '@mantine/modals'
+import type { ContextModalProps } from '@appser/ui'//modals
 
 export function UserChangePasswordModal({ context, id }: ContextModalProps) {
   const { t } = useTranslation()

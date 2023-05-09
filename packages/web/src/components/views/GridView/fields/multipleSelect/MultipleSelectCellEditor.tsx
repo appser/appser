@@ -1,4 +1,4 @@
-import { MultiSelect } from '@mantine/core'
+import { MultiSelect } from '@appser/ui'
 import { forwardRef, useImperativeHandle, useMemo, useState } from 'react'
 
 import type { FieldCellEditorProps, FieldCellEditorRef } from '..'

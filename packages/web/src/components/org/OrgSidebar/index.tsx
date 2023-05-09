@@ -1,4 +1,4 @@
-import { NavLink, Navbar, Text } from '@mantine/core'
+import { NavLink, Navbar, Text } from '@appser/ui'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink, useLocation } from 'react-router-dom'

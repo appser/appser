@@ -1,11 +1,11 @@
-import { Select, createStyles, useMantineColorScheme } from '@mantine/core'
-import { useLocalStorage } from '@mantine/hooks'
+import { Select, createStyles, useMantineColorScheme } from '@appser/ui'
+import { useLocalStorage } from '@appser/ui'
 import { useTranslation } from 'react-i18next'
 
 import { IconMoon } from '../icons/IconMoon'
 import { IconSun } from '../icons/IconSun'
 
-import type { SelectProps } from '@mantine/core'
+import type { SelectProps } from '@appser/ui'
 import type { FC } from 'react'
 import type { ImprovedColorScheme } from 'web/hooks/useImprovedColorScheme'
 

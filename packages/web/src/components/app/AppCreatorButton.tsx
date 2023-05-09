@@ -1,5 +1,5 @@
 import { colors } from '@appser/ui'
-import { Group, Loader, Text, ThemeIcon, UnstyledButton } from '@mantine/core'
+import { Group, Loader, Text, ThemeIcon, UnstyledButton } from '@appser/ui'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import useAccess from 'web/hooks/useAccess'

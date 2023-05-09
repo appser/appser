@@ -1,5 +1,5 @@
-import { ActionIcon, Box, Button, Flex, Group, Popover, Select, Text } from '@mantine/core'
-import { useForm } from '@mantine/form'
+import { ActionIcon, Box, Button, Flex, Group, Popover, Select, Text } from '@appser/ui'
+import { useForm } from '@appser/ui'
 import { IconTrash } from '@tabler/icons'
 import { MenuButton } from 'web/components/common/MenuButton'
 import { useCurrentRecordFilter } from 'web/servers/dataset/useQueryRecord'

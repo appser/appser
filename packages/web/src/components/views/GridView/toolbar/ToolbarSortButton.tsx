@@ -1,5 +1,5 @@
-import { Box, Button, Center, CloseButton, Flex, Group, Popover } from '@mantine/core'
-import { useForm } from '@mantine/form'
+import { Box, Button, Center, CloseButton, Flex, Group, Popover } from '@appser/ui'
+import { useForm } from '@appser/ui'
 import { IconGripVertical } from '@tabler/icons'
 import { useMemo } from 'react'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'

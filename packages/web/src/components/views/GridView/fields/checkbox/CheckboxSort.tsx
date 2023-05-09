@@ -1,4 +1,4 @@
-import { SegmentedControl } from '@mantine/core'
+import { SegmentedControl } from '@appser/ui'
 
 import type { FieldSortDirection, FieldSortProps } from '..'
 import type { FC } from 'react'

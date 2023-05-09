@@ -1,5 +1,5 @@
-import { Button, Flex, Title } from '@mantine/core'
-import { useForm } from '@mantine/form'
+import { Button, Flex, Title } from '@appser/ui'
+import { useForm } from '@appser/ui'
 import { useGetAccount } from 'web/servers/account/useGetAccount'
 import { useUpdateAccountProfile } from 'web/servers/account/useUpdateAccountProfile'
 

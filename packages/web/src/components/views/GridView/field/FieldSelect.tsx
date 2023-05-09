@@ -1,4 +1,4 @@
-import { Group, Menu, Text } from '@mantine/core'
+import { Group, Menu, Text } from '@appser/ui'
 import { useState } from 'react'
 import { MenuButton } from 'web/components/common/MenuButton'
 

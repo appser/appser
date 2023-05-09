@@ -9,9 +9,8 @@
   },
   "dependencies": {
     "@appser/access": "workspace:1.0.0",
-    "@appser/core-docs": "workspace:^1.0.0",
-    "@appser/languages": "workspace:1.0.0",
     "@appser/common": "workspace:0.0.1",
+    "@appser/languages": "workspace:1.0.0",
     "@appser/ui": "workspace:0.0.1",
     "@formkit/auto-animate": "1.0.0-beta.6",
     "@glideapps/glide-data-grid": "5.2.1",
@@ -29,12 +28,6 @@
   },
   "devDependencies": {
     "@appser/appser-js": "workspace:0.0.1",
-    "@emotion/react": "^11.10.5",
-    "@mantine/core": "^6.0.4",
-    "@mantine/form": "^6.0.4",
-    "@mantine/hooks": "^6.0.4",
-    "@mantine/modals": "^6.0.4",
-    "@mantine/notifications": "^6.0.4",
     "@tanstack/react-query": "^4.20.9",
     "@types/debug": "^4.1.7",
     "@types/lodash": "^4.14.191",
@@ -42,7 +35,6 @@
     "@types/react-beautiful-dnd": "^13.1.3",
     "@types/react-dom": "^18.0.10",
     "i18next-browser-languagedetector": "^7.0.1",
-    "react-router-dom": "^6.8.0",
-    "vite-plugin-svgr": "^2.4.0"
+    "react-router-dom": "^6.8.0"
   }
 }

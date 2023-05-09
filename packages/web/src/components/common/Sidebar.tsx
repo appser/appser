@@ -1,7 +1,7 @@
-import { Box, createPolymorphicComponent, createStyles } from '@mantine/core'
+import { Box, createPolymorphicComponent, createStyles } from '@appser/ui'
 import { forwardRef } from 'react'
 
-import type { BoxProps } from '@mantine/core'
+import type { BoxProps } from '@appser/ui'
 
 const useStyles = createStyles(({ colorScheme, colors }) => ({
   sidebar: {

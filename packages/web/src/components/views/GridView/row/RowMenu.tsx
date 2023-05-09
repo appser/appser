@@ -1,8 +1,8 @@
-import { Menu } from '@mantine/core'
+import { Menu } from '@appser/ui'
 import { useDeleteRecord } from 'web/servers/dataset/useDeleteRecord'
 
 import type { Rectangle } from '@glideapps/glide-data-grid'
-import type { MenuProps } from '@mantine/core'
+import type { MenuProps } from '@appser/ui'
 import type { FC } from 'react'
 import type { Row } from 'web/components/views/GridView/row/Row'
 

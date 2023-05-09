@@ -1,5 +1,5 @@
 import { Logo } from '@appser/ui'
-import { Box, Flex, Paper, SimpleGrid, useMantineColorScheme } from '@mantine/core'
+import { Box, Flex, Paper, SimpleGrid, useMantineColorScheme } from '@appser/ui'
 import { Outlet, redirect, useLoaderData, useOutletContext } from 'react-router-dom'
 import { LanguageSelect } from 'web/components/common/LanguageSelect'
 import { Sidebar } from 'web/components/common/Sidebar'

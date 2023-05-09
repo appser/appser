@@ -1,4 +1,4 @@
-import { NumberInput, Text } from '@mantine/core'
+import { NumberInput, Text } from '@appser/ui'
 
 import type { FieldColumnInputProps } from '..'
 import type { FC } from 'react'

@@ -1,4 +1,4 @@
-import { ThemeIcon } from '@mantine/core'
+import { ThemeIcon } from '@appser/ui'
 
 import { IconApp } from '../icons/IconApp'
 

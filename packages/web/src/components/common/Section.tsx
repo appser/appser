@@ -1,4 +1,4 @@
-import { Flex, Divider as OriginDivider, Text, createStyles } from '@mantine/core'
+import { Flex, Divider as OriginDivider, Text, createStyles } from '@appser/ui'
 
 import type { FC } from 'react'
 

@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Group, Text, Title, createStyles } from '@mantine/core'
+import { Box, Button, Center, Flex, Group, Text, Title, createStyles } from '@appser/ui'
 import { useMutation } from '@tanstack/react-query'
 import get from 'lodash/get'
 import { AlertOctagon } from 'react-feather'

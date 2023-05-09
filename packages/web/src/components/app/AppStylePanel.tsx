@@ -1,6 +1,5 @@
 import { datasetIconIds, datasetTintColors } from '@appser/common'
-import { ActionIcon, Box, ColorSwatch, Divider, Group } from '@mantine/core'
-import { useForm } from '@mantine/form'
+import { ActionIcon, Box, ColorSwatch, Divider, Group, useForm } from '@appser/ui'
 import { useEffect } from 'react'
 
 import { IconApp } from '../icons/IconApp'

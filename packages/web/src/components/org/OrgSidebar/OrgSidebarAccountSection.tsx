@@ -1,4 +1,4 @@
-import { Box, Flex, Group, Menu, Text, UnstyledButton } from '@mantine/core'
+import { Box, Flex, Group, Menu, Text, UnstyledButton } from '@appser/ui'
 import { useTranslation } from 'react-i18next'
 import { IconLogOut } from 'web/components/icons/IconLogout'
 import { IconMoreVertical } from 'web/components/icons/IconMoreVertical'

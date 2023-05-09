@@ -1,5 +1,5 @@
 import { colors } from '@appser/ui'
-import { Button, Group, Space } from '@mantine/core'
+import { Button, Group, Space } from '@appser/ui'
 import { ThemeSelect } from 'web/components/common/ThemeSelect'
 import { IconPlusCircle } from 'web/components/icons/IconPlusCircle'
 

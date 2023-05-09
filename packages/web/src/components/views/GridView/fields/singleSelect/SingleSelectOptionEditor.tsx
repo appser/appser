@@ -1,5 +1,5 @@
-import { Button, Center, CloseButton, Group, TextInput } from '@mantine/core'
-import { useForm } from '@mantine/form'
+import { Button, Center, CloseButton, Group, TextInput } from '@appser/ui'
+import { useForm } from '@appser/ui'
 import { useEffect } from 'react'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { FormSection } from 'web/components/common/FormSection'

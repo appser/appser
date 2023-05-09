@@ -1,9 +1,9 @@
-import { Box, CloseButton, Flex, MultiSelect, Text } from '@mantine/core'
+import { Box, CloseButton, Flex, MultiSelect, Text } from '@appser/ui'
 import { forwardRef } from 'react'
 
 import { UserAvatar } from '../user/UserAvatar'
 
-import type { MultiSelectProps, MultiSelectValueProps, SelectItemProps } from '@mantine/core'
+import type { MultiSelectProps, MultiSelectValueProps, SelectItemProps } from '@appser/ui'
 import type { FC } from 'react'
 
 export interface UserSelectItem {

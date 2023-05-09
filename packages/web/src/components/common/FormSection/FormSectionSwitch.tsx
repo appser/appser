@@ -1,8 +1,8 @@
-import { Switch } from '@mantine/core'
+import { Switch } from '@appser/ui'
 
 import { FormSectionItem } from './FormSectionItem'
 
-import type { SwitchProps } from '@mantine/core'
+import type { SwitchProps } from '@appser/ui'
 import type { FC } from 'react'
 
 export const FormSectionSwitch: FC<SwitchProps> = ({ label, description, ...props }) => {

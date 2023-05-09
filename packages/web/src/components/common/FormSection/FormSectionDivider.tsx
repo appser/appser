@@ -1,7 +1,7 @@
 import { colors } from '@appser/ui'
-import { Divider } from '@mantine/core'
+import { Divider } from '@appser/ui'
 
-import type { DividerProps } from '@mantine/core'
+import type { DividerProps } from '@appser/ui'
 import type { FC } from 'react'
 
 export const FormSectionDivider: FC<DividerProps> = (p) => (

@@ -1,5 +1,5 @@
 import { colors } from '@appser/ui'
-import { Box, Tabs, createStyles } from '@mantine/core'
+import { Box, Tabs, createStyles } from '@appser/ui'
 import { IconApiApp } from '@tabler/icons'
 import { useEffect, useState } from 'react'
 import { useDataSource } from 'web/components/views/GridView/hooks/useDataSource'

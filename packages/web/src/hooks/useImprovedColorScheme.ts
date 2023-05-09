@@ -1,7 +1,7 @@
-import { useLocalStorage } from '@mantine/hooks'
+import { useLocalStorage } from '@appser/ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import type { ColorScheme } from '@mantine/core'
+import type { ColorScheme } from '@appser/ui'
 
 export type ImprovedColorScheme = ColorScheme | 'system' | ''
 

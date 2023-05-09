@@ -1,4 +1,4 @@
-import { Text } from '@mantine/core'
+import { Text } from '@appser/ui'
 import { DatePickerInput } from '@mantine/dates'
 
 import type { FieldColumnInputProps } from '..'

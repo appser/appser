@@ -1,4 +1,4 @@
-import { Box, Radio, Select, Text, createStyles } from '@mantine/core'
+import { Box, Radio, Select, Text, createStyles } from '@appser/ui'
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 
 import type { FieldColumnInputProps } from '..'

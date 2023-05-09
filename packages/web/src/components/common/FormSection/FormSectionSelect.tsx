@@ -1,7 +1,7 @@
-import { Select } from '@mantine/core'
+import { Select } from '@appser/ui'
 import { IconSelector } from 'web/components/icons/IconSelector'
 
-import type { SelectProps } from '@mantine/core'
+import type { SelectProps } from '@appser/ui'
 import type { FC } from 'react'
 
 export const FormSectionSelect: FC<SelectProps> = (props) => {

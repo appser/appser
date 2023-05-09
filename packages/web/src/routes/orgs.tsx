@@ -1,4 +1,4 @@
-import { Flex } from '@mantine/core'
+import { Flex } from '@appser/ui'
 import { useEffect } from 'react'
 import { Outlet, redirect } from 'react-router-dom'
 import { OrgSidebar } from 'web/components/org/OrgSidebar'

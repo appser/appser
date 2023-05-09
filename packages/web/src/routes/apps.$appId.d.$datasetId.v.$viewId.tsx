@@ -1,4 +1,4 @@
-import { Loader } from '@mantine/core'
+import { Loader } from '@appser/ui'
 import React, { Suspense, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Forbidden } from 'web/components/errors/Forbidden'

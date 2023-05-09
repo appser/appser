@@ -1,8 +1,8 @@
-import { ActionIcon } from '@mantine/core'
+import { ActionIcon } from '@appser/ui'
 import { IconChevronDown } from '@tabler/icons'
 import { forwardRef } from 'react'
 
-import type { ActionIconProps } from '@mantine/core'
+import type { ActionIconProps } from '@appser/ui'
 import type { ComponentPropsWithoutRef } from 'react'
 
 interface ActionButtonProps extends ActionIconProps, Omit<ComponentPropsWithoutRef<'button'>, 'color'> {

@@ -1,4 +1,4 @@
-import { Text, UnstyledButton } from '@mantine/core'
+import { Text, UnstyledButton } from '@appser/ui'
 import { forwardRef } from 'react'
 
 import { IconSelector } from '../icons/IconSelector'

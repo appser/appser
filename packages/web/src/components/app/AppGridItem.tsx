@@ -1,7 +1,7 @@
 import { ContextMenu } from '@appser/ui'
-import { Flex, Popover, ThemeIcon, createStyles } from '@mantine/core'
-import { useForm } from '@mantine/form'
-import { useClickOutside } from '@mantine/hooks'
+import { Flex, Popover, ThemeIcon, createStyles } from '@appser/ui'
+import { useForm } from '@appser/ui'
+import { useClickOutside } from '@appser/ui'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -13,7 +13,7 @@ import { useUpdateApp } from 'web/servers/app/useUpdateApp'
 import { AppStylePanel } from './AppStylePanel'
 import { openAlertDialog } from '../modals/alertDialog'
 
-import type { FlexProps } from '@mantine/core'
+import type { FlexProps } from '@appser/ui'
 import type { TApp } from 'web/servers/app/types'
 
 interface AppItemProps extends FlexProps {

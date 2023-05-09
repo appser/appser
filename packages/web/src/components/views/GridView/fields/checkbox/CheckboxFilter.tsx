@@ -1,5 +1,4 @@
-import { Group, Select } from '@mantine/core'
-import { useForm } from '@mantine/form'
+import { Group, Select, useForm } from '@appser/ui'
 import { useEffect } from 'react'
 
 import type { FieldFilterProps } from '..'

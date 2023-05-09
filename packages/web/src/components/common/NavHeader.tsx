@@ -1,6 +1,6 @@
-import { Box, Flex } from '@mantine/core'
+import { Box, Flex } from '@appser/ui'
 
-import type { BoxProps } from '@mantine/core'
+import type { BoxProps } from '@appser/ui'
 import type { FC } from 'react'
 
 interface Props extends BoxProps {

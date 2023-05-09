@@ -13,7 +13,7 @@ export const useInputWithInsideLabelStyles = createStyles((theme) => ({
     pointerEvents: 'none',
     fontSize: theme.fontSizes.xs,
     paddingLeft: theme.spacing.sm,
-    paddingTop: theme.spacing.sm / 2,
+    paddingTop: `calc(${theme.spacing.sm}  / 2)`,
     zIndex: 1
   }
 }))

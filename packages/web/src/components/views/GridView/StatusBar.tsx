@@ -1,4 +1,4 @@
-import { Box } from '@mantine/core'
+import { Box } from '@appser/ui'
 
 // TODO @tccsg
 export const StatusBar = () => {

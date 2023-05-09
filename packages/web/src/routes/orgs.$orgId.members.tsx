@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Box, Button, Flex, Group, Menu, Popover, Table, Text, Title, createStyles } from '@mantine/core'
+import { ActionIcon, Badge, Box, Button, Flex, Group, Menu, Popover, Table, Text, Title, createStyles } from '@appser/ui'
 import { IconUserPlus } from '@tabler/icons'
 import { useCallback, useState } from 'react'
 import { MoreHorizontal } from 'react-feather'

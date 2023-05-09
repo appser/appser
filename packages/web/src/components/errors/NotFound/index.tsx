@@ -1,4 +1,4 @@
-import { Button, Container, Group, Text, Title, createStyles } from '@mantine/core'
+import { Button, Container, Group, Text, Title, createStyles } from '@appser/ui'
 import { Link } from 'react-router-dom'
 
 import { Illustration } from './Illustration'

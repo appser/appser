@@ -1,5 +1,5 @@
-import { hasLength, useForm } from '@mantine/form'
-import { useDisclosure } from '@mantine/hooks'
+import { hasLength, useForm } from '@appser/ui'
+import { useDisclosure } from '@appser/ui'
 import { useTranslation } from 'react-i18next'
 import { FormSection } from 'web/components/common/FormSection'
 import { openUserChangePassword } from 'web/components/modals'

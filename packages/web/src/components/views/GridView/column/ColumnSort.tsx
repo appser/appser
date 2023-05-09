@@ -1,4 +1,4 @@
-import { Group } from '@mantine/core'
+import { Group } from '@appser/ui'
 import { useEffect, useState } from 'react'
 
 import { ColumnSelect } from './ColumnSelect'

@@ -1,4 +1,4 @@
-import { Menu, Radio } from '@mantine/core'
+import { Menu, Radio } from '@appser/ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 

@@ -1,7 +1,4 @@
-import { mantineTheme } from '@appser/ui'
-import { ColorSchemeProvider, MantineProvider } from '@mantine/core'
-import { ModalsProvider } from '@mantine/modals'
-import { Notifications } from '@mantine/notifications'
+import { AppserUIProvider, ModalsProvider, Notifications } from '@appser/ui'
 import { QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
@@ -13,38 +10,26 @@ import useCustomColorScheme from './hooks/useImprovedColorScheme'
 import router from './router'
 import queryClient from './vendor/queryClient'
 
-import type { MantineThemeOverride } from '@mantine/core'
 
 import './vendor/i18n'
-
-const theme: MantineThemeOverride = {
-  ...mantineTheme,
-  globalStyles: () => ({
-    'button, .mantine-NavLink-root, .mantine-Select-input': {
-      cursor: 'default !important'
-    }
-  })
-}
 
 function App() {
   const { colorScheme, toggleColorScheme } = useCustomColorScheme()
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-        <MantineProvider theme={{
-          ...theme,
-          colorScheme
-        }}
-          withGlobalStyles
-          withNormalizeCSS
-        >
+        <AppserUIProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme} theme={{
+          globalStyles: () => ({
+            'button, .mantine-NavLink-root, .mantine-Select-input': {
+              cursor: 'default !important'
+            }
+          })
+        }}>
           <ModalsProvider modals={modals}>
             <Notifications position='top-center' zIndex={2077} />
             <RouterProvider router={router} fallbackElement={<LoaderFallback />} />
           </ModalsProvider>
-        </MantineProvider>
-      </ColorSchemeProvider>
+        </AppserUIProvider>
     </QueryClientProvider>
   )
 }

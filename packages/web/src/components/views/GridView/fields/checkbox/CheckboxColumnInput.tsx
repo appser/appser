@@ -1,4 +1,4 @@
-import { Checkbox } from '@mantine/core'
+import { Checkbox } from '@appser/ui'
 
 import type { FieldColumnInputProps } from '..'
 import type { FC } from 'react'

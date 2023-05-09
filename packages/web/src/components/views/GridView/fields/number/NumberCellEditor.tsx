@@ -1,5 +1,5 @@
-import { NumberInput } from '@mantine/core'
-import { useForm } from '@mantine/form'
+import { NumberInput } from '@appser/ui'
+import { useForm } from '@appser/ui'
 import { forwardRef, useImperativeHandle } from 'react'
 
 import type { FieldCellEditorProps, FieldCellEditorRef } from '..'

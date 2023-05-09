@@ -1,6 +1,6 @@
-import { Box } from '@mantine/core'
+import { Box } from '@appser/ui'
 
-import type { BoxProps, MantineTheme } from '@mantine/core'
+import type { BoxProps, MantineTheme } from '@appser/ui'
 import type { FC } from 'react'
 
 interface PaperBackgroundProps extends BoxProps {

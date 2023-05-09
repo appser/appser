@@ -1,4 +1,4 @@
-import { Menu } from '@mantine/core'
+import { Menu } from '@appser/ui'
 import { useState } from 'react'
 import { openAlertDialog } from 'web/components/modals/alertDialog'
 import { useDeleteColumn } from 'web/servers/dataset/useDeleteColumn'
@@ -9,7 +9,7 @@ import { ColumnConfigForm } from './ColumnConfigForm'
 
 import type { DatasetColumn } from './Column'
 import type { Rectangle } from '@glideapps/glide-data-grid'
-import type { MenuProps } from '@mantine/core'
+import type { MenuProps } from '@appser/ui'
 import type { FC } from 'react'
 
 interface ColumnMenuProps extends MenuProps {
