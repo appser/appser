@@ -5,7 +5,7 @@ import { openAppMember } from '../modals/appMember'
 import { UserAvatar } from '../user/UserAvatar'
 
 import type { FC } from 'react'
-import type { TApp } from 'web/servers/app/types'
+import type { TApp } from 'web/types'
 
 interface Props {
   app: Required<Pick<TApp, 'id' | 'name' | 'orgId'>>

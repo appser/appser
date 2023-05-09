@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useFetcher } from 'react-router-dom'
 import db from 'web/vendor/db'
 
-import { listAccountOrgQuery } from './queries'
+import { listAccountOrgQuery } from './useListAccountOrg'
 import { setLastOrgId } from '../org/utils'
 
 import type { ListAccountOrgResponse } from './useListAccountOrg'

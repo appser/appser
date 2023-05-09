@@ -1,10 +1,9 @@
-import { Logo } from '@appser/ui'
-import { Box, Flex, Paper, SimpleGrid, useMantineColorScheme } from '@appser/ui'
+import { Box, Flex, Logo, Paper, SimpleGrid, useMantineColorScheme } from '@appser/ui'
 import { Outlet, redirect, useLoaderData, useOutletContext } from 'react-router-dom'
 import { LanguageSelect } from 'web/components/common/LanguageSelect'
 import { Sidebar } from 'web/components/common/Sidebar'
 import { ThemeSelect } from 'web/components/common/ThemeSelect'
-import { getAuthConfigQuery } from 'web/servers/auth/queries'
+import { getAuthConfigQuery } from 'web/servers/auth/useGetAuthConfig'
 import { getInviteQuery } from 'web/servers/invitation/queries'
 import { loadQueryData } from 'web/utils/loadQueryData'
 
@@ -17,7 +16,7 @@ export const loader = (queryClient: QueryClient) => async ({ request, params }: 
   const invitationToken = url.searchParams.get('it')
 
   const [authConfig, invitation] = await Promise.all([
-    loadQueryData(queryClient, getAuthConfigQuery()),
+    loadQueryData(queryClient, getAuthConfigQuery),
     invitationToken ? loadQueryData(queryClient, getInviteQuery({ invitationToken })) : undefined
   ])
 

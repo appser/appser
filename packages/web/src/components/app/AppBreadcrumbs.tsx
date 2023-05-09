@@ -5,8 +5,8 @@ import { IconTable } from '../icons/IconTable'
 import { IconView } from '../icons/IconView'
 
 import type { FC } from 'react'
-import type { TApp } from 'web/servers/app/types'
 import type { TDataset, TView } from 'web/servers/dataset/types'
+import type { TApp } from 'web/types'
 
 interface Props {
   current: {

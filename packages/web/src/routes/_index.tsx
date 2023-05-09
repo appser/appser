@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
-import { getAccountQuery, listAccountPolicyQuery } from 'web/servers/account/queries'
+import { getAccountQuery } from 'web/servers/account/useGetAccount'
+import { listAccountPolicyQuery } from 'web/servers/account/useListAccountPolicy'
 import { loadQueryData } from 'web/utils/loadQueryData'
 
 import type { QueryClient } from '@tanstack/react-query'

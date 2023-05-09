@@ -13,8 +13,8 @@ import { AppViewNavLink } from './AppViewNavLink'
 import type { NavbarProps } from '@appser/ui'
 import type { FC } from 'react'
 import type { DropResult } from 'react-beautiful-dnd'
-import type { TApp } from 'web/servers/app/types'
 import type { TView } from 'web/servers/dataset/types'
+import type { TApp } from 'web/types'
 
 const reorder = (list: any[], startIndex: number, endIndex: number): any[] => {
   const result = Array.from(list)

@@ -3,9 +3,7 @@ import { useFetcher } from 'react-router-dom'
 import { useActivatedApp } from 'web/hooks/useActivatedApp'
 import db from 'web/vendor/db'
 
-import { getAppQuery } from './queries'
-
-export type UpdateAppParams = Parameters<typeof db.app.updateApp>[0]
+import { getAppQuery } from './useGetApp'
 
 export const useCreateDataset = () => {
   const queryClient = useQueryClient()
@@ -22,7 +20,7 @@ export const useCreateDataset = () => {
       })
     },
     onSuccess: (app, p) => {
-      appId && queryClient.invalidateQueries(getAppQuery({ appId }))
+      appId && queryClient.invalidateQueries(getAppQuery(appId))
 
       // return fetcher.load(`/apps/${app.id}`)
     }

@@ -1,7 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
+import db from 'web/vendor/db'
 
-import { listAppPeopleQuery } from './queries'
+export const listAppPeopleQuery = (appId: string) => ({
+  queryKey: ['app', appId, 'people'],
+  queryFn: async () => db.app.listAppPeople({ appId })
+})
 
 export const useAppPeople = (appId: string) => {
-  return useQuery(listAppPeopleQuery({ appId }))
+  return useQuery(listAppPeopleQuery(appId))
 }

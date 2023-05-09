@@ -1,7 +1,5 @@
-import { colors } from '@appser/ui'
+import { ActionIcon, Box, Divider, Flex, Group, Title, colors, createStyles, useResizeObserver } from '@appser/ui'
 import { CompactSelection } from '@glideapps/glide-data-grid'
-import { ActionIcon, Box, Divider, Flex, Group, Title, createStyles } from '@appser/ui'
-import { useResizeObserver } from '@appser/ui'
 import { IconChevronLeft, IconLayoutSidebarLeftExpand, IconLayoutSidebarRightExpand } from '@tabler/icons'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Outlet, redirect, useNavigate, useParams } from 'react-router-dom'
@@ -15,8 +13,7 @@ import { ActionButton } from 'web/components/common/ActionButton'
 import ResizablePanels from 'web/components/common/ResizablePanels'
 import { useGridSelection } from 'web/components/views/GridView/hooks/useGridSelection'
 import { useActivatedApp } from 'web/hooks/useActivatedApp'
-import { getAppQuery } from 'web/servers/app/queries'
-import { useGetApp } from 'web/servers/app/useGetApp'
+import { getAppQuery, useGetApp } from 'web/servers/app/useGetApp'
 import { loadQueryData } from 'web/utils/loadQueryData'
 
 import type { QueryClient } from '@tanstack/react-query'
@@ -25,7 +22,7 @@ import type { LoaderFunctionArgs } from 'react-router-dom'
 export const loader = (queryClient: QueryClient) => async ({ request, params }: LoaderFunctionArgs) => {
   const { appId = '' } = params
   const { pathname } = new URL(request.url)
-  const app = await loadQueryData(queryClient, getAppQuery({ appId }))
+  const app = await loadQueryData(queryClient, getAppQuery(appId))
   const lastDataset = app.datasets[0]
   const lastView = lastDataset.views[0]
 

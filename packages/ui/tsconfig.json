@@ -1,4 +1,10 @@
 {
   "extends": "../../tsconfig.browser.json",
-  "compilerOptions": {}
+  "compilerOptions": {
+    "outDir": "lib",
+    "baseUrl": ".",
+    "paths": {
+      "ui/*": ["src/*"]
+    }
+  }
 }

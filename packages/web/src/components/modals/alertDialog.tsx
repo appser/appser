@@ -1,7 +1,6 @@
-import { Box, Button, Flex, SimpleGrid, Stack, Text } from '@appser/ui'
-import { openContextModal } from '@appser/ui'//modals
+import { Box, Button, Flex, SimpleGrid, Stack, Text, openContextModal } from '@appser/ui'
 
-import type { ContextModalProps } from '@appser/ui'//modals
+import type { ContextModalProps } from '@appser/ui'
 
 export type AlertDialogProps = {
   icon?: React.ReactNode

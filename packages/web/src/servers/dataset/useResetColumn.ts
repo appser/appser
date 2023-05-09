@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { getDatasetQuery } from 'web/servers/dataset/queries'
 import db from 'web/vendor/db'
+
+import { getDatasetQuery } from './useGetDataset'
 
 export type RestColumnParams = Parameters<typeof db.dataset.resetColumn>[0]
 

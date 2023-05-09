@@ -4,7 +4,7 @@ import { AppNavbar } from './AppNavbar'
 import { IconChevronDown } from '../icons/IconChevronDown'
 
 import type { FC } from 'react'
-import type { TApp } from 'web/servers/app/types'
+import type { TApp } from 'web/types'
 
 // TODO @tccsg
 

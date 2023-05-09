@@ -3,11 +3,10 @@ import { merge } from 'lodash'
 import cloneDeep from 'lodash/cloneDeep'
 import db from 'web/vendor/db'
 
-import { getViewQuery } from './queries'
-import { useActivatedDataset } from '../../hooks/useActivatedDataset'
+import { getViewQuery } from './useGetView'
 import { useActivatedView } from '../../hooks/useActivatedView'
 
-import type { TDataset, TView } from './types'
+import type { TView } from './types'
 
 export type UpdateViewParams = Parameters<typeof db.dataset.updateView>[0]
 

@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
 import { useActivatedView } from 'web/hooks/useActivatedView'
-import { getDatasetQuery, getViewQuery } from 'web/servers/dataset/queries'
 import db from 'web/vendor/db'
+
+import { getViewQuery } from './useGetView'
 
 type DeleteColumnParams = Parameters<typeof db.dataset.deleteColumn>[0]
 

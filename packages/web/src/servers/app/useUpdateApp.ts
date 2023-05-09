@@ -5,8 +5,9 @@ import db from 'web/vendor/db'
 
 import { listOrgAppQuery } from '../org/queries'
 
-export type UpdateAppParams = Parameters<typeof db.app.updateApp>[0]
-export type ListOrgAppResponse = Awaited<ReturnType<typeof db.org.listOrgApp>>
+import type { ListOrgAppResponse } from '../org/useListOrgApp'
+
+type UpdateAppParams = Parameters<typeof db.app.updateApp>[0]
 
 export const useUpdateApp = () => {
   const [org] = useActivatedOrg()

@@ -6,9 +6,11 @@ import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
 import { useActivatedView } from 'web/hooks/useActivatedView'
 import db from 'web/vendor/db'
 
-import { listRecordQuery } from './queries'
-
 import type { QueryKey } from '@tanstack/react-query'
+
+export const queryRecordQuery = (datasetId: string, viewId: string, params?: unknown) => ({
+  queryKey: ['dataset', datasetId, 'view', viewId, 'record', 'query', params]
+})
 
 export type QueryRecordParameters = Parameters<typeof db.dataset.queryRecord>[0]
 export type Filter = NonNullable<QueryRecordParameters['requestBody']['filter']>
@@ -55,7 +57,7 @@ export function useQueryRecord(datasetId?: string, viewId?: string) {
     filter: queryParamsFilter,
     sorts: sorts.length === 0 ? undefined : sorts
   }
-  const queryKey = listRecordQuery(_datasetId, _viewId, queryParams).queryKey
+  const queryKey = queryRecordQuery(_datasetId, _viewId, queryParams).queryKey
 
   useEffect(() => {
     setCurrentQueryKey(queryKey)

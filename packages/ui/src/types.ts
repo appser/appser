@@ -1,4 +1,4 @@
-import type { CSSObject, ContextStylesParams, MantineTheme, Variants } from '@mantine/core'
+import type { CSSObject, ContextStylesParams, MantineTheme } from '@mantine/core'
 
 export interface ThemeComponent {
   defaultProps?: Record<string, any>

@@ -1,7 +1,6 @@
 import { em, rem } from '@mantine/core'
 
 import components from './components'
-import { color } from './other'
 
 import type { DefaultMantineColor, MantineThemeOverride, Tuple } from '@mantine/core'
 
@@ -67,10 +66,7 @@ export const mantineTheme: MantineThemeOverride = {
       h6: { fontSize: rem(14), lineHeight: 1.5, fontWeight: undefined }
     }
   },
-  components,
-  other: {
-    color
-  }
+  components
 }
 
 type ExtendedCustomColors = 'primary' | DefaultMantineColor
@@ -78,11 +74,5 @@ type ExtendedCustomColors = 'primary' | DefaultMantineColor
 declare module '@mantine/core' {
   export interface MantineThemeColorsOverride {
     colors: Record<ExtendedCustomColors, Tuple<string, 10>>
-  }
-}
-
-declare module '@mantine/core' {
-  interface MantineThemeOther {
-    color: typeof color
   }
 }

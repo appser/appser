@@ -1,6 +1,4 @@
-import { Box, Button, Group } from '@appser/ui'
-import { isNotEmpty, useForm } from '@appser/ui'
-import { openContextModal } from '@appser/ui'//modals
+import { Box, Button, Group, isNotEmpty, openContextModal, useForm } from '@appser/ui'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAddAppPeople } from 'web/servers/app/useAddAppPeople'
@@ -14,8 +12,8 @@ import { IconSelector } from '../icons/IconSelector'
 import { OrgUserSelect } from '../org/OrgUserSelect'
 import { RoleSelect } from '../role/RoleSelect'
 
-import type { ContextModalProps } from '@appser/ui'//modals
-import type { TApp } from 'web/servers/app/types'
+import type { ContextModalProps } from '@appser/ui' // modals
+import type { TApp } from 'web/types'
 
 export type AddAppMemberModalProps = {
   app: Pick<TApp, 'orgId' | 'name' | 'id'>

@@ -1,4 +1,4 @@
-import { AppserUIProvider, ModalsProvider, Notifications } from '@appser/ui'
+import { ModalsProvider, Notifications, UIProvider } from '@appser/ui'
 import { QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
@@ -10,7 +10,6 @@ import useCustomColorScheme from './hooks/useImprovedColorScheme'
 import router from './router'
 import queryClient from './vendor/queryClient'
 
-
 import './vendor/i18n'
 
 function App() {
@@ -18,18 +17,22 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-        <AppserUIProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme} theme={{
+      <UIProvider
+        colorScheme={colorScheme}
+        toggleColorScheme={toggleColorScheme}
+        theme={{
           globalStyles: () => ({
             'button, .mantine-NavLink-root, .mantine-Select-input': {
               cursor: 'default !important'
             }
           })
-        }}>
-          <ModalsProvider modals={modals}>
-            <Notifications position='top-center' zIndex={2077} />
-            <RouterProvider router={router} fallbackElement={<LoaderFallback />} />
-          </ModalsProvider>
-        </AppserUIProvider>
+        }}
+      >
+        <ModalsProvider modals={modals}>
+          <Notifications position='top-center' zIndex={2077} />
+          <RouterProvider router={router} fallbackElement={<LoaderFallback />} />
+        </ModalsProvider>
+      </UIProvider>
     </QueryClientProvider>
   )
 }

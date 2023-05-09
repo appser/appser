@@ -1,8 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
 import { useActivatedView } from 'web/hooks/useActivatedView'
-import { getDatasetQuery, getViewQuery } from 'web/servers/dataset/queries'
 import db from 'web/vendor/db'
+
+import { getDatasetQuery } from './useGetDataset'
+import { getViewQuery } from './useGetView'
 
 type AddColumnParams = Parameters<typeof db.dataset.addColumn>[0]
 

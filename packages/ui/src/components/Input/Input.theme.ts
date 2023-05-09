@@ -1,8 +1,7 @@
 import { rem } from '@mantine/core'
+import { useInputFloatingErrorStyles } from 'ui/styles/useInputFloatingErrorStyles'
 
-import { useInputFloatingErrorStyles } from '../../styles/useInputFloatingErrorStyles'
-
-import type { ThemeComponent } from '../../types'
+import type { ThemeComponent } from 'ui/types'
 
 export const Input: ThemeComponent = {
   styles(theme) {

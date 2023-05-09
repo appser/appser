@@ -10,19 +10,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "peerDependencies": {
-    "@mantine/core": "^6.0.4"
-  },
   "dependencies": {
     "@ctrl/tinycolor": "^3.6.0",
-    "@mantine/dates": "^6.0.4",
-    "@mantine/form": "^6.0.4",
-    "@mantine/hooks": "^6.0.4",
-    "@mantine/modals": "^6.0.4",
-    "@mantine/notifications": "^6.0.4",
-    "@mantine/prism": "^6.0.4"
-  },
-  "devDependencies": {
-    "@mantine/core": "^6.0.4"
+    "@mantine/core": "^6.0.10",
+    "@mantine/dates": "^6.0.10",
+    "@mantine/form": "^6.0.10",
+    "@mantine/hooks": "^6.0.10",
+    "@mantine/modals": "^6.0.10",
+    "@mantine/notifications": "^6.0.10",
+    "@mantine/prism": "^6.0.10"
   }
 }

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { cloneDeep } from 'lodash'
-import { listAccountOrgQuery } from 'web/servers/account/queries'
+import { listAccountOrgQuery } from 'web/servers/account/useListAccountOrg'
 import db from 'web/vendor/db'
 
 import { getOrgQuery } from './queries'

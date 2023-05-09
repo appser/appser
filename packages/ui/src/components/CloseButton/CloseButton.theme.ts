@@ -1,4 +1,4 @@
-import type { ThemeComponent } from '../../types'
+import type { ThemeComponent } from 'ui/types'
 
 export const CloseButton: ThemeComponent = {
   defaultProps: {

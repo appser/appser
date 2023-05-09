@@ -1,6 +1,6 @@
-import { colors } from '../../theme/colors'
+import { colors } from 'ui/theme/colors'
 
-import type { ThemeComponent } from '../../types'
+import type { ThemeComponent } from 'ui/types'
 
 export const ActionIcon: ThemeComponent = {
   styles({ colorScheme, colors: mantineColors, other }, { variant }) {

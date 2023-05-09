@@ -1,7 +1,4 @@
-import { ContextMenu } from '@appser/ui'
-import { Flex, Popover, ThemeIcon, createStyles } from '@appser/ui'
-import { useForm } from '@appser/ui'
-import { useClickOutside } from '@appser/ui'
+import { ContextMenu, Flex, Popover, ThemeIcon, createStyles, useClickOutside, useForm } from '@appser/ui'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -14,7 +11,7 @@ import { AppStylePanel } from './AppStylePanel'
 import { openAlertDialog } from '../modals/alertDialog'
 
 import type { FlexProps } from '@appser/ui'
-import type { TApp } from 'web/servers/app/types'
+import type { TApp } from 'web/types'
 
 interface AppItemProps extends FlexProps {
   app: Pick<TApp, 'id' | 'name' | 'tintColor' | 'icon'>

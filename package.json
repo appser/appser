@@ -1,4 +1,5 @@
 {
+  "name": "@appser/monorepo",
   "private": true,
   "packageManager": "pnpm@7.4.0",
   "repository": {
@@ -48,6 +49,7 @@
     "source-map-explorer": "^2.5.3",
     "storybook-dark-mode": "^1.1.2",
     "supertest": "^6.3.3",
+    "tsup": "^6.7.0",
     "tsx": "3.12.6",
     "typescript": "5.0.4",
     "vite": "^4.1.4",
