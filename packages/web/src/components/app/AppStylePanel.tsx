@@ -1,4 +1,4 @@
-import { datasetIconIds, datasetTintColors } from '@appser/shared'
+import { datasetIconIds, datasetTintColors } from '@appser/common'
 import { ActionIcon, Box, ColorSwatch, Divider, Group } from '@appser/ui'
 import { useForm } from '@appser/ui'
 import { useEffect } from 'react'

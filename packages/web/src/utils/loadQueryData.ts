@@ -1,4 +1,4 @@
-import type { OnlyRequired } from '@appser/shared'
+import type { OnlyRequired } from '@appser/common'
 import type { QueryClient, QueryOptions } from '@tanstack/react-query'
 
 type PromiseType<T> = T extends Promise<infer U> ? U : never

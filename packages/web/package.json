@@ -9,9 +9,8 @@
   },
   "dependencies": {
     "@appser/access": "workspace:1.0.0",
-    "@appser/backend-docs": "workspace:^1.0.0",
+    "@appser/common": "workspace:0.0.1",
     "@appser/languages": "workspace:1.0.0",
-    "@appser/shared": "workspace:0.0.1",
     "@appser/ui": "workspace:0.0.1",
     "@formkit/auto-animate": "1.0.0-beta.6",
     "@glideapps/glide-data-grid": "5.2.1",

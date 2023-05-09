@@ -8,7 +8,7 @@ import { ReactComponent as Magnet } from './magnet.svg'
 import { ReactComponent as Overflow } from './overflow.svg'
 import { ReactComponent as Today } from './today.svg'
 
-import type { datasetIconIds } from '@appser/shared'
+import type { datasetIconIds } from '@appser/common'
 import type { FC } from 'react'
 
 interface AppImageProps {
