@@ -14,12 +14,12 @@ export class AccountService {
    */
   public getAccount(): CancelablePromise<{
     id: string;
-    status?: number;
+    status: number;
     name: string;
     avatar?: string;
     settings?: {
-      timezone?: string;
-      firstDayOfWeek?: number;
+      timezone: string;
+      firstDayOfWeek: number;
     };
   }> {
     return this.httpRequest.request({
@@ -56,8 +56,8 @@ export class AccountService {
     requestBody,
   }: {
     requestBody: {
-      timezone?: string;
-      firstDayOfWeek?: number;
+      timezone: string;
+      firstDayOfWeek: number;
     },
   }): CancelablePromise<void> {
     return this.httpRequest.request({
@@ -105,7 +105,7 @@ export class AccountService {
    */
   public listAccountOrg(): CancelablePromise<Array<{
     id: string;
-    status: 'pending' | 'active' | 'failed';
+    status: number;
     name: string;
   }>> {
     return this.httpRequest.request({

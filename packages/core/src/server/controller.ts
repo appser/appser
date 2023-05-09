@@ -4,11 +4,13 @@ import type { Middleware, RouterParamContext } from '@koa/router'
 import type { Middleware as KoaMiddleware } from 'koa'
 import type { Schema, ZodObject, ZodTypeAny, z } from 'zod'
 
+type ObjectSchema = ZodObject<Record<string, ZodTypeAny>>
+
 export interface RequestSchema {
-  header?: Schema
-  params?: Schema
-  query?: Schema
-  body?: Schema
+  header?: ObjectSchema
+  params?: ObjectSchema
+  query?: ObjectSchema
+  body?: ObjectSchema
 }
 export interface ResponseSchema {
   200?: Schema | null
@@ -29,10 +31,10 @@ interface ControllerConfig<StateS, HeaderS, ParamsS, QueryS, BodyS, ResponseS> {
 
 export class Controller<
   StateS extends StateST,
-  HeaderS extends Schema,
-  ParamsS extends Schema,
-  QueryS extends Schema,
-  BodyS extends Schema,
+  HeaderS extends ObjectSchema,
+  ParamsS extends ObjectSchema,
+  QueryS extends ObjectSchema,
+  BodyS extends ObjectSchema,
   ResponseS extends ResponseSchema
 > {
   constructor(

@@ -36,7 +36,7 @@ export const User = Model.define('user', {
 
 export type TUser = z.infer<typeof User.schema>
 
-declare module 'core/model' {
+declare module 'core/db/model' {
   interface Models {
     user: Knex.CompositeTableType<
       TUser,

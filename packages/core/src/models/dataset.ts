@@ -24,7 +24,7 @@ export const Dataset = Model.define('dataset', {
 
 export type TDataset = z.infer<typeof Dataset.schema>
 
-declare module 'core/model' {
+declare module 'core/db/model' {
   interface Models {
     dataset: Knex.CompositeTableType<TDataset, Optional<TDataset, 'id' | 'fields' | 'views' | 'createdAt' | 'updatedAt'>>
   }

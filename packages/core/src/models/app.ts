@@ -18,7 +18,7 @@ export const App = Model.define('app', {
 
 export type TApp = z.infer<typeof App.schema>
 
-declare module 'core/model' {
+declare module 'core/db/model' {
   interface Models {
     app: Knex.CompositeTableType<TApp, Optional<TApp, 'id' | 'createdAt' | 'updatedAt'>>
   }

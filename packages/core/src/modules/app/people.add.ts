@@ -36,9 +36,6 @@ export const addAppPeople = new Controller(
   },
   {
     state: ['auth', 'access', 'getApp'],
-    params: z.object({
-      appId: z.string().regex(rNumId)
-    }),
     body: z.object({
       userId: z.string().regex(rNumId),
       roleId: z.string()

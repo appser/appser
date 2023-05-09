@@ -28,7 +28,7 @@ export const People = Model.define('people', {
 
 export type TPeople = z.infer<typeof People.schema>
 
-declare module 'core/model' {
+declare module 'core/db/model' {
   interface Models {
     people: Knex.CompositeTableType<TPeople, Optional<TPeople, 'invitedAt'>>
   }

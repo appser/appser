@@ -27,7 +27,7 @@ export class AppService {
       name?: string;
       views: Array<{
         id: string;
-        type: 'grid';
+        type: 'sheet';
         name?: string;
       }>;
     }>;
@@ -96,7 +96,7 @@ export class AppService {
   }): CancelablePromise<Array<{
     orgId: string;
     appId: string;
-    status: 'pending' | 'active' | 'failed';
+    status: number;
     user: {
       id: string;
       name: string;

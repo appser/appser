@@ -20,12 +20,16 @@ export class DatasetService {
     id: string;
     appId: string;
     name?: string;
-    pos?: number;
-    column: Record<string, (({
-      field: 'checkbox';
+    fields: Record<string, (({
+      type: 'numId';
+      options?: {
+        dynamicDefault?: 'snowflakeId';
+      };
+    } | {
+      type: 'checkbox';
       options?: any;
     } | {
-      field: 'date';
+      type: 'date';
       options?: {
         dynamicDefault?: 'now';
         calendar?: 'gregory' | 'chinese' | 'hebrew' | 'islamic' | 'coptic' | 'indian' | 'ethiopic' | 'iso8601' | 'japanese' | 'persian';
@@ -33,10 +37,10 @@ export class DatasetService {
         timeStyle?: 'full' | 'long' | 'medium' | 'short';
       };
     } | {
-      field: 'email';
+      type: 'email';
       options?: any;
     } | {
-      field: 'multipleSelect';
+      type: 'multipleSelect';
       options: {
         items: Array<{
           id?: number;
@@ -44,23 +48,16 @@ export class DatasetService {
         }>;
       };
     } | {
-      field: 'number';
-      options?: {
-        precision: number;
-        allowNegative: boolean;
+      type: 'number';
+      options: {
+        precision?: number;
+        allowNegative?: boolean;
       };
     } | {
-      field: 'numId';
-      options?: {
-        dynamicDefault?: 'snowflakeId';
-      };
+      type: 'simpleText';
+      options?: any;
     } | {
-      field: 'simpleText';
-      options?: {
-        default?: string;
-      };
-    } | {
-      field: 'singleSelect';
+      type: 'singleSelect';
       options: {
         items: Array<{
           id?: number;
@@ -68,12 +65,14 @@ export class DatasetService {
         }>;
       };
     } | {
-      field: 'url';
+      type: 'url';
       options?: any;
     }) & {
+      name?: string;
       title?: string;
-      isRequired?: boolean;
-      isLocked?: boolean;
+      required?: boolean;
+      locked?: boolean;
+      deletedAt?: string;
     })>;
     createdAt: string;
     updatedAt: string;
@@ -115,21 +114,66 @@ export class DatasetService {
    * @returns any Created
    * @throws ApiError
    */
-  public addColumn({
+  public addField({
     datasetId,
     requestBody,
   }: {
     datasetId: string,
-    requestBody: {
+    requestBody: (({
+      type: 'numId';
+      options?: {
+        dynamicDefault?: 'snowflakeId';
+      };
+    } | {
+      type: 'checkbox';
+      options?: any;
+    } | {
+      type: 'date';
+      options?: {
+        dynamicDefault?: 'now';
+        calendar?: 'gregory' | 'chinese' | 'hebrew' | 'islamic' | 'coptic' | 'indian' | 'ethiopic' | 'iso8601' | 'japanese' | 'persian';
+        dateStyle?: 'full' | 'long' | 'medium' | 'short';
+        timeStyle?: 'full' | 'long' | 'medium' | 'short';
+      };
+    } | {
+      type: 'email';
+      options?: any;
+    } | {
+      type: 'multipleSelect';
+      options: {
+        items: Array<{
+          id?: number;
+          name: string;
+        }>;
+      };
+    } | {
+      type: 'number';
+      options: {
+        precision?: number;
+        allowNegative?: boolean;
+      };
+    } | {
+      type: 'simpleText';
+      options?: any;
+    } | {
+      type: 'singleSelect';
+      options: {
+        items: Array<{
+          id?: number;
+          name: string;
+        }>;
+      };
+    } | {
+      type: 'url';
+      options?: any;
+    }) & {
       title?: string;
-      field: 'checkbox' | 'date' | 'email' | 'multipleSelect' | 'number' | 'numId' | 'richText' | 'simpleText' | 'singleSelect' | 'url';
-      options?: Record<string, any>;
       appendViewId?: string;
-    },
+    }),
   }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
-      url: '/datasets/{datasetId}/columns',
+      url: '/datasets/{datasetId}/fields',
       path: {
         'datasetId': datasetId,
       },
@@ -142,7 +186,7 @@ export class DatasetService {
    * @returns void
    * @throws ApiError
    */
-  public deleteColumn({
+  public deleteField({
     datasetId,
     fieldName,
   }: {
@@ -151,7 +195,7 @@ export class DatasetService {
   }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: 'DELETE',
-      url: '/datasets/{datasetId}/columns/{fieldName}',
+      url: '/datasets/{datasetId}/fields/{fieldName}',
       path: {
         'datasetId': datasetId,
         'fieldName': fieldName,
@@ -163,50 +207,67 @@ export class DatasetService {
    * @returns void
    * @throws ApiError
    */
-  public updateColumn({
+  public updateField({
     datasetId,
     fieldName,
     requestBody,
   }: {
     datasetId: string,
     fieldName: string,
-    requestBody: {
+    requestBody: (({
+      type: 'numId';
+      options?: {
+        dynamicDefault?: 'snowflakeId';
+      };
+    } | {
+      type: 'checkbox';
+      options?: any;
+    } | {
+      type: 'date';
+      options?: {
+        dynamicDefault?: 'now';
+        calendar?: 'gregory' | 'chinese' | 'hebrew' | 'islamic' | 'coptic' | 'indian' | 'ethiopic' | 'iso8601' | 'japanese' | 'persian';
+        dateStyle?: 'full' | 'long' | 'medium' | 'short';
+        timeStyle?: 'full' | 'long' | 'medium' | 'short';
+      };
+    } | {
+      type: 'email';
+      options?: any;
+    } | {
+      type: 'multipleSelect';
+      options: {
+        items: Array<{
+          id?: number;
+          name: string;
+        }>;
+      };
+    } | {
+      type: 'number';
+      options: {
+        precision?: number;
+        allowNegative?: boolean;
+      };
+    } | {
+      type: 'simpleText';
+      options?: any;
+    } | {
+      type: 'singleSelect';
+      options: {
+        items: Array<{
+          id?: number;
+          name: string;
+        }>;
+      };
+    } | {
+      type: 'url';
+      options?: any;
+    }) & {
       title?: string;
-      options?: Record<string, any>;
-    },
+    }),
   }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: 'PATCH',
-      url: '/datasets/{datasetId}/columns/{fieldName}',
-      path: {
-        'datasetId': datasetId,
-        'fieldName': fieldName,
-      },
-      body: requestBody,
-      mediaType: 'application/json',
-    });
-  }
-
-  /**
-   * @returns void
-   * @throws ApiError
-   */
-  public resetColumn({
-    datasetId,
-    fieldName,
-    requestBody,
-  }: {
-    datasetId: string,
-    fieldName: string,
-    requestBody: {
-      title?: string;
-      field?: any;
-      options?: any;
-    },
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: 'PUT',
-      url: '/datasets/{datasetId}/columns/{fieldName}',
+      url: '/datasets/{datasetId}/fields/{fieldName}',
       path: {
         'datasetId': datasetId,
         'fieldName': fieldName,
@@ -229,12 +290,12 @@ export class DatasetService {
   }): CancelablePromise<{
     id: string;
     name?: string;
-    type: 'grid';
-    column: Record<string, {
+    type: 'sheet';
+    field: Record<string, {
       width?: number;
       selected?: boolean;
     }>;
-    columns: Array<string>;
+    fields: Array<string>;
     sorts: Array<string>;
     filter?: {
       and?: Array<Record<string, {
@@ -332,12 +393,12 @@ export class DatasetService {
           notNull?: boolean;
         }>>;
       };
-      stickyField?: number;
-      columns?: Array<string>;
-      column?: Record<string, {
+      field?: Record<string, {
         width?: number;
         selected?: boolean;
       }>;
+      fields?: Array<string>;
+      stickyField?: number;
     },
   }): CancelablePromise<void> {
     return this.httpRequest.request({
@@ -408,7 +469,7 @@ export class DatasetService {
   }: {
     datasetId: string,
     viewId: string,
-    requestBody: Record<string, any>,
+    requestBody: ((string | number | boolean | 'null' | null) | Record<string, ((string | number | boolean | 'null' | null) | Record<string, any>)>),
   }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
@@ -526,7 +587,7 @@ export class DatasetService {
     datasetId: string,
     viewId: string,
     recordId: string,
-    requestBody: Record<string, any>,
+    requestBody: ((string | number | boolean | 'null' | null) | Record<string, ((string | number | boolean | 'null' | null) | Record<string, any>)>),
   }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: 'PATCH',

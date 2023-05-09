@@ -16,7 +16,7 @@ export const Org = Model.define('org', {
 
 export type TOrg = z.infer<typeof Org.schema>
 
-declare module 'core/model' {
+declare module 'core/db/model' {
   interface Models {
     org: Knex.CompositeTableType<TOrg, Optional<TOrg, 'id' | 'createdAt' | 'updatedAt'>>
   }

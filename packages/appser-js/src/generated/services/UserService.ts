@@ -18,7 +18,7 @@ export class UserService {
     userId: string,
   }): CancelablePromise<{
     id: string;
-    status?: number;
+    status: number;
     name: string;
     avatar?: string;
   }> {

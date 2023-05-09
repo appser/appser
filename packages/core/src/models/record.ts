@@ -19,7 +19,7 @@ export const Record = Model.define('record', {
 
 export type TRecord = z.infer<typeof Record.schema>
 
-declare module 'core/model' {
+declare module 'core/db/model' {
   interface Models {
     record: Knex.CompositeTableType<TRecord, Optional<TRecord, 'id' | 'createdAt' | 'updatedAt'>>
   }

@@ -13,7 +13,7 @@ export default [
   app,
   invitation,
   signup,
-  // dataset,
+  dataset,
   user,
   org
 ]

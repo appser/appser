@@ -140,7 +140,7 @@ export class OrgService {
     kind: 'member' | 'outsideCollaborator' | 'pending' | 'failed',
   }): CancelablePromise<Array<{
     orgId: string;
-    status: 'pending' | 'active' | 'failed';
+    status: number;
     user: {
       id: string;
       name: string;

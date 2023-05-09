@@ -204,10 +204,10 @@ export class Router {
     return requestSchemas.reduce((acc, requestSchema) => {
       const { query, body, header, params } = requestSchema
 
-      if (query) acc.query = acc.query ? acc.query.and(query) : query
-      if (body) acc.body = acc.body ? acc.body.and(body) : body
-      if (header) acc.header = acc.header ? acc.header.and(header) : header
-      if (params) acc.params = acc.params ? acc.params.and(params) : params
+      if (query) acc.query = acc.query ? acc.query.merge(query) : query
+      if (body) acc.body = acc.body ? acc.body.merge(body) : body
+      if (header) acc.header = acc.header ? acc.header.merge(header) : header
+      if (params) acc.params = acc.params ? acc.params.merge(params) : params
 
       return acc
     }, {})
