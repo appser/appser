@@ -5,17 +5,17 @@ import { useTranslation } from 'react-i18next'
 import { MenuButton } from '../common/MenuButton'
 
 import type { FC } from 'react'
-import type { TRole } from 'web/servers/org/types'
+import type { Role } from 'web/types'
 
 interface RoleSelectProps {
-  roles: TRole[]
+  roles: Role[]
   defaultRoleId?: string
-  onChange?: (role: TRole) => void
+  onChange?: (role: Role) => void
 }
 
 export const RoleSelect: FC<RoleSelectProps> = ({ roles, defaultRoleId, onChange }) => {
   const { t } = useTranslation()
-  const [role, setRole] = useState<TRole | null>(null)
+  const [role, setRole] = useState<Role | null>(null)
   const [isFocus, setIsFocus] = useState(false)
 
   useEffect(() => {

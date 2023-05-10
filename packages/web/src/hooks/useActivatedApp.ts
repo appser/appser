@@ -1,7 +1,7 @@
 import { atom, useAtom } from 'jotai'
 
-import type { TApp } from 'web/types'
+import type { App } from 'web/types'
 
-const activatedApp = atom<TApp | null | undefined>(null)
+const activatedApp = atom<App | null | undefined>(null)
 
 export const useActivatedApp = () => useAtom(activatedApp)

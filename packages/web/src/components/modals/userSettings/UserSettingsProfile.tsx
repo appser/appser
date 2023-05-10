@@ -1,7 +1,6 @@
-import { Button, Flex, Title } from '@appser/ui'
-import { useForm } from '@appser/ui'
-import { useGetAccount } from 'web/servers/account/useGetAccount'
-import { useUpdateAccountProfile } from 'web/servers/account/useUpdateAccountProfile'
+import { Button, Flex, Title, useForm } from '@appser/ui'
+import { useGetAccount } from 'web/hooks/account/useGetAccount'
+import { useUpdateAccountProfile } from 'web/hooks/account/useUpdateAccountProfile'
 
 import { UserSettingsContainer } from './UserSettingsContainer'
 import { FormSection } from '../../common/FormSection'

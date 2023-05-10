@@ -1,15 +1,14 @@
-import { colors } from '@appser/ui'
-import { Box, Tabs, createStyles } from '@appser/ui'
+import { Box, Tabs, colors, createStyles } from '@appser/ui'
 import { IconApiApp } from '@tabler/icons'
 import { useEffect, useState } from 'react'
-import { useDataSource } from 'web/components/views/GridView/hooks/useDataSource'
-import { useGridSelection } from 'web/components/views/GridView/hooks/useGridSelection'
-import { RowSideView } from 'web/components/views/GridView/row/RowSideView'
+import { useDataSource } from 'web/components/views/SheetView/hooks/useDataSource'
+import { useGridSelection } from 'web/components/views/SheetView/hooks/useGridSelection'
+import { RowSideView } from 'web/components/views/SheetView/row/RowSideView'
 
 import { NoRowSelected } from './NoRowSelected'
 
 import type { FC } from 'react'
-import type { Row } from 'web/components/views/GridView/row/Row'
+import type { Row } from 'web/components/views/SheetView/row/Row'
 
 const useTabStyles = createStyles(theme => ({
   root: {
@@ -67,7 +66,7 @@ const useTabStyles = createStyles(theme => ({
 
 export const AppRightSidebar: FC = () => {
   const { classes } = useTabStyles()
-  const { getRow, columns } = useDataSource()
+  const { getRow, fields } = useDataSource()
   const { selection } = useGridSelection()
   const [row, setRow] = useState<Row>()
 
@@ -100,7 +99,7 @@ export const AppRightSidebar: FC = () => {
         </Tabs.List>
 
         <Tabs.Panel value="preview">
-          <RowSideView row={row} columns={columns} />
+          <RowSideView row={row} fields={fields} />
         </Tabs.Panel>
         <Tabs.Panel value="preview2">
           <Box>1233</Box>

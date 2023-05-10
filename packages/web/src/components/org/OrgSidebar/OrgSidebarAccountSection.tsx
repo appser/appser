@@ -6,8 +6,8 @@ import { IconUser } from 'web/components/icons/IconUser'
 import { openAlertDialog } from 'web/components/modals/alertDialog'
 import { openUserSettings } from 'web/components/modals/userSettings'
 import { UserAvatar } from 'web/components/user/UserAvatar'
-import { useGetAccount } from 'web/servers/account/useGetAccount'
-import { useSignOut } from 'web/servers/signup/useSignOut'
+import { useGetAccount } from 'web/hooks/account/useGetAccount'
+import { useSignOut } from 'web/hooks/signup/useSignOut'
 
 export const OrgSidebarAccountSection = () => {
   const { t } = useTranslation()

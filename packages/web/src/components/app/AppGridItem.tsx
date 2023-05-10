@@ -4,17 +4,17 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import EditableText from 'web/components/common/EditableText'
 import { IconApp } from 'web/components/icons/IconApp'
-import { useDeleteApp } from 'web/servers/app/useDeleteApp'
-import { useUpdateApp } from 'web/servers/app/useUpdateApp'
+import { useDeleteApp } from 'web/hooks/app/useDeleteApp'
+import { useUpdateApp } from 'web/hooks/app/useUpdateApp'
 
 import { AppStylePanel } from './AppStylePanel'
 import { openAlertDialog } from '../modals/alertDialog'
 
 import type { FlexProps } from '@appser/ui'
-import type { TApp } from 'web/types'
+import type { App } from 'web/types'
 
 interface AppItemProps extends FlexProps {
-  app: Pick<TApp, 'id' | 'name' | 'tintColor' | 'icon'>
+  app: Pick<App, 'id' | 'name' | 'tintColor' | 'icon'>
 }
 
 const ITEM_WIDTH = 120

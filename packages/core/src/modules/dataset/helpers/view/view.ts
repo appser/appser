@@ -14,14 +14,14 @@ export class View {
   #dataset
   #config
 
-  constructor(config: TView, fromDataset?: Pick<TDataset, 'fields'>) {
+  constructor(config: TView, fromDataset?: Pick<TDataset, 'field'>) {
     this.#config = config
     this.#dataset = fromDataset
   }
 
-  static getFromDatasetById(dataset: TDataset, viewId: string) {
-    const viewIndex = dataset.views.findIndex(view => view.id === viewId)
-    const view = dataset.views[viewIndex]
+  static getById(fromDataset: TDataset, viewId: string) {
+    const viewIndex = fromDataset.views.findIndex(view => view.id === viewId)
+    const view = fromDataset.views[viewIndex]
 
     if (!view) throw datasetError('viewNotFound')
 
@@ -43,7 +43,7 @@ export class View {
 
   validate(config: Partial<TView>) {
     const { field, fields, filter, sorts, stickyField } = config
-    const datasetAvailableFieldNames = Object.keys(this.dataset.fields)
+    const datasetAvailableFieldNames = Object.keys(this.dataset.field)
     const viewAvailableFieldNames = Object.keys(field ?? this.#config.field)
     const isValidField = field ? viewAvailableFieldNames.every(c => datasetAvailableFieldNames.includes(c)) : true
     const isValidFields = fields ? fields.every(s => viewAvailableFieldNames.includes(s)) : true

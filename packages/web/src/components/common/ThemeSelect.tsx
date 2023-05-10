@@ -1,5 +1,4 @@
-import { Select, createStyles, useMantineColorScheme } from '@appser/ui'
-import { useLocalStorage } from '@appser/ui'
+import { Select, createStyles, useLocalStorage, useMantineColorScheme } from '@appser/ui'
 import { useTranslation } from 'react-i18next'
 
 import { IconMoon } from '../icons/IconMoon'

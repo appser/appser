@@ -1,7 +1,7 @@
 import { atom, useAtom } from 'jotai'
 
-import type { TView } from 'web/servers/dataset/types'
+import type { View } from 'web/types'
 
-const activatedView = atom<TView | null>(null)
+const activatedView = atom<View | null>(null)
 
 export const useActivatedView = () => useAtom(activatedView)

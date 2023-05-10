@@ -3,11 +3,13 @@ export const colors = {
     primary: '#49a92a',
     text: '#1A202C',
     icon: '#808080',
-    border: '#E9ECEF'
+    border: '#E9ECEF',
+    background: '#cccccc'
   },
   dark: {
     text: '#F1F3F5',
     icon: '#A6A7AB',
-    border: '#373A40'
+    border: '#373A40',
+    background: '#cccccc'
   }
 }

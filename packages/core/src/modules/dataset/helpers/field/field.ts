@@ -1,5 +1,5 @@
-import { createLogger } from 'core/logger'
 import { column } from 'core/db/model/column'
+import { createLogger } from 'core/logger'
 import { z } from 'zod'
 
 import type { Column } from 'core/db/model/column'
@@ -47,6 +47,7 @@ export class Field {
     log.debug('defined field type', type)
 
     return {
+      schema: meta.schema,
       optionSchema: meta.optionSchema ?? z.never().optional()
     }
   }

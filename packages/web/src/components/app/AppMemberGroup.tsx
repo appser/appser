@@ -1,14 +1,15 @@
 import { Avatar, Button, Group } from '@appser/ui'
-import { useAppPeople } from 'web/servers/app/useAppPeople'
+import { useAppPeople } from 'web/hooks/app/useAppPeople'
 
+import { openAddAppMember } from '../modals/addAppMember'
 import { openAppMember } from '../modals/appMember'
 import { UserAvatar } from '../user/UserAvatar'
 
 import type { FC } from 'react'
-import type { TApp } from 'web/types'
+import type { App } from 'web/types'
 
 interface Props {
-  app: Required<Pick<TApp, 'id' | 'name' | 'orgId'>>
+  app: Required<Pick<App, 'id' | 'name' | 'orgId'>>
 }
 
 export const AppMemberGroup: FC<Props> = ({ app }) => {
@@ -26,7 +27,7 @@ export const AppMemberGroup: FC<Props> = ({ app }) => {
         ))}
         {persons && persons?.length > 2 && <Avatar size={30} radius="xl">+{persons.length - 2}</Avatar>}
       </Avatar.Group>
-      <Button variant='default' size='xs' onClick={() => openAddAppMember({ dataset })}>Share</Button>
+      <Button variant='default' size='xs' onClick={() => openAddAppMember({ app })}>Share</Button>
     </Group>
   )
 }

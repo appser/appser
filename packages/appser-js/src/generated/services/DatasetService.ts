@@ -20,7 +20,7 @@ export class DatasetService {
     id: string;
     appId: string;
     name?: string;
-    fields: Record<string, (({
+    field: Record<string, (({
       type: 'numId';
       options?: {
         dynamicDefault?: 'snowflakeId';
@@ -43,7 +43,7 @@ export class DatasetService {
       type: 'multipleSelect';
       options: {
         items: Array<{
-          id?: number;
+          id?: string;
           name: string;
         }>;
       };
@@ -60,7 +60,7 @@ export class DatasetService {
       type: 'singleSelect';
       options: {
         items: Array<{
-          id?: number;
+          id?: string;
           name: string;
         }>;
       };
@@ -142,7 +142,7 @@ export class DatasetService {
       type: 'multipleSelect';
       options: {
         items: Array<{
-          id?: number;
+          id?: string;
           name: string;
         }>;
       };
@@ -159,7 +159,7 @@ export class DatasetService {
       type: 'singleSelect';
       options: {
         items: Array<{
-          id?: number;
+          id?: string;
           name: string;
         }>;
       };
@@ -237,7 +237,7 @@ export class DatasetService {
       type: 'multipleSelect';
       options: {
         items: Array<{
-          id?: number;
+          id?: string;
           name: string;
         }>;
       };
@@ -254,7 +254,7 @@ export class DatasetService {
       type: 'singleSelect';
       options: {
         items: Array<{
-          id?: number;
+          id?: string;
           name: string;
         }>;
       };
@@ -469,7 +469,7 @@ export class DatasetService {
   }: {
     datasetId: string,
     viewId: string,
-    requestBody: ((string | number | boolean | 'null' | null) | Record<string, ((string | number | boolean | 'null' | null) | Record<string, any>)>),
+    requestBody: Record<string, any>,
   }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',

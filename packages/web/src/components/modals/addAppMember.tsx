@@ -1,10 +1,10 @@
 import { Box, Button, Group, isNotEmpty, openContextModal, useForm } from '@appser/ui'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAddAppPeople } from 'web/servers/app/useAddAppPeople'
-import { useAppPeople } from 'web/servers/app/useAppPeople'
-import { useListAppRole } from 'web/servers/app/useListAppRole'
-import { useListOrgPeople } from 'web/servers/org/useListOrgPeople'
+import { useAddAppPeople } from 'web/hooks/app/useAddAppPeople'
+import { useAppPeople } from 'web/hooks/app/useAppPeople'
+import { useListAppRole } from 'web/hooks/app/useListAppRole'
+import { useListOrgPeople } from 'web/hooks/org/useListOrgPeople'
 import i18n from 'web/vendor/i18n'
 
 import { FormSection } from '../common/FormSection'
@@ -12,11 +12,11 @@ import { IconSelector } from '../icons/IconSelector'
 import { OrgUserSelect } from '../org/OrgUserSelect'
 import { RoleSelect } from '../role/RoleSelect'
 
-import type { ContextModalProps } from '@appser/ui' // modals
-import type { TApp } from 'web/types'
+import type { ContextModalProps } from '@appser/ui'
+import type { App } from 'web/types'
 
 export type AddAppMemberModalProps = {
-  app: Pick<TApp, 'orgId' | 'name' | 'id'>
+  app: Pick<App, 'orgId' | 'name' | 'id'>
 }
 
 export function AddAppMemberModal({ context, id, innerProps: { app } }: ContextModalProps<AddAppMemberModalProps>) {

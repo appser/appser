@@ -6,10 +6,10 @@ import EditableText from 'web/components/common/EditableText'
 import { AppNavLink } from './AppNavLink'
 
 import type { FC, PropsWithChildren } from 'react'
-import type { TDataset } from 'web/servers/dataset/types'
+import type { Dataset } from 'web/types'
 
 interface Props extends PropsWithChildren {
-  dataset: Pick<TDataset, 'name' | 'id'>
+  dataset: Pick<Dataset, 'name' | 'id'>
 }
 
 export const AppDatasetNavLink: FC<Props> = ({ children, dataset }) => {

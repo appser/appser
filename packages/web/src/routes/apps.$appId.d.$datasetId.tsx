@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
+import { getDatasetQuery, useGetDataset } from 'web/hooks/dataset/useGetDataset'
 import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
-import { getDatasetQuery, useGetDataset } from 'web/servers/dataset/useGetDataset'
 
 import type { QueryClient } from '@tanstack/react-query'
 import type { LoaderFunctionArgs } from 'react-router-dom'

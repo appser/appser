@@ -5,14 +5,13 @@ import { IconTable } from '../icons/IconTable'
 import { IconView } from '../icons/IconView'
 
 import type { FC } from 'react'
-import type { TDataset, TView } from 'web/servers/dataset/types'
-import type { TApp } from 'web/types'
+import type { App, Dataset, View } from 'web/types'
 
 interface Props {
   current: {
-    app: TApp
-    dataset?: Pick<TDataset, 'id' | 'name'>
-    view?: Pick<TView, 'id' | 'name' | 'type'>
+    app: App
+    dataset?: Pick<Dataset, 'id' | 'name'>
+    view?: Pick<View, 'id' | 'name' | 'type'>
   }
 }
 

@@ -1,5 +1,4 @@
-import { colors } from '@appser/ui'
-import { Box, Divider, createStyles, getStylesRef } from '@appser/ui'
+import { Box, Divider, colors, createStyles, getStylesRef } from '@appser/ui'
 import { useEffect, useRef, useState } from 'react'
 
 import type { DefaultProps, Selectors } from '@appser/ui'

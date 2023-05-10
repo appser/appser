@@ -1,16 +1,14 @@
-import { colors } from '@appser/ui'
-import { Flex, Tabs, Text, createStyles } from '@appser/ui'
-import { openContextModal } from '@appser/ui'//modals
+import { Flex, Tabs, Text, colors, createStyles, openContextModal } from '@appser/ui'
 import { IconMonitor } from 'web/components/icons/IconMonitor'
 import { IconShield } from 'web/components/icons/IconShield'
 import { IconUser } from 'web/components/icons/IconUser'
-import { useGetAccount } from 'web/servers/account/useGetAccount'
+import { useGetAccount } from 'web/hooks/account/useGetAccount'
 
 import { UserSettingsAccount } from './UserSettingsAccount'
 import { UserSettingsAppearance } from './UserSettingsAppearance'
 import { UserSettingsProfile } from './UserSettingsProfile'
 
-import type { ContextModalProps } from '@appser/ui'//modals
+import type { ContextModalProps } from '@appser/ui'
 
 export const useStyles = createStyles((theme) => ({
   root: {

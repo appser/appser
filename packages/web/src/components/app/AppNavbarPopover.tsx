@@ -4,12 +4,12 @@ import { AppNavbar } from './AppNavbar'
 import { IconChevronDown } from '../icons/IconChevronDown'
 
 import type { FC } from 'react'
-import type { TApp } from 'web/types'
+import type { App } from 'web/types'
 
 // TODO @tccsg
 
 interface Props {
-  app: TApp
+  app: App
 }
 
 export const AppNavbarPopover: FC<Props> = ({ app }) => {

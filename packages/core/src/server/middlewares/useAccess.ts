@@ -1,8 +1,9 @@
 // TODO: when the role id < SYSTEM_ROLE_MAX_ID, the policies can be combined.
 import Access, { roles } from '@appser/access'
+import { PersonStatus } from '@appser/common'
 import db from 'core/db'
 import { App } from 'core/models/app'
-import { People, PersonStatus } from 'core/models/people'
+import { People } from 'core/models/people'
 import { Role } from 'core/models/role'
 import { authError } from 'core/modules/auth/auth.error'
 import jsonTemplate from 'core/utils/jsonTemplate'

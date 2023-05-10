@@ -16,10 +16,10 @@ export const getView = new Controller(
 
     guard('app:dataset:view:get', { appId, datasetId, viewId })
 
-    const { view, viewIndex } = View.getFromDatasetById(dataset, viewId)
+    const { view, viewIndex } = View.getById(dataset, viewId)
 
     // fill all the missing field
-    Object.entries(dataset.fields).forEach(([name, config]) => {
+    Object.entries(dataset.field).forEach(([name, config]) => {
       view.field[name] = {
         selected: false,
         ...config

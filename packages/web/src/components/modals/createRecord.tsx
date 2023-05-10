@@ -1,23 +1,21 @@
-import { colors } from '@appser/ui'
-import { Button, Flex, Group } from '@appser/ui'
-import { openContextModal } from '@appser/ui'//modals
+import { Button, Flex, Group, colors, openContextModal } from '@appser/ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAddRecord } from 'web/servers/dataset/useAddRecord'
+import { useAddRecord } from 'web/hooks/dataset/useAddRecord'
 import i18n from 'web/vendor/i18n'
 
-import { ColumnInput } from '../views/GridView/column/ColumnInput'
+import { FieldFormInput } from '../views/SheetView/field/FieldFormInput'
 
-import type { Column } from '../views/GridView/column/Column'
-import type { ContextModalProps } from '@appser/ui'//modals
+import type { SheetField } from '../views/SheetView/field/Field'
+import type { ContextModalProps } from '@appser/ui'
 
 type CreateRecordProps = {
   datasetId: string
   viewId: string
-  columns: Column[]
+  fields: SheetField[]
 }
 
-export function CreateRecordModal({ context, id, innerProps: { columns, viewId, datasetId } }: ContextModalProps<CreateRecordProps>) {
+export function CreateRecordModal({ context, id, innerProps: { fields, viewId, datasetId } }: ContextModalProps<CreateRecordProps>) {
   const { t } = useTranslation()
   const { mutate, isLoading } = useAddRecord(datasetId, viewId)
   const [data, setData] = useState<Record<string, unknown>>({})
@@ -33,11 +31,11 @@ export function CreateRecordModal({ context, id, innerProps: { columns, viewId, 
   return (
     <Flex direction="column" w='100%' sx={{ flex: 1 }}>
       <Flex sx={{ flex: 1, overflow: 'auto' }} pl='lg' pr='lg' pb={30} direction='column'>
-        {columns.map(column => (
-          <ColumnInput
-            key={column.name}
-            column={column}
-            onChange={v => setData(prev => ({ ...prev, [column.name]: v }))}
+        {fields.map(field => (
+          <FieldFormInput
+            key={field.name}
+            field={field}
+            onChange={v => setData(prev => ({ ...prev, [field.name]: v }))}
           // onChange={v => console.log(v)}
             mb='xs'
           />

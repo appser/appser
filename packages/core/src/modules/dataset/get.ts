@@ -1,3 +1,4 @@
+import db from 'core/db'
 import { Model } from 'core/db/model'
 import { Dataset } from 'core/models/dataset'
 import { Record } from 'core/models/record'
@@ -32,7 +33,7 @@ export const getDataset = new Controller(
 
     const model = new Model({
       ...Record.columns,
-      data: Field.toColumnWithFields(dataset.fields)
+      data: Field.toColumnWithFields(dataset.field)
     }).connect({ tableName: 'record' })
 
     Object.assign(ctx.state, {
@@ -44,7 +45,7 @@ export const getDataset = new Controller(
       }
     })
 
-    dataset.fields = merge(dataset.fields, defaultDatasetFields)
+    dataset.field = merge(dataset.field, defaultDatasetFields)
 
     ctx.body = dataset
 
@@ -56,11 +57,9 @@ export const getDataset = new Controller(
       datasetId: z.string().regex(rNumId)
     }),
     response: {
-      200: Dataset.schema.required({
+      200: Dataset.schema.pick({
         createdAt: true,
         updatedAt: true
-      }).omit({
-        views: true
       })
     }
   }

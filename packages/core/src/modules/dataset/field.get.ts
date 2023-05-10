@@ -15,7 +15,7 @@ export const getField = new Controller(
 
     guard('app:dataset:field:get', { appId, datasetId, fieldName })
 
-    const config = dataset.fields[fieldName]
+    const config = dataset.field[fieldName]
 
     if (!config) return ctx.throw(datasetError('fieldNotFound'))
 

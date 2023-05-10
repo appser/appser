@@ -52,7 +52,6 @@ export function resolveOperation(info: OpenAPIPartialOperation, request?: Reques
   if (request) {
     const { header, params, query, body } = request
     const parameters: OpenAPIV3.ParameterObject[] = []
-    console.log(info)
 
     if (header) parameters.push(...resolveParameters('header', header))
     if (params) parameters.push(...resolveParameters('path', params))
@@ -66,8 +65,6 @@ export function resolveOperation(info: OpenAPIPartialOperation, request?: Reques
 
 function resolveParameters(inside: ParameterIn, zodSchema: Schema): OpenAPIV3.ParameterObject[] {
   const schema = toOpenAPISchema(zodSchema)
-  console.log(inside)
-  console.dir(schema, { depth: 10 })
 
   if (!(('type' in schema) && schema.type === 'object' && 'properties' in schema && schema.properties)) throw new Error('schema must be an object')
 

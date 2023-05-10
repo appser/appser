@@ -1,6 +1,7 @@
-import { Button, Flex, Group, PasswordInput, TextInput, Title } from '@appser/ui'
-import { hasLength, isEmail, useForm } from '@appser/ui'
-import { useDisclosure } from '@appser/ui'
+import {
+  Button, Flex, Group, PasswordInput,
+  TextInput, Title, hasLength, isEmail, useDisclosure, useForm
+} from '@appser/ui'
 import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'

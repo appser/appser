@@ -6,10 +6,10 @@ import { IconView } from 'web/components/icons/IconView'
 import { AppNavLink } from './AppNavLink'
 
 import type { FC, PropsWithChildren } from 'react'
-import type { TView } from 'web/servers/dataset/types'
+import type { View } from 'web/types'
 
 interface Props extends PropsWithChildren {
-  view: Pick<TView, 'name' | 'type'>
+  view: Pick<View, 'name' | 'type'>
 }
 
 export const AppViewNavLink: FC<Props> = ({ children, view }) => {

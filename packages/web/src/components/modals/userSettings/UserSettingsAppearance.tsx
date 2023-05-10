@@ -1,6 +1,5 @@
 import { createStyles } from '@appser/ui'
 import { useTranslation } from 'react-i18next'
-import { FormSectionSelect } from 'web/components/common/FormSection/FormSectionSelect'
 import { LanguageSelect } from 'web/components/common/LanguageSelect'
 import { ThemeSelect } from 'web/components/common/ThemeSelect'
 

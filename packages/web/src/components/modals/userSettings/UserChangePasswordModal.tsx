@@ -1,11 +1,9 @@
-import { Button, Flex, Group, PasswordInput } from '@appser/ui'
-import { hasLength, useForm } from '@appser/ui'
-import { useDisclosure } from '@appser/ui'
+import { Button, Flex, Group, PasswordInput, hasLength, useDisclosure, useForm } from '@appser/ui'
 import { useTranslation } from 'react-i18next'
-import { useChangeAccountPassword } from 'web/servers/account/useChangeAccountPassword'
-import { useGetAccount } from 'web/servers/account/useGetAccount'
+import { useChangeAccountPassword } from 'web/hooks/account/useChangeAccountPassword'
+import { useGetAccount } from 'web/hooks/account/useGetAccount'
 
-import type { ContextModalProps } from '@appser/ui'//modals
+import type { ContextModalProps } from '@appser/ui'
 
 export function UserChangePasswordModal({ context, id }: ContextModalProps) {
   const { t } = useTranslation()

@@ -21,7 +21,7 @@
     "updatedAt": "Last Modified",
     "lastEditor": "Last Modified By"
   },
-  "field": {
+  "fieldType": {
     "checkbox": "Checkbox",
     "date": "Date",
     "email": "Email",

@@ -6,12 +6,6 @@ import { z } from 'zod'
 import type { Optional } from '@appser/common'
 import type { Knex } from 'knex'
 
-export enum PersonStatus {
-  PENDING = 0,
-  ACTIVE = 1,
-  FAILED = 2
-}
-
 export const People = Model.define('people', {
   userId: column('bigint', z.string().regex(rNumId)),
   orgId: column('bigint', z.string().regex(rNumId)),

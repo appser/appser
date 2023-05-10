@@ -23,13 +23,13 @@ export const deleteField = new Controller(
 
     if (field.locked) return ctx.throw(datasetError('fieldIsLocked'))
 
-    dataset.fields[name].deletedAt = new Date().toISOString()
+    dataset.field[name].deletedAt = new Date().toISOString()
     dataset.views = dataset.views.map(view => new View(view).cleanField(name).toJSON())
 
     await Dataset.query
       .where({ id: datasetId })
       .update({
-        fields: dataset.fields,
+        field: dataset.field,
         views: dataset.views
       })
 

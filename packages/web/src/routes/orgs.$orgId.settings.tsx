@@ -1,13 +1,12 @@
-import { Box, Button, Divider, Flex, Group, Modal, Text, TextInput, Title } from '@appser/ui'
-import { hasLength, useForm } from '@appser/ui'
+import { Box, Button, Divider, Flex, Group, Modal, Text, TextInput, Title, hasLength, useForm } from '@appser/ui'
 import { useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import { FormSection } from 'web/components/common/FormSection'
 import { NavHeader } from 'web/components/common/NavHeader'
-import { useDeleteOrg } from 'web/servers/org/useDeleteOrg'
-import { useGetOrg } from 'web/servers/org/useGetOrg'
-import { useUpdateOrg } from 'web/servers/org/useUpdateOrg'
+import { useDeleteOrg } from 'web/hooks/org/useDeleteOrg'
+import { useGetOrg } from 'web/hooks/org/useGetOrg'
+import { useUpdateOrg } from 'web/hooks/org/useUpdateOrg'
 
 export default function OrgIdSettings() {
   const { t } = useTranslation()

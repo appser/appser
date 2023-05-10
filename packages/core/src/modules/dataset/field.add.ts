@@ -29,7 +29,7 @@ export const addField = new Controller(
       .update('field', db.jsonInsert('field', `$.${name}`, config))
 
     if (appendViewId) {
-      const { view, viewIndex } = View.getFromDatasetById(dataset, appendViewId)
+      const { view, viewIndex } = View.getById(dataset, appendViewId)
 
       view.field[name] = {
         selected: true

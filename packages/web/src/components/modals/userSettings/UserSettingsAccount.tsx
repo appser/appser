@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FormSection } from 'web/components/common/FormSection'
 import { IconChevronRight } from 'web/components/icons/IconChevronRight'
-import { openUserChangePassword } from 'web/components/modals'
 
 import { UserSettingsContainer } from './UserSettingsContainer'
 

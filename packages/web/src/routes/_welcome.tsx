@@ -3,9 +3,9 @@ import { Outlet, redirect, useLoaderData, useOutletContext } from 'react-router-
 import { LanguageSelect } from 'web/components/common/LanguageSelect'
 import { Sidebar } from 'web/components/common/Sidebar'
 import { ThemeSelect } from 'web/components/common/ThemeSelect'
-import { getAuthConfigQuery } from 'web/servers/auth/useGetAuthConfig'
-import { getInviteQuery } from 'web/servers/invitation/queries'
-import { loadQueryData } from 'web/utils/loadQueryData'
+import { loadQueryData } from 'web/helpers/loadQueryData'
+import { getAuthConfigQuery } from 'web/hooks/auth/useGetAuthConfig'
+import { getInvitationQuery } from 'web/hooks/invitation/useGetInvitation'
 
 import type { QueryClient } from '@tanstack/react-query'
 import type { LoaderFunctionArgs } from 'react-router-dom'
@@ -17,7 +17,7 @@ export const loader = (queryClient: QueryClient) => async ({ request, params }: 
 
   const [authConfig, invitation] = await Promise.all([
     loadQueryData(queryClient, getAuthConfigQuery),
-    invitationToken ? loadQueryData(queryClient, getInviteQuery({ invitationToken })) : undefined
+    invitationToken ? loadQueryData(queryClient, getInvitationQuery(invitationToken)) : undefined
   ])
 
   if (pathname !== '/signup' && !authConfig.isInitialize) {

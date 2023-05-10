@@ -1,9 +1,7 @@
-import { hasLength, useForm } from '@appser/ui'
-import { useDisclosure } from '@appser/ui'
+import { hasLength, useDisclosure, useForm } from '@appser/ui'
 import { useTranslation } from 'react-i18next'
 import { FormSection } from 'web/components/common/FormSection'
-import { openUserChangePassword } from 'web/components/modals'
-import { useChangeAccountPassword } from 'web/servers/account/useChangeAccountPassword'
+import { useChangeAccountPassword } from 'web/hooks/account/useChangeAccountPassword'
 
 import { UserSettingsContainer } from './UserSettingsContainer'
 

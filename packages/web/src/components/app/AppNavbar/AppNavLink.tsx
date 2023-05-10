@@ -14,9 +14,9 @@ const useStyles = createStyles((theme, _: AppNavLinkStylesParams) => ({
     height: 38,
     position: 'relative'
   },
-  label: {
-    fontSize: theme.fontSizes.sm - 1
-  },
+  // label: {
+  //   fontSize: theme.fontSizes.sm - 1
+  // },
   icon: {
     marginRight: 6
   },

@@ -1,7 +1,7 @@
 import { Radio, Stack } from '@appser/ui'
+import { useChangeOrgPeopleRole } from 'web/hooks/org/useChangeOrgPeopleRole'
+import { useListOrgRole } from 'web/hooks/org/useListOrgRole'
 import { useActivatedOrg } from 'web/hooks/useActivatedOrg'
-import { useChangeOrgPeopleRole } from 'web/servers/org/useChangeOrgPeopleRole'
-import { useListOrgRole } from 'web/servers/org/useListOrgRole'
 
 import type { FC } from 'react'
 

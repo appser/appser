@@ -1,6 +1,6 @@
 import Access from '@appser/access'
 import { useMemo } from 'react'
-import { useListAccountPolicy } from 'web/servers/account/useListAccountPolicy'
+import { useListAccountPolicy } from 'web/hooks/account/useListAccountPolicy'
 
 export default function useAccess() {
   const { data: policies } = useListAccountPolicy()

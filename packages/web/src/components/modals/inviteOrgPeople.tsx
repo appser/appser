@@ -1,17 +1,14 @@
-import { Box, Button, Group } from '@appser/ui'
-import { useForm } from '@appser/ui'
-import { useClipboard } from '@appser/ui'
-import { openContextModal } from '@appser/ui'//modals
+import { Box, Button, Group, openContextModal, useClipboard, useForm } from '@appser/ui'
 import { useTranslation } from 'react-i18next'
+import { useCreateOrgInvitation } from 'web/hooks/org/useCreateOrgInvitation'
+import { useListOrgRole } from 'web/hooks/org/useListOrgRole'
 import { useActivatedOrg } from 'web/hooks/useActivatedOrg'
-import { useCreateOrgInvitation } from 'web/servers/org/useCreateOrgInvitation'
-import { useListOrgRole } from 'web/servers/org/useListOrgRole'
 import i18n from 'web/vendor/i18n'
 
 import { FormSection } from '../common/FormSection'
 import { RoleSelect } from '../role/RoleSelect'
 
-import type { ContextModalProps } from '@appser/ui'//modals
+import type { ContextModalProps } from '@appser/ui'
 
 export function InviteOrgPeopleModal({ context, id, innerProps }: ContextModalProps) {
   const { t } = useTranslation()

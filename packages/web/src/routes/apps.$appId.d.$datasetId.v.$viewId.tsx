@@ -3,14 +3,14 @@ import React, { Suspense, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Forbidden } from 'web/components/errors/Forbidden'
 import { NotFound } from 'web/components/errors/NotFound'
+import { loadQueryData } from 'web/helpers/loadQueryData'
+import { getViewQuery, useGetView } from 'web/hooks/dataset/useGetView'
 import { useActivatedView } from 'web/hooks/useActivatedView'
-import { getViewQuery, useGetView } from 'web/servers/dataset/useGetView'
-import { loadQueryData } from 'web/utils/loadQueryData'
 
 import type { QueryClient } from '@tanstack/react-query'
 import type { LoaderFunctionArgs } from 'react-router-dom'
 
-const SheetView = React.lazy(() => import('web/components/views/GridView'))
+const SheetView = React.lazy(() => import('web/components/views/SheetView'))
 
 export const loader = (queryClient: QueryClient) => async ({ request, params }: LoaderFunctionArgs) => {
   const { datasetId = '', viewId = '' } = params
@@ -35,7 +35,7 @@ export default function AppsIdViewsId() {
   if (isSuccess) {
     if (!view) return <NotFound />
 
-    if (view.type === 'grid') {
+    if (view.type === 'sheet') {
       return (
         <Suspense fallback="loading">
           <SheetView view={view} />

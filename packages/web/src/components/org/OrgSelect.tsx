@@ -2,11 +2,11 @@ import { Flex, Group, Menu, Text, UnstyledButton } from '@appser/ui'
 import { useNavigate } from 'react-router-dom'
 import { IconSelector } from 'web/components/icons/IconSelector'
 import { OrgLogo } from 'web/components/org/OrgLogo'
+import { useListAccountOrg } from 'web/hooks/account/useListAccountOrg'
 import { useActivatedOrg } from 'web/hooks/useActivatedOrg'
-import { useListAccountOrg } from 'web/servers/account/useListAccountOrg'
 
 import type { FC } from 'react'
-import type { TOrg } from 'web/servers/org/types'
+import type { Org } from 'web/types'
 
 export const OrgSelect: FC = () => {
   const navigate = useNavigate()
@@ -15,7 +15,7 @@ export const OrgSelect: FC = () => {
 
   if (!isSuccess) return null
 
-  const gotoOrg = (org: TOrg) => {
+  const gotoOrg = (org: Org) => {
     navigate(`/orgs/${org.id}/apps`)
     setActivatedOrg(org)
   }

@@ -1,5 +1,6 @@
+import { PersonStatus } from '@appser/common'
 import { Org } from 'core/models/org'
-import { People, PersonStatus } from 'core/models/people'
+import { People } from 'core/models/people'
 import { checkRoleInOrg } from 'core/modules/org/utils/checkRoleInOrg'
 import { Controller } from 'core/server/controller'
 import { z } from 'zod'

@@ -6,7 +6,7 @@ import type { TView } from 'core/modules/dataset/helpers/view/view.schema'
 describe('class View', () => {
   let view: View
   let config: TView
-  let dataset: Pick<TDataset, 'fields'>
+  let dataset: Pick<TDataset, 'field'>
 
   beforeEach(() => {
     config = {
@@ -29,7 +29,7 @@ describe('class View', () => {
     }
 
     dataset = {
-      fields: {
+      field: {
         field1: { type: 'simpleText' },
         field2: { type: 'simpleText' },
         field3: { type: 'simpleText' }

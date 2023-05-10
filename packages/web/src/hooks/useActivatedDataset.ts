@@ -1,7 +1,7 @@
 import { atom, useAtom } from 'jotai'
 
-import type { TDataset } from 'web/servers/dataset/types'
+import type { Dataset } from 'web/types'
 
-const activatedDataset = atom<TDataset | null | undefined>(null)
+const activatedDataset = atom<Dataset | null | undefined>(null)
 
 export const useActivatedDataset = () => useAtom(activatedDataset)

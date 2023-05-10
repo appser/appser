@@ -1,5 +1,6 @@
 import { roles } from '@appser/access'
-import { People, PersonStatus } from 'core/models/people'
+import { PersonStatus } from '@appser/common'
+import { People } from 'core/models/people'
 import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 

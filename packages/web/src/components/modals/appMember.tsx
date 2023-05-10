@@ -2,17 +2,17 @@ import { ActionIcon, Badge, Group, Menu, Popover, Table, Text, createStyles, ope
 import { useCallback, useState } from 'react'
 import { MoreHorizontal } from 'react-feather'
 import { useTranslation } from 'react-i18next'
-import { useAppPeople } from 'web/servers/app/useAppPeople'
+import { useAppPeople } from 'web/hooks/app/useAppPeople'
 import i18n from 'web/vendor/i18n'
 
 import { RoleChange } from '../role/RoleChange'
 import { UserAvatar } from '../user/UserAvatar'
 
 import type { ContextModalProps } from '@appser/ui'
-import type { TApp } from 'web/types'
+import type { App } from 'web/types'
 
 export type AppMemberProps = {
-  app: Pick<TApp, 'id'>
+  app: Pick<App, 'id'>
 }
 
 const useStyles = createStyles((theme) => ({

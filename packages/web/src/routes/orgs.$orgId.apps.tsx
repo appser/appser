@@ -1,19 +1,18 @@
+import { Flex, Text, Title } from '@appser/ui'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { Box, Flex, Text, Title } from '@appser/ui'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import { AppCreatorButton } from 'web/components/app/AppCreatorButton'
 import { AppGridItem } from 'web/components/app/AppGridItem'
 import { NavHeader } from 'web/components/common/NavHeader'
-import { listOrgAppQuery } from 'web/servers/org/queries'
-import { useListOrgApp } from 'web/servers/org/useListOrgApp'
+import { listOrgAppQuery, useListOrgApp } from 'web/hooks/org/useListOrgApp'
 
 import type { QueryClient } from '@tanstack/react-query'
 import type { LoaderFunctionArgs } from 'react-router-dom'
 
 export const loader = (queryClient: QueryClient) => async ({ request, params }: LoaderFunctionArgs) => {
   const { orgId = '' } = params
-  queryClient.prefetchQuery(listOrgAppQuery({ orgId }))
+  queryClient.prefetchQuery(listOrgAppQuery(orgId))
 
   return null
 }

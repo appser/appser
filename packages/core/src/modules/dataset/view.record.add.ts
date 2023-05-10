@@ -1,5 +1,5 @@
 import { Controller } from 'core/server/controller'
-import jsonSchema from 'core/utils/jsonSchema'
+import { z } from 'zod'
 
 export const addViewRecord = new Controller(
   async (ctx, next) => {
@@ -28,7 +28,7 @@ export const addViewRecord = new Controller(
   },
   {
     state: ['auth', 'access', 'getDataset', 'getDatasetView'],
-    body: jsonSchema,
+    body: z.object({}).catchall(z.unknown()),
     response: {
       201: null
     }

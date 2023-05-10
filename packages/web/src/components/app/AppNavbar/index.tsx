@@ -4,8 +4,8 @@ import { useCallback } from 'react'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { ActionButton } from 'web/components/common/ActionButton'
 import { StrictModeDroppable } from 'web/components/common/StrictModeDroppable'
+import { useCreateDataset } from 'web/hooks/app/useCreateDataset'
 import { useActivatedApp } from 'web/hooks/useActivatedApp'
-import { useCreateDataset } from 'web/servers/app/useCreateDataset'
 
 import { AppDatasetNavLink } from './AppDatasetNavLink'
 import { AppViewNavLink } from './AppViewNavLink'
@@ -13,8 +13,7 @@ import { AppViewNavLink } from './AppViewNavLink'
 import type { NavbarProps } from '@appser/ui'
 import type { FC } from 'react'
 import type { DropResult } from 'react-beautiful-dnd'
-import type { TView } from 'web/servers/dataset/types'
-import type { TApp } from 'web/types'
+import type { App, View } from 'web/types'
 
 const reorder = (list: any[], startIndex: number, endIndex: number): any[] => {
   const result = Array.from(list)
@@ -45,7 +44,7 @@ export const AppNavbar: FC<NavbarProps> = (p) => {
     }
   }
 
-  const renderList = useCallback((list: TApp['datasets'] | TApp['datasets'][number]['views'], id: string, type: 'view' | 'dataset' = 'dataset') => (
+  const renderList = useCallback((list: App['datasets'] | App['datasets'][number]['views'], id: string, type: 'view' | 'dataset' = 'dataset') => (
     <StrictModeDroppable droppableId={id} type={`${type}-${id}`} key={id}>
       {(provided) => (
         <div {...provided.droppableProps} ref={provided.innerRef}>
@@ -57,10 +56,10 @@ export const AppNavbar: FC<NavbarProps> = (p) => {
                     {type === 'dataset'
                       ? (
                         <AppDatasetNavLink dataset={item}>
-                          {renderList((item as TApp['datasets'][number]).views, item.id, 'view')}
+                          {renderList((item as App['datasets'][number]).views, item.id, 'view')}
                         </AppDatasetNavLink>
                         )
-                      : <AppViewNavLink key={item.id} view={item as Pick<TView, 'name' | 'type'>} />}
+                      : <AppViewNavLink key={item.id} view={item as Pick<View, 'name' | 'type'>} />}
                   </div>
                 )}
               </Draggable>

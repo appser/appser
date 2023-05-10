@@ -1,15 +1,18 @@
 import { atom, useAtom } from 'jotai'
-import { setLastOrgId } from 'web/servers/org/utils'
+import { getLastOrgId, setLastOrgId } from 'web/helpers/lastOrgId'
 
-import type { Optional } from '@appser/common'
-import type { TOrg } from 'web/servers/org/types'
+import type { Org } from 'web/types'
 
-const activatedOrg = atom<Optional<TOrg, 'id'>, TOrg>({
-  image: '',
-  name: ''
-}, (get, set, org) => {
-  set(activatedOrg, org)
-  setLastOrgId(org.id)
-})
+const activatedOrgAtom = atom(
+  {
+    id: getLastOrgId(),
+    image: '',
+    name: ''
+  },
+  (_get, set, org: Org) => {
+    set(activatedOrgAtom, org)
+    setLastOrgId(org.id)
+  }
+)
 
-export const useActivatedOrg = () => useAtom(activatedOrg)
+export const useActivatedOrg = () => useAtom(activatedOrgAtom)

@@ -5,7 +5,7 @@ import { AlertOctagon } from 'react-feather'
 import { Trans, useTranslation } from 'react-i18next'
 import { useNavigate, useRouteError } from 'react-router-dom'
 import { OrgLogo } from 'web/components/org/OrgLogo'
-import { setLastOrgId } from 'web/servers/org/utils'
+import { setLastOrgId } from 'web/helpers/lastOrgId'
 import db from 'web/vendor/db'
 
 import { useWelcomeContext } from './_welcome'

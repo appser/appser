@@ -1,4 +1,4 @@
-import { Avatar } from '@appser/ui'
+import { Avatar, useColors } from '@appser/ui'
 
 import type { AvatarProps } from '@appser/ui'
 import type { FC } from 'react'
@@ -11,14 +11,16 @@ interface Props extends AvatarProps {
 }
 
 export const OrgLogo: FC<Props> = ({ org: { name, image }, ...rest }) => {
+  const colors = useColors()
+
   return (
     <Avatar
       src={image}
       size="sm"
-      styles={({ colorScheme, colors }, p) => ({
+      styles={({ colorScheme }, p) => ({
         placeholder: {
-          backgroundColor: colorScheme === 'dark' ? colors.dark[5] : colors.gray[2],
-          borderRadius: p.size === 'lg' ? 12 : 4
+          backgroundColor: colors.border
+          // borderRadius: p.size === 'lg' ? 12 : 4
         }
       })}
       {...rest}
