@@ -1,5 +1,4 @@
 import { Controller } from 'core/server/controller'
-import jsonSchema from 'core/utils/jsonSchema'
 import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
@@ -23,7 +22,7 @@ export const updateViewRecord = new Controller(
       .update({
         data,
         lastEditor: currentUser.id,
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date()
       } as never)
 
     ctx.status = 204

@@ -1,5 +1,6 @@
 import db from 'core/db'
 import { pathToColumn } from 'core/db/helpers/pathToColumn'
+import { merge } from 'lodash'
 
 import { datasetError } from '../../dataset.error'
 
@@ -36,7 +37,7 @@ export class View {
 
   update(config: Partial<TView>) {
     this.validate(config)
-    this.#config = Object.assign(this.#config, config)
+    this.#config = merge(this.#config, config)
 
     return this
   }

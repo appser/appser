@@ -19,11 +19,13 @@ export const getView = new Controller(
     const { view, viewIndex } = View.getById(dataset, viewId)
 
     // fill all the missing field
-    Object.entries(dataset.field).forEach(([name, config]) => {
-      view.field[name] = {
-        selected: false,
-        ...config
+    Object.keys(dataset.field).forEach((name) => {
+      if (!view.field[name]) {
+        view.field[name] = {
+          selected: false
+        }
       }
+
       view.fields.includes(name) || view.fields.push(name)
     })
 

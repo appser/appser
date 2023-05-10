@@ -70,7 +70,7 @@ export class Model<C extends SomeColumns = SomeColumns, T = unknown> extends Eve
   }
 
   get query() {
-    return db(this.tableName as T extends keyof Models ? T : never).model()
+    return db(this.tableName as T extends keyof Models ? T : never).model(this)
   }
 
   get validator() {

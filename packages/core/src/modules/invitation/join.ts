@@ -38,7 +38,7 @@ export const inviteToApp = new Module(
       roleId,
       status: PeopleStatus.ACTIVE,
       inviterId: currentUser.id,
-      joinedAt: new Date().toISOString()
+      joinedAt: new Date()
     })
 
     ctx.status = 204
