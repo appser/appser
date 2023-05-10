@@ -27,7 +27,7 @@ export const addAppPeople = new Controller(
       userId,
       roleId,
       status: PersonStatus.ACTIVE,
-      joinedAt: new Date().toISOString()
+      joinedAt: new Date()
     })
 
     ctx.status = HttpStatusCode.NotContent

@@ -43,7 +43,7 @@ export const acceptInvitation = new Controller(
         roleId,
         status: PersonStatus.ACTIVE,
         inviterId: payload.iss,
-        joinedAt: new Date().toISOString()
+        joinedAt: new Date()
       })
     }
 

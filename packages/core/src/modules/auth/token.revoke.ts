@@ -11,7 +11,7 @@ export const revokeToken = new Controller(
       id: payload.jti,
       audience: payload.aud,
       isRevoke: true,
-      expiredAt: new Date(payload.exp * 1000).toISOString()
+      expiredAt: new Date(payload.exp * 1000)
     })
 
     ctx.status = 204

@@ -11,8 +11,8 @@ export const Record = Model.define('record', {
   id: column('bigint', z.string().default(() => genSnowflakeId().toString())),
   creator: column('bigint', z.string()).relation('user', 'id', ['id', 'name', 'avatar']),
   lastEditor: column('bigint', z.string()).relation('user', 'id', ['id', 'name', 'avatar']),
-  createdAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString())),
-  updatedAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString())),
+  createdAt: column('timestamp', z.date().default(() => new Date())),
+  updatedAt: column('timestamp', z.date().default(() => new Date())),
   data: column('jsonb', z.any())
 })
   .primary(['datasetId', 'id'])

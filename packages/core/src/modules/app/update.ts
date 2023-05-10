@@ -20,7 +20,7 @@ export const updateApp = new Controller(
         name,
         tintColor,
         icon,
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date()
       })
 
     ctx.status = HttpStatusCode.NotContent

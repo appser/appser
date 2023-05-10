@@ -50,7 +50,7 @@ export const createOrgApp = new Controller(
           roleId: roles.app.admin.id,
           status: PersonStatus.ACTIVE,
           inviterId: user.id,
-          joinedAt: new Date().toISOString()
+          joinedAt: new Date()
         })
         .transacting(trx)
 

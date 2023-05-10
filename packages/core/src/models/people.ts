@@ -13,9 +13,9 @@ export const People = Model.define('people', {
   roleId: column('bigint', z.string().regex(rNumId)),
   status: column('smallint', z.number().int().gte(0).lte(2)),
   inviterId: column('bigint', z.string().regex(rNumId).optional()),
-  invitedAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString())),
-  joinedAt: column('timestamp', z.string().datetime().optional()),
-  failedAt: column('timestamp', z.string().datetime().optional()),
+  invitedAt: column('timestamp', z.date().default(() => new Date())),
+  joinedAt: column('timestamp', z.date().optional()),
+  failedAt: column('timestamp', z.date().optional()),
   failedReason: column('text', z.string().optional())
 })
   .primary(['userId', 'orgId', 'appId'])

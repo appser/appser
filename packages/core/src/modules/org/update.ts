@@ -15,7 +15,7 @@ export const updateOrg = new Controller(
 
     await Org.query.where('id', orgId).update({
       name,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date()
     })
 
     ctx.status = 204

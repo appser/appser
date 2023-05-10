@@ -36,7 +36,7 @@ export const updateViewRecord = new Controller(
       datasetId: z.string().regex(rNumId),
       recordId: z.string().regex(rNumId)
     }),
-    body: jsonSchema,
+    body: z.object({}).catchall(z.unknown()),
     response: {
       204: null
     }

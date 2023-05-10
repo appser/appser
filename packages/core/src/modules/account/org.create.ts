@@ -32,7 +32,7 @@ export const createAccountOrg = new Controller(
           userId: user.id,
           roleId: roles.org.owner.id,
           status: PersonStatus.ACTIVE,
-          joinedAt: new Date().toISOString()
+          joinedAt: new Date()
         })
         .transacting(trx)
 

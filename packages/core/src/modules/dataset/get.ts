@@ -9,6 +9,7 @@ import { z } from 'zod'
 
 import { Field } from './helpers/field/field'
 import { getDatasetById } from './helpers/getDatasetById'
+import { viewSchema } from './helpers/view/view.schema'
 
 import type { FieldConfig } from './helpers/field/field.schema'
 import type { TDataset } from 'core/models/dataset'
@@ -58,8 +59,18 @@ export const getDataset = new Controller(
     }),
     response: {
       200: Dataset.schema.pick({
+        id: true,
+        appId: true,
+        name: true,
+        field: true,
         createdAt: true,
         updatedAt: true
+      }).extend({
+        views: viewSchema.pick({
+          id: true,
+          type: true,
+          name: true
+        }).array()
       })
     }
   }

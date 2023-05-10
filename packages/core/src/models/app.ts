@@ -12,8 +12,8 @@ export const App = Model.define('app', {
   name: column('text', z.string().optional()),
   tintColor: column('text', z.string()),
   icon: column('text', z.string()),
-  createdAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString())),
-  updatedAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString()))
+  createdAt: column('timestamp', z.date().default(() => new Date())),
+  updatedAt: column('timestamp', z.date().default(() => new Date()))
 })
 
 export type TApp = z.infer<typeof App.schema>

@@ -10,8 +10,8 @@ export const Org = Model.define('org', {
   name: column('text', z.string().trim()),
   image: column('text', z.string().url().optional()),
   creatorId: column('bigint', z.string()).relation('user', 'id', ['name', 'id']),
-  createdAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString())),
-  updatedAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString()))
+  createdAt: column('timestamp', z.date().default(() => new Date())),
+  updatedAt: column('timestamp', z.date().default(() => new Date()))
 })
 
 export type TOrg = z.infer<typeof Org.schema>

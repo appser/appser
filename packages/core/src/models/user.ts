@@ -27,8 +27,8 @@ export const User = Model.define('user', {
     timezone: z.string(),
     firstDayOfWeek: z.number().int().min(0).max(6)
   }).optional()),
-  createdAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString())),
-  updatedAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString()))
+  createdAt: column('timestamp', z.date().default(() => new Date())),
+  updatedAt: column('timestamp', z.date().default(() => new Date()))
 })
   .on('createTable', builder => {
     builder.raw('CREATE INDEX idx_account ON public.user USING gin (account jsonb_path_ops)')

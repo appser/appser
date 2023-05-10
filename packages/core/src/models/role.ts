@@ -24,8 +24,8 @@ export const Role = Model.define('role', {
   creatorId: column('bigint', z.string().optional()),
   orgId: column('bigint', z.string().optional()),
   appId: column('bigint', z.string().optional()),
-  createdAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString())),
-  updatedAt: column('timestamp', z.string().datetime().default(() => new Date().toISOString()))
+  createdAt: column('timestamp', z.date().default(() => new Date())),
+  updatedAt: column('timestamp', z.date().default(() => new Date()))
 })
 
 export type TRole = z.infer<typeof Role.schema>
