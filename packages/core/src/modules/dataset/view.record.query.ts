@@ -50,7 +50,7 @@ export const queryRecord = new Controller(
       200: z.object({
         records: z.object({
           id: z.string()
-        }).catchall(z.unknown()).array(),
+        }).catchall(z.any()).array(),
         pageToken: z.number().int().optional()
       })
     }

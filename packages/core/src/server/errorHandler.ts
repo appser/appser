@@ -1,5 +1,7 @@
+import { HttpStatusCode } from '@appser/common'
 import { type Context } from 'koa'
-import { z } from 'zod'
+import { ZodError, z } from 'zod'
+import { fromZodError } from 'zod-validation-error'
 
 export const errorSchema = z.object({
   error: z.object({
@@ -11,13 +13,22 @@ export const errorSchema = z.object({
 })
 
 export default function errorHandler(err: any, ctx: Context) {
-  const statusCode = typeof err.status === 'number' ? err.status : 500
-  const code = statusCode === 500 || !err.code ? 'InternalError' : err.code
-  const message = err?.expose ? err.message : undefined
-  const detail = err?.expose ? err.detail : undefined
+  let statusCode, code, message, detail
 
-  ctx.status = statusCode
+  if (err instanceof ZodError) {
+    statusCode = HttpStatusCode.BadRequest
+    code = 'ValidateError'
+    message = fromZodError(err).toString()
+  }
+  else {
+    statusCode = typeof err.status === 'number' ? err.status : 500
+    code = statusCode === 500 || !err.code ? 'InternalError' : err.code
+    message = err?.expose ? err.message : undefined
+    detail = err?.expose ? err.detail : undefined
+  }
+
   ctx.type = 'application/json'
+  ctx.status = statusCode
   ctx.body = errorSchema.parse({
     error: {
       code,

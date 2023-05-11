@@ -8,7 +8,6 @@ export const updateViewRecord = new Controller(
       auth: { currentUser },
       access: { guard },
       getDataset: { dataset, record: { model } },
-      getDatasetRecord: { record },
       getDatasetView: { view }
     } = ctx.state
     const { id: datasetId, appId } = dataset
@@ -35,7 +34,7 @@ export const updateViewRecord = new Controller(
     await next()
   },
   {
-    state: ['auth', 'access', 'getDataset', 'getDatasetRecord', 'getDatasetView'],
+    state: ['auth', 'access', 'getDataset', 'getDatasetView'],
     params: z.object({
       recordId: z.string()
     }),

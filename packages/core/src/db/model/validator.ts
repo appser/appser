@@ -29,16 +29,14 @@ export class Validator {
   parseUpdate(data: unknown) {
     if (typeof data === 'object' && data !== null) {
       const { verifiableObject, unverifiableObject } = this.filterQueryData(data)
-      const parser = this.schema
+      const verifiedData = this.schema
         .deepPartial()
         .strict()
-        .safeParse(verifiableObject)
-
-      if (!parser.success) throw modelError('validateFail', fromZodError(parser.error))
+        .parse(verifiableObject)
 
       log.debug('skip validate keys:', Object.keys(unverifiableObject))
 
-      return merge(this.fixTopLevelArrayJSONData(parser.data), unverifiableObject)
+      return merge(this.fixTopLevelArrayJSONData(verifiedData), unverifiableObject)
     } else {
       throw modelError('invalidUpdateType')
     }
