@@ -2,25 +2,21 @@ import { Flex, Group, Text } from '@appser/ui'
 
 import { useFieldsConfig } from '../fields'
 
+import type { Field } from './Field'
 import type { FieldFormInputProps } from '../fields'
-import type { FlexProps } from '@appser/ui'
 import type { FC } from 'react'
 
-type Props = FieldFormInputProps & FlexProps & {
-  labelWidth?: number
+interface Props {
+  defaultValue: unknown
+  field: Field
+  onDone: (v: unknown) => void
 }
 
-export const FieldFormInput: FC<Props> = ({
-  labelWidth: labelWith = 110,
-  field,
-  defaultData,
-  onChange,
-  ...rest
-}) => {
+export const FieldFormInput: FC<Props> = ({ defaultValue, field, onDone }) => {
   const fieldsConfig = useFieldsConfig()
-  const FieldInput = fieldsConfig[field.type].FormInput as FC<FieldFormInputProps>
+  const FormInput = fieldsConfig[field.type].FormInput as FC<FieldFormInputProps>
 
-  if (!FieldInput) return null
+  if (!FormInput) return null
 
   return (
     <Group position='left' spacing="xs" mb='md' w='100%' style={{ alignItems: 'flex-start' }}>
@@ -28,7 +24,7 @@ export const FieldFormInput: FC<Props> = ({
         size="sm"
         mih={36}
         align='right'
-        w={labelWith}
+        w={110}
         display='flex'
         sx={{ alignItems: 'center', justifyContent: 'flex-end' }}
         pr='lg'
@@ -37,7 +33,11 @@ export const FieldFormInput: FC<Props> = ({
       </Text>
 
       <Flex sx={{ flex: 1 }} mih={36} align='center'>
-        <FieldInput field={field} onChange={onChange} defaultData={defaultData} />
+        <FormInput
+          field={field}
+          onDone={onDone}
+          defaultValue={defaultValue}
+        />
       </Flex>
 
     </Group>

@@ -6,21 +6,21 @@ import type { BubbleCell } from '@glideapps/glide-data-grid'
 import type { ForwardRefRenderFunction } from 'react'
 
 const MultipleSelectCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, FieldCellEditorProps<BubbleCell> > = (
-  { cell, field, rectangle, onDone },
+  { cell, defaultValue, onDone },
   forwardedRef
 ) => {
   const [data, setData] = useState(cell.data)
   const list = useMemo(() => {
-    if (field.type !== 'multipleSelect') return []
+    if (cell.field.type !== 'multipleSelect') return []
 
-    return field.options?.items.map((item) => ({
+    return cell.field.options?.items.map((item) => ({
       label: item.name,
       value: String(item.id)
     }))
-  }, [field.options, field.type])
+  }, [cell.field.options, cell.field.type])
 
   const save = () => {
-    onDone(data)
+    onDone?.(data)
   }
 
   useImperativeHandle(forwardedRef, () => ({

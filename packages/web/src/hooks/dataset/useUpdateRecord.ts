@@ -9,6 +9,12 @@ import { useActivatedDataset } from '../useActivatedDataset'
 import type { InfiniteData } from '@tanstack/react-query'
 import type { Row } from 'web/components/views/SheetView/row/Row'
 
+interface MutationParams {
+  id: string
+  fields: Record<string, unknown>
+  optimisticUpdateRow?: Row
+}
+
 type QueryRecordResponse = Awaited<ReturnType<typeof db.dataset.queryViewRecord>>
 
 export function useUpdateRecord(fromDatasetId?: string) {
@@ -18,10 +24,8 @@ export function useUpdateRecord(fromDatasetId?: string) {
   const datasetId = fromDatasetId ?? dataset?.id
 
   return useMutation({
-    mutationFn: async (row: Row) => {
+    mutationFn: async ({ id, fields, optimisticUpdateRow: row }: MutationParams) => {
       if (!datasetId) throw new Error('dataset id  is required when update a record')
-
-      const { id, ...fields } = row.record
 
       return db.dataset.updateRecord({
         datasetId,
@@ -29,8 +33,13 @@ export function useUpdateRecord(fromDatasetId?: string) {
         requestBody: fields
       })
     },
-    onMutate: async (row) => {
-      if (!queryKey) return
+    onMutate: async ({ fields, optimisticUpdateRow: row }) => {
+      if (!queryKey || !row) return
+
+      row.record = {
+        ...row.record,
+        ...fields
+      }
 
       await queryClient.cancelQueries({ queryKey })
       // Snapshot the previous value

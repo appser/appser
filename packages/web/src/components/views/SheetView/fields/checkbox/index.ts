@@ -19,10 +19,9 @@ export function useCheckboxFieldConfig(): FieldConfig<BooleanCell> {
   const [view] = useActivatedView()
 
   const toCellContent: FieldConfig<BooleanCell>['toCellContent'] = ({ row, field, value }) => {
-    const { deny } = can('app:dataset:view:record:field:update', {
+    const { deny } = can('app:dataset:record:field:update', {
       appId: app?.id ?? '',
       datasetId: dataset?.id ?? '',
-      viewId: view?.id ?? '',
       recordId: row?.record.id ?? '',
       fieldName: field.name
     })

@@ -23,23 +23,24 @@ export const CellEditor: FC<Props> = ({ cell }) => {
   const value = cell.row.record[cell.field.name]
   const CellEditor = cell.field ? fields[cell.field.type].CellEditor : undefined
 
-  const save = (data: unknown) => {
-    if (data === value || !cell) return
-
+  const onDone = (data: unknown) => {
     setEditingCell(null)
+
+    if (!cell || data === value) return
 
     const row = cell.row
 
-    row.record = {
+    updateRecord.mutate({
       id: row.record.id,
-      [cell.field.name]: data
-    }
-
-    updateRecord.mutate(row)
+      fields: {
+        [cell.field.name]: data
+      },
+      optimisticUpdateRow: row
+    })
   }
 
   useClickOutside(() => {
-    editorRef.current?.save?.()
+    editorRef.current?.save()
   }, null, [ref])
 
   if (!CellEditor) return null
@@ -64,7 +65,7 @@ export const CellEditor: FC<Props> = ({ cell }) => {
         ref={editorRef}
         cell={cell as any}
         defaultValue={value}
-        onDone={save}
+        onDone={onDone}
       />
     </Flex>
   )

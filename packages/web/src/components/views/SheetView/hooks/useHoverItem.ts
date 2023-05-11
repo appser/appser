@@ -1,7 +1,7 @@
 import { atom, useAtom } from 'jotai'
 import { useCallback, useEffect, useState } from 'react'
 
-import { useDataSource } from './useDataSource'
+import { useViewDataSource } from './useViewDataSource'
 
 import type { Cell } from '../cell/Cell'
 import type { GridMouseEventArgs, Rectangle } from '@glideapps/glide-data-grid'
@@ -11,7 +11,7 @@ const hoveringCellAtom = atom<Cell | null>(null)
 const useHoveringCell = () => useAtom(hoveringCellAtom)
 
 export function useHoverItem() {
-  const { getRow, getGridCell, getField } = useDataSource()
+  const { getRow, getGridCell, getField } = useViewDataSource()
   const [hoveringCell, setHoveringCell] = useHoveringCell()
   const [cellBounds, setCellBounds] = useState<Rectangle>()
   const [rowIndex, setRowIndex] = useState<number>()

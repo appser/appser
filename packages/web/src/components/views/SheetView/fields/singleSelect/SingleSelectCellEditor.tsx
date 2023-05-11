@@ -36,7 +36,9 @@ const SingleSelectCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, F
       initiallyOpened
       clearable
       variant='unstyled'
-      onChange={v => setValue(v)}
+      onChange={v => {
+        setValue(v)
+      }}
     />
   )
 }

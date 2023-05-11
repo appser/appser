@@ -6,13 +6,13 @@ import type { TextCell } from '@glideapps/glide-data-grid'
 import type { ForwardRefRenderFunction } from 'react'
 
 const EmailCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, FieldCellEditorProps<TextCell> > = (
-  { cell, field, rectangle, onDone },
+  { cell, defaultValue, onDone },
   forwardedRef
 ) => {
   const [data, setData] = useState<string>('')
 
   const save = () => {
-    onDone(data)
+    onDone?.(data)
   }
 
   useImperativeHandle(forwardedRef, () => ({
@@ -20,7 +20,10 @@ const EmailCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, FieldCel
   }))
 
   return (
-    <TextInput autoFocus variant='unstyled' />
+    <TextInput
+      autoFocus
+      variant='unstyled'
+    />
   )
 }
 

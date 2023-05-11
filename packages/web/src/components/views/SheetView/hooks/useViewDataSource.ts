@@ -14,7 +14,7 @@ import type { DataEditorProps, GridCell, Rectangle } from '@glideapps/glide-data
 import type { Row } from 'web/components/views/SheetView/row/Row'
 import type { Record } from 'web/types'
 
-export function useDataSource() {
+export function useViewDataSource() {
   const [dataset] = useActivatedDataset()
   const [view] = useActivatedView()
   const [rows, setRows] = useState(0)
@@ -123,7 +123,6 @@ export function useDataSource() {
     getRow,
     getField,
     getGridCell: getCellContent,
-    fields: selectedFields,
     props: {
       rows,
       columns: selectedFields,
@@ -134,5 +133,3 @@ export function useDataSource() {
     }
   }
 }
-
-export type DataSource = ReturnType<typeof useDataSource>

@@ -3,7 +3,7 @@ import { Text, TextInput } from '@appser/ui'
 import type { FieldFormInputProps } from '..'
 import type { FC } from 'react'
 
-export const URLFormInput: FC<FieldFormInputProps> = ({ field, onChange, defaultData = '', denyEdit }) => {
+export const URLFormInput: FC<FieldFormInputProps> = ({ field, onChange, defaultValue: defaultData = '', denyEdit }) => {
   return (
     denyEdit
       ? <Text fz='sm'>{String(defaultData)}</Text>

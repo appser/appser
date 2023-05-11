@@ -16,7 +16,7 @@ const useStyles = createStyles(theme => ({
 }))
 
 // TODO: bugfix
-export const MultipleSelectFormInput: FC<FieldFormInputProps> = ({ field, onChange, defaultData, denyEdit }) => {
+export const MultipleSelectFormInput: FC<FieldFormInputProps> = ({ field, onChange, defaultValue: defaultData, denyEdit }) => {
   const [totalWidth, setTotalWidth] = useState(0)
   const { classes } = useStyles()
   const ref = useRef<HTMLDivElement | null>(null)

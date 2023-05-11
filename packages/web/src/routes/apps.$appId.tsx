@@ -175,7 +175,6 @@ export default function AppsId() {
 
   useEffect(() => {
     const rows = selection.rows.toArray()
-    // console.log(rows)
 
     if (rows.length === 1) {
       expandRightSidebar(true)

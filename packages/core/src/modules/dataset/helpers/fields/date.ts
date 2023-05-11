@@ -11,9 +11,9 @@ export default Field.define('date', {
 
   schema: (opts) => {
     let s
-    s = z.string().datetime()
+    s = z.number().nullable()
 
-    if (opts?.dynamicDefault === 'now') s = s.default(() => new Date().toISOString())
+    if (opts?.dynamicDefault === 'now') s = s.default(() => new Date().valueOf())
 
     return s
   }

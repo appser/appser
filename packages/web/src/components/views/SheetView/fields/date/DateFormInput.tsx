@@ -4,15 +4,18 @@ import { DatePickerInput } from '@mantine/dates'
 import type { FieldFormInputProps } from '..'
 import type { FC } from 'react'
 
-export const DateFormInput: FC<FieldFormInputProps> = ({ field, onChange, defaultData, denyEdit }) => {
+export const DateFormInput: FC<FieldFormInputProps> = ({ field, onDone, defaultValue, denyEdit = true }) => {
+  const date = typeof defaultValue === 'number' ? new Date(defaultValue) : undefined
+
   return (
     denyEdit
-      ? <Text fz='sm'>{Number(defaultData)}</Text>
+      ? <Text fz='sm'>{date ? date.toISOString() : ''}</Text>
       : <DatePickerInput
+          w={200}
           popoverProps={{ withinPortal: true }}
-          placeholder="Pick date"
+          defaultValue={typeof defaultValue === 'number' ? new Date(defaultValue) : undefined}
           variant='filled'
-          onChange={v => v && onChange?.(v.toISOString())}
+          onChange={v => onDone?.(v?.valueOf() ?? v)}
         />
   )
 }

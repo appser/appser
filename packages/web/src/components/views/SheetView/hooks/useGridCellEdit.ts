@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useUpdateRecord } from 'web/hooks/dataset/useUpdateRecord'
 
-import { useDataSource } from './useDataSource'
+import { useViewDataSource } from './useViewDataSource'
 
 import type { DataEditorProps } from '@glideapps/glide-data-grid'
 
@@ -9,7 +9,7 @@ import type { DataEditorProps } from '@glideapps/glide-data-grid'
  * only run when cell is checkbox cell
  * */
 export function useGridCellEdit() {
-  const { getRow, getField } = useDataSource()
+  const { getRow, getField } = useViewDataSource()
   const { mutate } = useUpdateRecord()
 
   const onCellEdited: NonNullable<DataEditorProps['onCellEdited']> = useCallback(([fieldIndex, rowIndex], cell) => {
@@ -21,12 +21,13 @@ export function useGridCellEdit() {
 
     const data = cell.data
 
-    row.record = {
+    mutate({
       id: row.record.id,
-      [fieldName]: data
-    }
-
-    mutate(row)
+      fields: {
+        [fieldName]: data
+      },
+      optimisticUpdateRow: row
+    })
   }, [getRow])
 
   return {

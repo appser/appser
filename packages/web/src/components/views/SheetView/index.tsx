@@ -8,7 +8,6 @@ import { CellEditor } from './cell/CellEditor'
 import { CellEditorFloatingIcon } from './cell/CellEditorFloatingIcon'
 import { FieldAddButton } from './field/FieldAddButton'
 import { FieldMenu } from './field/FieldMenu'
-import { useDataSource } from './hooks/useDataSource'
 import { useEditingCell } from './hooks/useEditingCell'
 import { useGridCellEdit } from './hooks/useGridCellEdit'
 import { useGridSelection } from './hooks/useGridSelection'
@@ -16,6 +15,7 @@ import { useGridTheme } from './hooks/useGridTheme'
 import { useHeaderIcons } from './hooks/useHeaderIcons'
 import { useHoverItem } from './hooks/useHoverItem'
 import { userResizeColumn } from './hooks/userResizeColumn'
+import { useViewDataSource } from './hooks/useViewDataSource'
 import { RowMenu } from './row/RowMenu'
 import { StatusBar } from './statusBar/StatusBar'
 import { SheetToolbar } from './toolbar/Toolbar'
@@ -27,6 +27,7 @@ import type { Row } from 'web/components/views/SheetView/row/Row'
 import type { View } from 'web/types'
 
 import '@glideapps/glide-data-grid/dist/index.css'
+import { useFields } from './hooks/useFields'
 
 interface ShowMenu {
   bounds: Rectangle
@@ -47,7 +48,8 @@ const GridView: FC<GridViewProps> = ({ view }) => {
   const [showMenu, setShowMenu] = useState<ShowMenu>()
   const gridTheme = useGridTheme()
   const [editingCell] = useEditingCell()
-  const { props: dataSourceProps, getRow, fields } = useDataSource()
+  const { selectedFields: fields } = useFields()
+  const { props: dataSourceProps, getRow } = useViewDataSource()
   const { props: headerIconsProps } = useHeaderIcons()
   const { handler: itemHoveredHandler, hoveringCell } = useHoverItem()
   const { handler: gridSelectionHandler } = useGridSelection()

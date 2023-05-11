@@ -15,7 +15,7 @@ const useStyles = createStyles(theme => ({
   }
 }))
 
-export const SingleSelectFormInput: FC<FieldFormInputProps> = ({ field, onChange, defaultData, denyEdit }) => {
+export const SingleSelectFormInput: FC<FieldFormInputProps> = ({ field, onChange, defaultValue: defaultData, denyEdit }) => {
   const [totalWidth, setTotalWidth] = useState(0)
   const { classes } = useStyles()
   const ref = useRef<HTMLDivElement | null>(null)

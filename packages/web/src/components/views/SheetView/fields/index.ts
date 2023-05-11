@@ -18,8 +18,8 @@ import type { DatasetField, FilterConditionOperatorItem } from 'web/types'
 export interface FieldFormInputProps<T = unknown> {
   field: Field
   denyEdit?: boolean
-  defaultData?: T
-  onChange?: (data: T) => void
+  defaultValue?: T
+  onDone?: (v: T) => void
 }
 
 export interface FieldFilterOperatorItemProps {
@@ -38,11 +38,11 @@ export interface FieldSortDirectionProps {
 export type FieldCellEditorProps<T extends GridCell = GridCell> = {
   cell: Cell<T>
   defaultValue: unknown
-  onDone: (v: string | boolean | number | object | undefined | null) => void
+  onDone?: (v: string | boolean | number | object | undefined | null) => void
 }
 
 export type FieldCellEditorRef = {
-  save?: () => void
+  save: () => void
 }
 
 export interface FieldIconProps {

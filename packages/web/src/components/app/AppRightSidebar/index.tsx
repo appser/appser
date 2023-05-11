@@ -1,8 +1,9 @@
 import { Box, Tabs, colors, createStyles } from '@appser/ui'
 import { IconApiApp } from '@tabler/icons'
 import { useEffect, useState } from 'react'
-import { useDataSource } from 'web/components/views/SheetView/hooks/useDataSource'
+import { useFields } from 'web/components/views/SheetView/hooks/useFields'
 import { useGridSelection } from 'web/components/views/SheetView/hooks/useGridSelection'
+import { useViewDataSource } from 'web/components/views/SheetView/hooks/useViewDataSource'
 import { RowSideView } from 'web/components/views/SheetView/row/RowSideView'
 
 import { NoRowSelected } from './NoRowSelected'
@@ -66,7 +67,8 @@ const useTabStyles = createStyles(theme => ({
 
 export const AppRightSidebar: FC = () => {
   const { classes } = useTabStyles()
-  const { getRow, fields } = useDataSource()
+  const { getRow } = useViewDataSource()
+  const { selectedFields } = useFields()
   const { selection } = useGridSelection()
   const [row, setRow] = useState<Row>()
 
@@ -99,7 +101,7 @@ export const AppRightSidebar: FC = () => {
         </Tabs.List>
 
         <Tabs.Panel value="preview">
-          <RowSideView row={row} fields={fields} />
+          <RowSideView row={row} fields={selectedFields} />
         </Tabs.Panel>
         <Tabs.Panel value="preview2">
           <Box>1233</Box>
