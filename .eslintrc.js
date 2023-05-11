@@ -1,4 +1,4 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
-  extends: ['appser']
+  extends: ['@appser']
 }

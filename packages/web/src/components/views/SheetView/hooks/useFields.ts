@@ -31,7 +31,7 @@ export const useFields = () => {
           ...fieldInView,
           // grid column
           id: name,
-          title: fieldInDataset.title || t(`field.type.${fieldInDataset.type}`),
+          title: fieldInDataset.title || t([`field.${name}`, `field.type.${fieldInDataset.type}`]),
           icon: fieldInDataset.type,
           hasMenu: true,
           width: fieldInView?.width

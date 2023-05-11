@@ -5,6 +5,6 @@ const server = new Server()
 
 server
   .mount(modules)
-  .sleep(200)
+  .sleep(0)
 
 export default server
