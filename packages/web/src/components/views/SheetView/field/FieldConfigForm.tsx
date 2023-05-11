@@ -36,7 +36,10 @@ export const FieldConfigForm: FC<Props> = ({ defaultField, loading, onSubmit, on
             />
             <FormSection.Divider />
             <FormSection.Item label='Field Type'>
-              <FieldTypeSelect defaultType={form.values.type} onChange={f => form.setFieldValue('type', f)} />
+              <FieldTypeSelect
+                defaultType={form.values.type}
+                onChange={f => form.setFieldValue('type', f)}
+              />
             </FormSection.Item>
           </FormSection>
           {OptionEditor && <OptionEditor field={defaultField} onChange={v => form.setFieldValue('options', v)} />}

@@ -1,5 +1,5 @@
 export * from '@mantine/core'
-export * from '@mantine/dates'
+
 export * from '@mantine/form'
 export * from '@mantine/modals'
 export { Notifications, showNotification } from '@mantine/notifications'

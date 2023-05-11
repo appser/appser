@@ -17,17 +17,17 @@ export function userResizeColumn() {
     }
   }
 
-  const onColumnResize: DataEditorProps['onColumnResize'] = (column, newSize) => {
-    instantUpdate(columns => {
-      const index = columns.findIndex(c => c.id === column.id)
-      const newColumns = [...columns]
+  const onColumnResize: DataEditorProps['onColumnResize'] = (field, newSize) => {
+    instantUpdate(fields => {
+      const index = fields.findIndex(c => c.id === field.id)
+      const newFields = [...fields]
 
-      newColumns.splice(index, 1, {
-        ...columns[index],
+      newFields.splice(index, 1, {
+        ...fields[index],
         width: newSize
       })
 
-      return newColumns
+      return newFields
     })
   }
 

@@ -16,7 +16,8 @@ interface Props {
 export const FieldTypeSelect: FC<Props> = ({ defaultType, onChange }) => {
   const data = useFieldSelectData()
   const [isFocus, setIsFocus] = useState(false)
-  const [field, setField] = useState<typeof data[number] | null>(null)
+  const defaultField = data.find(d => d.value === defaultType)
+  const [field, setField] = useState<typeof data[number] | undefined>(defaultField)
 
   return (
     <Menu
