@@ -1,4 +1,5 @@
-import { Button, Card, Group, hasLength, useForm } from '@appser/ui'
+import { Button, Card, Group } from '@appser/ui'
+import { hasLength, useForm } from '@appser/ui/form'
 import { FormSection } from 'web/components/common/FormSection'
 
 import { FieldTypeSelect } from './FieldTypeSelect'
@@ -36,7 +37,10 @@ export const FieldConfigForm: FC<Props> = ({ defaultField, loading, onSubmit, on
             />
             <FormSection.Divider />
             <FormSection.Item label='Field Type'>
-              <FieldTypeSelect defaultType={form.values.type} onChange={f => form.setFieldValue('type', f)} />
+              <FieldTypeSelect
+                defaultType={form.values.type}
+                onChange={f => form.setFieldValue('type', f)}
+              />
             </FormSection.Item>
           </FormSection>
           {OptionEditor && <OptionEditor field={defaultField} onChange={v => form.setFieldValue('options', v)} />}

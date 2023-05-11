@@ -1,4 +1,6 @@
-import { ModalsProvider, Notifications, UIProvider } from '@appser/ui'
+import { UIProvider } from '@appser/ui'
+import { ModalsProvider } from '@appser/ui/modals'
+import { Notifications } from '@appser/ui/notifications'
 import { QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import ReactDOM from 'react-dom/client'

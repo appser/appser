@@ -1,4 +1,5 @@
-import { NumberInput, useForm } from '@appser/ui'
+import { NumberInput } from '@appser/ui'
+import { useForm } from '@appser/ui/form'
 import { forwardRef, useImperativeHandle } from 'react'
 
 import type { FieldCellEditorProps, FieldCellEditorRef } from '..'

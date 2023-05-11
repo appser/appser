@@ -1,4 +1,4 @@
-import { useForm } from '@appser/ui'
+import { useForm } from '@appser/ui/form'
 import { useEffect, useMemo } from 'react'
 import { FormSection } from 'web/components/common/FormSection'
 

@@ -1,5 +1,5 @@
-import { ActionIcon, Button, Center, Divider, Flex, Group, Menu, Popover, Text } from '@mantine/core'
-import { openConfirmModal } from '@mantine/modals'
+import { ActionIcon, Button, Center, Divider, Flex, Group, Menu, Popover, Text } from '@appser/ui'
+import { openConfirmModal } from '@appser/ui/modals'
 import { useState } from 'react'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { MenuButton } from 'web/components/common/MenuButton'

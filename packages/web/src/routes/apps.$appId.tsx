@@ -1,4 +1,5 @@
-import { ActionIcon, Box, Divider, Flex, Group, Title, colors, createStyles, useResizeObserver } from '@appser/ui'
+import { ActionIcon, Box, Divider, Flex, Group, Title, colors, createStyles } from '@appser/ui'
+import { useResizeObserver } from '@appser/ui/hooks'
 import { CompactSelection } from '@glideapps/glide-data-grid'
 import { IconChevronLeft, IconLayoutSidebarLeftExpand, IconLayoutSidebarRightExpand } from '@tabler/icons'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -315,7 +316,7 @@ export default function AppsId() {
             }
           }}
         >
-          {/* <AppRightSidebar /> */}
+          <AppRightSidebar />
         </ResizablePanels>
 
       </Flex>

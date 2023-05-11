@@ -1,4 +1,5 @@
-import { Avatar, useColors } from '@appser/ui'
+import { Avatar } from '@appser/ui'
+import { useColors } from '@appser/ui/hooks'
 
 import type { AvatarProps } from '@appser/ui'
 import type { FC } from 'react'

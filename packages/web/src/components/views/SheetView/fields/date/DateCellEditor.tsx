@@ -6,7 +6,7 @@ import type { TextCell } from '@glideapps/glide-data-grid'
 import type { ForwardRefRenderFunction } from 'react'
 
 // TODO:bugfix
-const DatePicker = React.lazy(() => import('@mantine/dates').then((module) => ({ default: module.DatePickerInput })))
+const DatePicker = React.lazy(() => import('@appser/ui/dates').then((module) => ({ default: module.DatePickerInput })))
 
 const DateCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, FieldCellEditorProps<TextCell> > = (
   { cell, field, rectangle, onDone },

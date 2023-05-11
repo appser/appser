@@ -48,7 +48,7 @@ export const useFields = () => {
 
   return {
     fields,
-    instantUpdate,
-    selectedFields
+    selectedFields,
+    instantUpdate
   }
 }

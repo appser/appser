@@ -1,4 +1,5 @@
-import { Button, Flex, Group, colors, openContextModal } from '@appser/ui'
+import { Button, Flex, Group, colors } from '@appser/ui'
+import { openContextModal } from '@appser/ui/modals'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAddRecord } from 'web/hooks/dataset/useAddRecord'
@@ -7,7 +8,7 @@ import i18n from 'web/vendor/i18n'
 import { FieldFormInput } from '../views/SheetView/field/FieldFormInput'
 
 import type { SheetField } from '../views/SheetView/field/Field'
-import type { ContextModalProps } from '@appser/ui'
+import type { ContextModalProps } from '@appser/ui/modals'
 
 type CreateRecordProps = {
   datasetId: string

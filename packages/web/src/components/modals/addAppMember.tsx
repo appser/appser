@@ -1,4 +1,6 @@
-import { Box, Button, Group, isNotEmpty, openContextModal, useForm } from '@appser/ui'
+import { Box, Button, Group } from '@appser/ui'
+import { isNotEmpty, useForm } from '@appser/ui/form'
+import { openContextModal } from '@appser/ui/modals'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAddAppPeople } from 'web/hooks/app/useAddAppPeople'
@@ -12,7 +14,7 @@ import { IconSelector } from '../icons/IconSelector'
 import { OrgUserSelect } from '../org/OrgUserSelect'
 import { RoleSelect } from '../role/RoleSelect'
 
-import type { ContextModalProps } from '@appser/ui'
+import type { ContextModalProps } from '@appser/ui/modals'
 import type { App } from 'web/types'
 
 export type AddAppMemberModalProps = {
