@@ -1,4 +1,6 @@
-import { TextInput, getHotkeyHandler, useForm } from '@appser/ui'
+import { TextInput } from '@appser/ui'
+import { useForm } from '@appser/ui/form'
+import { getHotkeyHandler } from '@appser/ui/hooks'
 import { forwardRef, useImperativeHandle } from 'react'
 
 import type { FieldCellEditorProps, FieldCellEditorRef } from '..'

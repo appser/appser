@@ -1,4 +1,5 @@
-import { ActionIcon, Badge, Group, Menu, Popover, Table, Text, createStyles, openContextModal } from '@appser/ui'
+import { ActionIcon, Badge, Group, Menu, Popover, Table, Text, createStyles } from '@appser/ui'
+import { openContextModal } from '@appser/ui/modals'
 import { useCallback, useState } from 'react'
 import { MoreHorizontal } from 'react-feather'
 import { useTranslation } from 'react-i18next'
@@ -8,7 +9,7 @@ import i18n from 'web/vendor/i18n'
 import { RoleChange } from '../role/RoleChange'
 import { UserAvatar } from '../user/UserAvatar'
 
-import type { ContextModalProps } from '@appser/ui'
+import type { ContextModalProps } from '@appser/ui/modals'
 import type { App } from 'web/types'
 
 export type AppMemberProps = {

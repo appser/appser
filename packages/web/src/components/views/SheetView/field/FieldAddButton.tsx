@@ -1,4 +1,5 @@
-import { Popover, useDisclosure } from '@appser/ui'
+import { Popover } from '@appser/ui'
+import { useDisclosure } from '@appser/ui/hooks'
 import { useEffect } from 'react'
 import { ActionButton } from 'web/components/common/ActionButton'
 import { IconPlus } from 'web/components/icons/IconPlus'

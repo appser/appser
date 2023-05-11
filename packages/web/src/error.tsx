@@ -1,5 +1,5 @@
 import { HttpStatusCode as Http } from '@appser/common'
-import { showNotification } from '@appser/ui'// notifications
+import { showNotification } from '@appser/ui/notifications'
 import get from 'lodash/get'
 import { Navigate, useLocation, useRouteError } from 'react-router-dom'
 

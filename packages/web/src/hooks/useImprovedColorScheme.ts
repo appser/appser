@@ -1,4 +1,4 @@
-import { useLocalStorage } from '@appser/ui'
+import { useLocalStorage } from '@appser/ui/hooks'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import type { ColorScheme } from '@appser/ui'

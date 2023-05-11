@@ -1,4 +1,5 @@
-import { Button, Flex, Title, useForm } from '@appser/ui'
+import { Button, Flex, Title } from '@appser/ui'
+import { useForm } from '@appser/ui/form'
 import { useGetAccount } from 'web/hooks/account/useGetAccount'
 import { useUpdateAccountProfile } from 'web/hooks/account/useUpdateAccountProfile'
 

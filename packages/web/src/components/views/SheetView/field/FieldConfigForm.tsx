@@ -1,4 +1,5 @@
-import { Button, Card, Group, hasLength, useForm } from '@appser/ui'
+import { Button, Card, Group } from '@appser/ui'
+import { hasLength, useForm } from '@appser/ui/form'
 import { FormSection } from 'web/components/common/FormSection'
 
 import { FieldTypeSelect } from './FieldTypeSelect'
