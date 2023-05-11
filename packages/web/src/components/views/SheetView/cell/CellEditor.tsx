@@ -1,4 +1,5 @@
-import { Flex, useClickOutside } from '@appser/ui'
+import { Flex } from '@appser/ui'
+import { useClickOutside } from '@appser/ui/hooks'
 import { useRef, useState } from 'react'
 import { useUpdateRecord } from 'web/hooks/dataset/useUpdateRecord'
 

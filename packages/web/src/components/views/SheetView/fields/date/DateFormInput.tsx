@@ -4,7 +4,7 @@ import { DatePickerInput } from '@mantine/dates'
 import type { FieldFormInputProps } from '..'
 import type { FC } from 'react'
 
-export const DateFormInput: FC<FieldFormInputProps> = ({ field, onDone, defaultValue, denyEdit = true }) => {
+export const DateFormInput: FC<FieldFormInputProps> = ({ field, onDone, defaultValue, denyEdit = false }) => {
   const date = typeof defaultValue === 'number' ? new Date(defaultValue) : undefined
 
   return (
