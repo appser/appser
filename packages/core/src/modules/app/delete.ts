@@ -26,8 +26,7 @@ export const deleteApp = new Controller(
         .delete()
         .transacting(trx)
       // remove all data of the app
-      const datasets = await Dataset.query.where('appId', appId).delete().returning('id').transacting(trx)
-      await Promise.all(datasets.map(dataset => db.schema.dropTable(dataset.id).transacting(trx)))
+      await Dataset.query.where('appId', appId).delete().returning('id').transacting(trx)
     })
 
     ctx.status = 204

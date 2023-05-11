@@ -2,7 +2,6 @@ import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 
 import { viewSchema } from './helpers/view/view.schema'
-import { filterSchema } from '../../db/filter/filter.schema'
 
 // TODO: pageToken
 export const queryRecord = new Controller(
@@ -15,18 +14,18 @@ export const queryRecord = new Controller(
     } = ctx.state
     const { appId, id: datasetId } = dataset
     const { id: viewId } = view.toJSON()
-    const { pageToken: cursor = 0, filter, sorts, selects, pageSize = 50 } = ctx.request.body
+    const { pageToken: cursor = 0, filter, sorts, fields, pageSize = 50 } = ctx.request.body
 
     guard('app:dataset:view:record:query', { appId, datasetId, viewId })
 
-    view.validate({ filter, sorts, fields: selects })
+    view.updateConfig({ filter, sorts, fields })
 
     const records = await model.query
-      .select(view.toSelect(selects))
+      .select(view.toSelectQuery())
       .select('id')
-      .filter(view.toPathFromFilter(userFormula.parse(filter)))
-      .filter(view.toPathFromFilter(userFormula.parse(view.toJSON().filter)))
-      .orderBy(view.toOrderBy(sorts))
+      .filter(view.toFilterQuery(userFormula.parse(filter)))
+      .filter(view.toFilterQuery(userFormula.parse(view.toJSON().filter)))
+      .orderBy(view.toOrderByQuery(sorts))
       .limit(pageSize)
       .offset(cursor)
 
@@ -39,10 +38,11 @@ export const queryRecord = new Controller(
   },
   {
     state: ['auth', 'formula', 'access', 'getDataset', 'getDatasetView'],
-    body: z.object({
-      filter: filterSchema,
-      sorts: viewSchema.shape.sorts,
-      selects: z.string().array().nonempty(),
+    body: viewSchema.pick({
+      filter: true,
+      sorts: true,
+      fields: true
+    }).extend({
       pageSize: z.number().int().max(100).default(50),
       pageToken: z.number().int().optional()
     }).partial(),

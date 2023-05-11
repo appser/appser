@@ -81,7 +81,7 @@ declare module 'core/server/controller' {
     getDataset: {
       dataset: TDataset
       record: {
-        model: Model
+        model: typeof Record
       }
     }
   }

@@ -76,6 +76,11 @@ export class DatasetService {
     })>;
     createdAt: string;
     updatedAt: string;
+    views: Array<{
+      id: string;
+      type: 'sheet';
+      name?: string;
+    }>;
   }> {
     return this.httpRequest.request({
       method: 'GET',
@@ -530,7 +535,7 @@ export class DatasetService {
         }>>;
       };
       sorts?: Array<string>;
-      selects?: Array<string>;
+      fields?: Array<string>;
       pageSize?: number;
       pageToken?: number;
     },
@@ -587,7 +592,7 @@ export class DatasetService {
     datasetId: string,
     viewId: string,
     recordId: string,
-    requestBody: ((string | number | boolean | 'null' | null) | Record<string, ((string | number | boolean | 'null' | null) | Record<string, any>)>),
+    requestBody: Record<string, any>,
   }): CancelablePromise<void> {
     return this.httpRequest.request({
       method: 'PATCH',

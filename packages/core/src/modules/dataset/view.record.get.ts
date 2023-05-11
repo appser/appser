@@ -21,18 +21,18 @@ export const getViewRecord = new Controller(
     guard('app:dataset:view:record:get', { appId, datasetId, viewId, recordId })
 
     const record = await Record.query
-      .select(view.toSelect())
-      .select('id') // always select id column
       .where({
         datasetId: dataset.id,
         id: recordId
       })
+      .select(view.toSelectQuery())
+      .select('id') // always select id column
       .first()
 
     if (!record) return ctx.throw(datasetError('recordNotFound'))
 
     Object.assign(ctx.state, {
-      getDatasetRecord: {
+      getDatasetViewRecord: {
         record
       }
     })

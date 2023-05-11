@@ -16,7 +16,7 @@ export const updateView = new Controller(
 
     guard('app:dataset:view:update', { appId, datasetId, viewId })
 
-    const config = view.update({
+    const config = view.updateConfig({
       name,
       sorts,
       field,

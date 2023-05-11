@@ -13,7 +13,7 @@ export const Record = Model.define('record', {
   lastEditor: column('bigint', z.string()).relation('user', 'id', ['id', 'name', 'avatar']),
   createdAt: column('timestamp', z.date().default(() => new Date())),
   updatedAt: column('timestamp', z.date().default(() => new Date())),
-  data: column('jsonb', z.any())
+  data: column('jsonb', z.object({}).catchall(z.any()))
 })
   .primary(['datasetId', 'id'])
 

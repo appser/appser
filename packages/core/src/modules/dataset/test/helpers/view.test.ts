@@ -45,20 +45,20 @@ describe('class View', () => {
       sorts: ['field1', 'field2']
     }
 
-    expect(view.update({ sorts: ['field1', 'field2'] }).toJSON()).toEqual(expectedView)
+    expect(view.updateConfig({ sorts: ['field1', 'field2'] }).toJSON()).toEqual(expectedView)
   })
 
   describe('.isValidate', () => {
     test('returns true for a valid view', () => {
-      expect(view.validate({ field: { field3: { selected: true } } })).toBe(true)
+      expect(view.validateConfig({ field: { field3: { selected: true } } })).toBe(true)
     })
 
     test('returns false when a field is not available', () => {
-      expect(view.validate({ field: { field4: { selected: true } } })).toBe(false)
+      expect(view.validateConfig({ field: { field4: { selected: true } } })).toBe(false)
     })
 
     test('returns false when a sort field is not available', () => {
-      expect(view.validate({ sorts: ['col1'] })).toBe(false)
+      expect(view.validateConfig({ sorts: ['col1'] })).toBe(false)
     })
 
     test('returns false when a filter field is not available', () => {
@@ -71,11 +71,11 @@ describe('class View', () => {
           }
         ]
       }
-      expect(view.validate({ filter: invalidFilter })).toBe(false)
+      expect(view.validateConfig({ filter: invalidFilter })).toBe(false)
     })
 
     test('returns false when the sticky field is out of range', () => {
-      expect(view.validate({ stickyField: 2 })).toBe(false)
+      expect(view.validateConfig({ stickyField: 2 })).toBe(false)
     })
   })
 

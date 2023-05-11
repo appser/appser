@@ -1,3 +1,4 @@
+import { createLogger } from 'core/logger'
 import flattenObject from 'core/utils/flattenObject'
 import { merge, set } from 'lodash'
 import { fromZodError } from 'zod-validation-error'
@@ -5,6 +6,8 @@ import { fromZodError } from 'zod-validation-error'
 import { modelError } from './mode.error'
 
 import type { Model } from '.'
+
+const log = createLogger('model:validator')
 
 export class Validator {
   #model
@@ -32,6 +35,8 @@ export class Validator {
         .safeParse(verifiableObject)
 
       if (!parser.success) throw modelError('validateFail', fromZodError(parser.error))
+
+      log.debug('skip validate keys:', Object.keys(unverifiableObject))
 
       return merge(this.fixTopLevelArrayJSONData(parser.data), unverifiableObject)
     } else {
@@ -100,7 +105,7 @@ export class Validator {
     const flattenData = flattenObject(data)
 
     return Object.entries(flattenData).reduce((acc, [key, value]) => {
-      if (['bigint', 'boolean', 'number', 'string', 'undefined'].includes(typeof value) || value === null) {
+      if (['bigint', 'boolean', 'number', 'string', 'undefined'].includes(typeof value) || value === null || value instanceof Date) {
         acc.verifiableObject = set(acc.verifiableObject, key, value)
       } else {
         acc.unverifiableObject = set(acc.unverifiableObject, key, value)

@@ -35,14 +35,18 @@ export class View {
     return this.#dataset
   }
 
-  update(config: Partial<TView>) {
-    this.validate(config)
+  get selectedFields() {
+    return this.#config.fields.filter(f => this.#config.field[f].selected)
+  }
+
+  updateConfig(config: Partial<TView>) {
+    this.validateConfig(config)
     this.#config = merge(this.#config, config)
 
     return this
   }
 
-  validate(config: Partial<TView>) {
+  validateConfig(config: Partial<TView>) {
     const { field, fields, filter, sorts, stickyField } = config
     const datasetAvailableFieldNames = Object.keys(this.dataset.field)
     const viewAvailableFieldNames = Object.keys(field ?? this.#config.field)
@@ -79,12 +83,12 @@ export class View {
     return this
   }
 
-  toSelect(customFields?: [string, ...string[]]) {
+  toSelectQuery(fields = this.#config.fields) {
     const { field } = this.#config
-    const fields = customFields ?? this.#config.fields
     const select = fields.filter(name => field[name].selected).map(name => {
       if (columnTypeFields.includes(name)) return name
 
+      // flatten object
       return db.raw(':column: -> :field as :field:', {
         column: PARENT_COLUMN,
         field: name
@@ -94,9 +98,7 @@ export class View {
     return select
   }
 
-  toOrderBy(customSorts?: TView['sorts']) {
-    const sorts = customSorts ?? this.#config.sorts
-
+  toOrderByQuery(sorts = this.#config.sorts) {
     const orderBy = sorts?.map(s => {
       const sort = s.startsWith('-') ? [s.slice(1), 'desc'] : [s, 'asc']
       const [name, direction] = sort
@@ -110,9 +112,7 @@ export class View {
     return orderBy
   }
 
-  toPathFromFilter(customFilter?: TView['filter']) {
-    const filter = customFilter ?? this.#config.filter
-
+  toFilterQuery(filter = this.#config.filter) {
     if (!filter) return
 
     const { and, or } = filter

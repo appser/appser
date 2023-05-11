@@ -1,5 +1,5 @@
+import db from 'core/db'
 import { Controller } from 'core/server/controller'
-import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
 
 export const updateViewRecord = new Controller(
@@ -8,9 +8,10 @@ export const updateViewRecord = new Controller(
       auth: { currentUser },
       access: { guard },
       getDataset: { dataset, record: { model } },
+      getDatasetRecord: { record },
       getDatasetView: { view }
     } = ctx.state
-    const { appId, id: datasetId } = dataset
+    const { id: datasetId, appId } = dataset
     const { recordId } = ctx.params
     const { id: viewId } = view.toJSON()
     const data = ctx.request.body
@@ -18,9 +19,13 @@ export const updateViewRecord = new Controller(
     guard('app:dataset:view:record:field:update', { appId, datasetId, viewId, recordId, fieldName: '*' })
 
     await model.query
-      .where('id', recordId)
+      .where({
+        datasetId,
+        id: recordId
+      })
       .update({
-        data,
+        // TODO: support nested object
+        data: db.raw('?? || ?', ['data', model.schema.shape.data.strict().parse(data)]),
         lastEditor: currentUser.id,
         updatedAt: new Date()
       } as never)
@@ -30,10 +35,9 @@ export const updateViewRecord = new Controller(
     await next()
   },
   {
-    state: ['auth', 'access', 'getDataset', 'getDatasetView'],
+    state: ['auth', 'access', 'getDataset', 'getDatasetRecord', 'getDatasetView'],
     params: z.object({
-      datasetId: z.string().regex(rNumId),
-      recordId: z.string().regex(rNumId)
+      recordId: z.string()
     }),
     body: z.object({}).catchall(z.unknown()),
     response: {

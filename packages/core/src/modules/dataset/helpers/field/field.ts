@@ -54,7 +54,11 @@ export class Field {
 
   static toColumnWithFields(fields: Record<string, FieldConfig>): Column {
     const schema = Object.entries(fields).reduce((acc, [name, config]) => {
-      acc[name] = new Field(name, config).schema
+      let s = new Field(name, config).schema.optional()
+
+      if (config.required) s = s.required()
+
+      acc[name] = s
 
       return acc
     }, {} as Record<string, Schema | Path>)
