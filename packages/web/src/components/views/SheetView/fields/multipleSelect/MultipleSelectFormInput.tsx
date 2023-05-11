@@ -52,11 +52,13 @@ export const MultipleSelectFormInput: FC<FieldFormInputProps> = ({ field, onChan
 
   return (
     denyEdit
-      ? <Group>
-        {[1, 2, 4, 5, 6, 7, 8, 9, 10, 11].map(d => (
-          <Text key={d} className={classes.tag}>{d}</Text>
-        ))}
+      ? (
+        <Group>
+          {[1, 2, 4, 5, 6, 7, 8, 9, 10, 11].map(d => (
+            <Text key={d} className={classes.tag}>{d}</Text>
+          ))}
         </Group>
+        )
       : <MultiSelect
           data={data}
           variant='filled'

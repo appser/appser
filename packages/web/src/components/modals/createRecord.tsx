@@ -51,7 +51,6 @@ export function CreateRecordModal({ context, id, innerProps: { fields, viewId, d
           width: '100%',
           bottom: 0,
           zIndex: 99,
-
           background: theme.colorScheme === 'light' ? 'white' : theme.colors.dark[7]
         })}
         pb='sm'

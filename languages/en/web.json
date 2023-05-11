@@ -19,19 +19,19 @@
     "creator": "Creator",
     "createdAt": "Created Time",
     "updatedAt": "Last Modified",
-    "lastEditor": "Last Modified By"
-  },
-  "fieldType": {
-    "checkbox": "Checkbox",
-    "date": "Date",
-    "email": "Email",
-    "multipleSelect": "Multiple Select",
-    "number": "Number",
-    "numId": "Number Id",
-    "richText": "Rich Text",
-    "simpleText": "Simple Text",
-    "singleSelect": "Single Select",
-    "url": "Url"
+    "lastEditor": "Last Modified By",
+    "type": {
+      "checkbox": "Checkbox",
+      "date": "Date",
+      "email": "Email",
+      "multipleSelect": "Multiple Select",
+      "number": "Number",
+      "numId": "Number Id",
+      "richText": "Rich Text",
+      "simpleText": "Simple Text",
+      "singleSelect": "Single Select",
+      "url": "Url"
+    }
   },
   "modal": {
     "button": {

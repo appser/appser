@@ -7,7 +7,9 @@ export const EmailFormInput: FC<FieldFormInputProps> = ({ field, onChange, defau
   return (
     denyEdit
       ? <Text fz='sm'>{String(defaultData)}</Text>
-      : <TextInput variant='filled'
+      : <TextInput
+          variant='filled'
+          defaultValue={String(defaultData ?? '')}
           onChange={e => onChange?.(e.currentTarget.value)}
         />
   )
