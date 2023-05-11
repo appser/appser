@@ -1,19 +1,17 @@
 import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 
-export const addViewRecord = new Controller(
+export const addRecord = new Controller(
   async (ctx, next) => {
     const {
       access: { guard },
       auth: { currentUser },
-      getDataset: { dataset, record: { model } },
-      getDatasetView: { view }
+      getDataset: { dataset, record: { model } }
     } = ctx.state
     const { appId, id: datasetId } = dataset
-    const { id: viewId } = view.toJSON()
     const data = ctx.request.body
 
-    guard('app:dataset:view:record:add', { appId, datasetId, viewId })
+    guard('app:dataset:record:add', { appId, datasetId })
 
     await model.query.insert({
       datasetId,
@@ -27,7 +25,7 @@ export const addViewRecord = new Controller(
     await next()
   },
   {
-    state: ['auth', 'access', 'getDataset', 'getDatasetView'],
+    state: ['auth', 'access', 'getDataset'],
     body: z.object({}).catchall(z.unknown()),
     response: {
       201: null

@@ -1,4 +1,4 @@
-import { camelCase } from '../../helpers/camelCase'
+import { camelCase } from 'core/db/helpers/camelCase'
 
 test('camelCase', () => {
   expect(camelCase('hello_world')).toEqual('helloWorld')

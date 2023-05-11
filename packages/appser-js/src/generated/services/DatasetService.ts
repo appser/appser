@@ -469,19 +469,41 @@ export class DatasetService {
    */
   public addRecord({
     datasetId,
-    viewId,
     requestBody,
   }: {
     datasetId: string,
-    viewId: string,
     requestBody: Record<string, any>,
   }): CancelablePromise<any> {
     return this.httpRequest.request({
       method: 'POST',
-      url: '/datasets/{datasetId}/views/{viewId}/records',
+      url: '/datasets/{datasetId}/records',
       path: {
         'datasetId': datasetId,
-        'viewId': viewId,
+      },
+      body: requestBody,
+      mediaType: 'application/json',
+    });
+  }
+
+  /**
+   * @returns void
+   * @throws ApiError
+   */
+  public updateRecord({
+    datasetId,
+    recordId,
+    requestBody,
+  }: {
+    datasetId: string,
+    recordId: string,
+    requestBody: Record<string, any>,
+  }): CancelablePromise<void> {
+    return this.httpRequest.request({
+      method: 'PATCH',
+      url: '/datasets/{datasetId}/records/{recordId}',
+      path: {
+        'datasetId': datasetId,
+        'recordId': recordId,
       },
       body: requestBody,
       mediaType: 'application/json',
@@ -492,7 +514,28 @@ export class DatasetService {
    * @returns any Default Response
    * @throws ApiError
    */
-  public queryRecord({
+  public deleteRecord({
+    datasetId,
+    recordId,
+  }: {
+    datasetId: string,
+    recordId: string,
+  }): CancelablePromise<any> {
+    return this.httpRequest.request({
+      method: 'DELETE',
+      url: '/datasets/{datasetId}/records/{recordId}',
+      path: {
+        'datasetId': datasetId,
+        'recordId': recordId,
+      },
+    });
+  }
+
+  /**
+   * @returns any Default Response
+   * @throws ApiError
+   */
+  public queryViewRecord({
     datasetId,
     viewId,
     requestBody,
@@ -574,55 +617,6 @@ export class DatasetService {
       path: {
         'datasetId': datasetId,
         'viewId': viewId,
-        'recordId': recordId,
-      },
-    });
-  }
-
-  /**
-   * @returns void
-   * @throws ApiError
-   */
-  public updateRecord({
-    datasetId,
-    viewId,
-    recordId,
-    requestBody,
-  }: {
-    datasetId: string,
-    viewId: string,
-    recordId: string,
-    requestBody: Record<string, any>,
-  }): CancelablePromise<void> {
-    return this.httpRequest.request({
-      method: 'PATCH',
-      url: '/datasets/{datasetId}/views/{viewId}/records/{recordId}',
-      path: {
-        'datasetId': datasetId,
-        'viewId': viewId,
-        'recordId': recordId,
-      },
-      body: requestBody,
-      mediaType: 'application/json',
-    });
-  }
-
-  /**
-   * @returns any Default Response
-   * @throws ApiError
-   */
-  public deleteRecord({
-    datasetId,
-    recordId,
-  }: {
-    datasetId: string,
-    recordId: string,
-  }): CancelablePromise<any> {
-    return this.httpRequest.request({
-      method: 'DELETE',
-      url: '/datasets/{datasetId}/records/{recordId}',
-      path: {
-        'datasetId': datasetId,
         'recordId': recordId,
       },
     });

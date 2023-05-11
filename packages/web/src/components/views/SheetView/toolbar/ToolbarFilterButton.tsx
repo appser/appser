@@ -2,7 +2,7 @@ import { ActionIcon, Box, Button, Flex, Group, Popover, Select, Text } from '@ap
 import { useForm } from '@appser/ui/form'
 import { IconTrash } from '@tabler/icons'
 import { MenuButton } from 'web/components/common/MenuButton'
-import { useCurrentRecordFilter } from 'web/hooks/dataset/useQueryRecord'
+import { useCurrentRecordFilter } from 'web/hooks/dataset/useQueryViewRecord'
 
 import { FieldFilterCondition } from '../field/FieldFilterCondition'
 import { useFields } from '../hooks/useFields'

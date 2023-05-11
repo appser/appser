@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { MenuButton } from 'web/components/common/MenuButton'
 import { StrictModeDroppable } from 'web/components/common/StrictModeDroppable'
-import { useCurrentRecordSorts } from 'web/hooks/dataset/useQueryRecord'
+import { useCurrentRecordSorts } from 'web/hooks/dataset/useQueryViewRecord'
 
 import { FieldSelect } from '../field/FieldSelect'
 import { FieldSort } from '../field/FieldSort'

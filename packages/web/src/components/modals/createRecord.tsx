@@ -7,18 +7,18 @@ import i18n from 'web/vendor/i18n'
 
 import { FieldFormInput } from '../views/SheetView/field/FieldFormInput'
 
-import type { SheetField } from '../views/SheetView/field/Field'
+import type { Field } from '../views/SheetView/field/Field'
 import type { ContextModalProps } from '@appser/ui/modals'
 
 type CreateRecordProps = {
   datasetId: string
   viewId: string
-  fields: SheetField[]
+  fields: Field[]
 }
 
 export function CreateRecordModal({ context, id, innerProps: { fields, viewId, datasetId } }: ContextModalProps<CreateRecordProps>) {
   const { t } = useTranslation()
-  const { mutate, isLoading } = useAddRecord(datasetId, viewId)
+  const { mutate, isLoading } = useAddRecord(datasetId)
   const [data, setData] = useState<Record<string, unknown>>({})
 
   const onCreate = () => {

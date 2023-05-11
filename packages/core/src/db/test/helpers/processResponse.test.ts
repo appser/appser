@@ -1,4 +1,4 @@
-import { processResponse } from '../helpers/processResponse'
+import { processResponse } from 'core/db/helpers/processResponse'
 
 describe('processResponse', () => {
   test('remove null values', () => {

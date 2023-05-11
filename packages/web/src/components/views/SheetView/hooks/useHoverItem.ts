@@ -1,13 +1,18 @@
+import { atom, useAtom } from 'jotai'
 import { useCallback, useEffect, useState } from 'react'
 
+import { useDataSource } from './useDataSource'
+
+import type { Cell } from '../cell/Cell'
 import type { GridMouseEventArgs, Rectangle } from '@glideapps/glide-data-grid'
 import type { GetRowThemeCallback } from '@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render'
 
-interface Props {
-  isScrolling: boolean
-}
+const hoveringCellAtom = atom<Cell | null>(null)
+const useHoveringCell = () => useAtom(hoveringCellAtom)
 
-export function useHoverItem({ isScrolling }: Props) {
+export function useHoverItem() {
+  const { getRow, getGridCell, getField } = useDataSource()
+  const [hoveringCell, setHoveringCell] = useHoveringCell()
   const [cellBounds, setCellBounds] = useState<Rectangle>()
   const [rowIndex, setRowIndex] = useState<number>()
   const [fieldIndex, setFieldIndex] = useState<number>()
@@ -43,15 +48,29 @@ export function useHoverItem({ isScrolling }: Props) {
   )
 
   useEffect(() => {
-    isScrolling && clear()
-  }, [isScrolling])
+    if (cellBounds && rowIndex !== undefined && rowIndex >= 0 && fieldIndex !== undefined && fieldIndex >= 0) {
+      const field = getField(fieldIndex)
+      const gridCell = getGridCell([fieldIndex, rowIndex])
+      const row = getRow(rowIndex)
+
+      if (field && gridCell && row) {
+        setHoveringCell({
+          gridCell,
+          field,
+          row,
+          bounds: cellBounds,
+          location: [fieldIndex, rowIndex] as const
+        })
+      } else {
+        setHoveringCell(null)
+      }
+    } else {
+      setHoveringCell(null)
+    }
+  }, [cellBounds, rowIndex, fieldIndex])
 
   return {
-    cell: {
-      bounds: cellBounds,
-      fieldIndex,
-      rowIndex
-    },
+    hoveringCell,
     handler: {
       onItemHovered,
       getRowThemeOverride

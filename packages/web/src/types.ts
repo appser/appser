@@ -13,10 +13,9 @@ export type Record = {
 // field
 export type DatasetField = Dataset['field'][string] & { name: string }
 export type ViewField = View['field'][string]
-export type Field = DatasetField & ViewField
 
 // filter
-export type Filter = NonNullable<Parameters<typeof db.dataset.queryRecord>[0]['requestBody']['filter']>
+export type Filter = NonNullable<Parameters<typeof db.dataset.queryViewRecord>[0]['requestBody']['filter']>
 export type FilterConfig = {
   logic: 'and' | 'or'
   conditions: FilterCondition[]

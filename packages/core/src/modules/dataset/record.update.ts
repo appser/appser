@@ -2,20 +2,18 @@ import db from 'core/db'
 import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 
-export const updateViewRecord = new Controller(
+export const updateRecord = new Controller(
   async (ctx, next) => {
     const {
       auth: { currentUser },
       access: { guard },
-      getDataset: { dataset, record: { model } },
-      getDatasetView: { view }
+      getDataset: { dataset, record: { model } }
     } = ctx.state
     const { id: datasetId, appId } = dataset
     const { recordId } = ctx.params
-    const { id: viewId } = view.toJSON()
     const data = ctx.request.body
 
-    guard('app:dataset:view:record:field:update', { appId, datasetId, viewId, recordId, fieldName: '*' })
+    guard('app:dataset:record:field:update', { appId, datasetId, recordId, fieldName: '*' })
 
     await model.query
       .where({
@@ -34,7 +32,7 @@ export const updateViewRecord = new Controller(
     await next()
   },
   {
-    state: ['auth', 'access', 'getDataset', 'getDatasetView'],
+    state: ['auth', 'access', 'getDataset'],
     params: z.object({
       recordId: z.string()
     }),

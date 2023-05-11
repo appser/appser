@@ -1,18 +1,28 @@
 import { Select } from '@appser/ui'
-import { forwardRef, useImperativeHandle, useState } from 'react'
+import { forwardRef, useImperativeHandle, useMemo, useState } from 'react'
 
 import type { FieldCellEditorProps, FieldCellEditorRef } from '..'
 import type { BubbleCell } from '@glideapps/glide-data-grid'
 import type { ForwardRefRenderFunction } from 'react'
 
 const SingleSelectCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, FieldCellEditorProps<BubbleCell> > = (
-  { cell, field, rectangle, onDone },
+  { cell: { field }, defaultValue, onDone },
   forwardedRef
 ) => {
-  const [data, setData] = useState<number | undefined>()
+  const [value, setValue] = useState<string | null>(defaultValue ? String(defaultValue) : null)
+  const data = useMemo(() => {
+    if (field.type === 'singleSelect') {
+      return field.options?.items.map((item) => ({
+        label: item.name,
+        value: String(item.id)
+      }))
+    }
+
+    return []
+  }, [field.options, field.type])
 
   const save = () => {
-    onDone(data)
+    onDone(value)
   }
 
   useImperativeHandle(forwardedRef, () => ({
@@ -21,12 +31,12 @@ const SingleSelectCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, F
 
   return (
     <Select
-      data={['React', 'Angular', 'Svelte', 'Vue', 'Riot', 'Next.js', 'Blitz.js']}
-      placeholder="Pick all that you like"
-      defaultValue="react"
+      data={data}
+      defaultValue={value}
       initiallyOpened
       clearable
       variant='unstyled'
+      onChange={v => setValue(v)}
     />
   )
 }

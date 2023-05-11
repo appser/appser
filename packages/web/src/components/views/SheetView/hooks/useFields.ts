@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next'
 import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
 import { useActivatedView } from 'web/hooks/useActivatedView'
 
-import type { SheetField } from '../field/Field'
+import type { Field } from '../field/Field'
 
-const fieldsAtom = atom<SheetField[]>([])
+const fieldsAtom = atom<Field[]>([])
 
 export const useFields = () => {
   const { t } = useTranslation()
@@ -18,7 +18,7 @@ export const useFields = () => {
     () => {
       if (!dataset || !view) return []
 
-      return view.fields.map<SheetField>(name => {
+      return view.fields.map<Field>(name => {
         const fieldInDataset = dataset.field[name]
         const fieldInView = view.field[name]
 

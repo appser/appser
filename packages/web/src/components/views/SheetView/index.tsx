@@ -1,16 +1,16 @@
 import { Flex } from '@appser/ui'
 import { DataEditor } from '@glideapps/glide-data-grid'
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { openCreateRecord } from 'web/components/modals/createRecord'
 import useAccess from 'web/hooks/useAccess'
 
-import { CellEditFloatingIcon } from './cell/CellEditFloatingIcon'
-import { CellEditPopover } from './cell/CellEditPopover'
+import { CellEditor } from './cell/CellEditor'
+import { CellEditorFloatingIcon } from './cell/CellEditorFloatingIcon'
 import { FieldAddButton } from './field/FieldAddButton'
 import { FieldMenu } from './field/FieldMenu'
-import { useActivatedCell } from './hooks/useActivatedCell'
 import { useDataSource } from './hooks/useDataSource'
-import { useEditCell } from './hooks/useEditCell'
+import { useEditingCell } from './hooks/useEditingCell'
+import { useGridCellEdit } from './hooks/useGridCellEdit'
 import { useGridSelection } from './hooks/useGridSelection'
 import { useGridTheme } from './hooks/useGridTheme'
 import { useHeaderIcons } from './hooks/useHeaderIcons'
@@ -20,7 +20,7 @@ import { RowMenu } from './row/RowMenu'
 import { StatusBar } from './statusBar/StatusBar'
 import { SheetToolbar } from './toolbar/Toolbar'
 
-import type { SheetField } from './field/Field'
+import type { Field } from './field/Field'
 import type { DataEditorRef, Rectangle } from '@glideapps/glide-data-grid'
 import type { FC } from 'react'
 import type { Row } from 'web/components/views/SheetView/row/Row'
@@ -31,7 +31,7 @@ import '@glideapps/glide-data-grid/dist/index.css'
 interface ShowMenu {
   bounds: Rectangle
   type: 'field' | 'row'
-  field?: SheetField
+  field?: Field
   row?: Row
 }
 
@@ -45,13 +45,13 @@ const GridView: FC<GridViewProps> = ({ view }) => {
   const { allow: allowCreateField } = can('app:dataset:field:add', { datasetId, appId })
   const gridRef = useRef<DataEditorRef | null>(null)
   const [showMenu, setShowMenu] = useState<ShowMenu>()
-  const [activatedCell] = useActivatedCell()
   const gridTheme = useGridTheme()
-  const { props: dataSourceProps, getRow, getCell, getField, fields, isScrolling } = useDataSource()
+  const [editingCell] = useEditingCell()
+  const { props: dataSourceProps, getRow, fields } = useDataSource()
   const { props: headerIconsProps } = useHeaderIcons()
-  const { handler: itemHoveredHandler, cell: hoveredCell } = useHoverItem({ isScrolling })
+  const { handler: itemHoveredHandler, hoveringCell } = useHoverItem()
   const { handler: gridSelectionHandler } = useGridSelection()
-  const { handler: editCellHandler } = useEditCell()
+  const { handler: editCellHandler } = useGridCellEdit()
   const { handler: resizeColumnHandler } = userResizeColumn()
 
   const showFieldMenu = useCallback((col: number, bounds: Rectangle) => {
@@ -63,26 +63,6 @@ const GridView: FC<GridViewProps> = ({ view }) => {
           bounds
         })
   }, [fields])
-
-  const editingCell = useMemo(() => {
-    const { fieldIndex, rowIndex, bounds } = hoveredCell
-
-    if (fieldIndex === undefined || rowIndex === undefined || bounds === undefined) return
-
-    const field = getField(fieldIndex)
-    const cell = getCell([fieldIndex, rowIndex])
-    const row = getRow(rowIndex)
-
-    if (!field || !cell || !row) return
-
-    return {
-      cell,
-      field,
-      row,
-      bounds,
-      location: [fieldIndex, rowIndex] as const
-    }
-  }, [hoveredCell])
 
   return (
     <Flex direction="column" h="100%" sx={{ flex: 1 }}>
@@ -167,8 +147,8 @@ const GridView: FC<GridViewProps> = ({ view }) => {
         />
       )}
 
-      {editingCell && !isScrolling && <CellEditFloatingIcon {...editingCell} />}
-      {activatedCell && <CellEditPopover />}
+      {hoveringCell && <CellEditorFloatingIcon cell={hoveringCell} />}
+      {editingCell && <CellEditor cell={editingCell} />}
 
     </Flex>
   )

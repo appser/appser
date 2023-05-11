@@ -3,24 +3,28 @@ import cloneDeep from 'lodash/cloneDeep'
 import merge from 'lodash/merge'
 import db from 'web/vendor/db'
 
-import { useCurrentRecordQueryKey } from './useQueryRecord'
+import { useCurrentRecordQueryKey } from './useQueryViewRecord'
+import { useActivatedDataset } from '../useActivatedDataset'
 
 import type { InfiniteData } from '@tanstack/react-query'
 import type { Row } from 'web/components/views/SheetView/row/Row'
 
-type QueryRecordResponse = Awaited<ReturnType<typeof db.dataset.queryRecord>>
+type QueryRecordResponse = Awaited<ReturnType<typeof db.dataset.queryViewRecord>>
 
-export function useUpdateRecord(datasetId: string, viewId: string) {
+export function useUpdateRecord(fromDatasetId?: string) {
   const queryClient = useQueryClient()
   const [queryKey] = useCurrentRecordQueryKey()
+  const [dataset] = useActivatedDataset()
+  const datasetId = fromDatasetId ?? dataset?.id
 
   return useMutation({
     mutationFn: async (row: Row) => {
+      if (!datasetId) throw new Error('dataset id  is required when update a record')
+
       const { id, ...fields } = row.record
 
       return db.dataset.updateRecord({
         datasetId,
-        viewId,
         recordId: id,
         requestBody: fields
       })

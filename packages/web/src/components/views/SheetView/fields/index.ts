@@ -9,21 +9,21 @@ import { useSingleSelectField } from './singleSelect'
 import { useURLField } from './url'
 
 import type { Cell } from '../cell/Cell'
-import type { SheetField } from '../field/Field'
+import type { Field } from '../field/Field'
 import type { Row } from '../row/Row'
-import type { GridCell, Rectangle, SpriteMap } from '@glideapps/glide-data-grid'
+import type { GridCell, SpriteMap } from '@glideapps/glide-data-grid'
 import type { FC, ForwardRefExoticComponent, RefAttributes } from 'react'
 import type { DatasetField, FilterConditionOperatorItem } from 'web/types'
 
 export interface FieldFormInputProps<T = unknown> {
-  field: SheetField
+  field: Field
   denyEdit?: boolean
   defaultData?: T
   onChange?: (data: T) => void
 }
 
 export interface FieldFilterOperatorItemProps {
-  field: SheetField
+  field: Field
   defaultOperatorItem?: FilterConditionOperatorItem
   onChange?: (item: FilterConditionOperatorItem) => void
 }
@@ -35,11 +35,10 @@ export interface FieldSortDirectionProps {
   onChange?: (direction: FieldSortDirection) => void
 }
 
-export type FieldCellEditorProps<T extends Cell = Cell> = {
-  cell: T
-  field: SheetField
-  rectangle: Rectangle
-  onDone: (data: string | boolean | number | object | undefined) => void
+export type FieldCellEditorProps<T extends GridCell = GridCell> = {
+  cell: Cell<T>
+  defaultValue: unknown
+  onDone: (v: string | boolean | number | object | undefined | null) => void
 }
 
 export type FieldCellEditorRef = {

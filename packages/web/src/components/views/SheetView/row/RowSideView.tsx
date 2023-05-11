@@ -3,11 +3,11 @@ import { Box, Title } from '@appser/ui'
 import { FieldFormInput } from '../field/FieldFormInput'
 
 import type { Row } from './Row'
-import type { SheetField } from '../field/Field'
+import type { Field } from '../field/Field'
 import type { FC } from 'react'
 
 interface Props {
-  fields: SheetField[]
+  fields: Field[]
   row: Row
 }
 

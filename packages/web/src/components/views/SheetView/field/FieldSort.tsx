@@ -5,7 +5,7 @@ import { FieldSelect } from './FieldSelect'
 import { useFieldsConfig } from '../fields'
 import { useFields } from '../hooks/useFields'
 
-import type { SheetField } from './Field'
+import type { Field } from './Field'
 import type { FieldSortDirectionProps } from '../fields'
 import type { FC } from 'react'
 
@@ -13,7 +13,7 @@ type Sort = [string, 'asc' | 'desc']
 
 interface Props {
   sort: Sort
-  defaultFields?: SheetField[]
+  defaultFields?: Field[]
   onChange?: (sort: Sort) => void
 }
 

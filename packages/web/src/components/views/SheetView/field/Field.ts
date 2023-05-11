@@ -1,4 +1,4 @@
 import type { GridColumn } from '@glideapps/glide-data-grid'
-import type { Field } from 'web/types'
+import type { DatasetField, ViewField } from 'web/types'
 
-export type SheetField = Field & GridColumn
+export type Field = DatasetField & ViewField & GridColumn

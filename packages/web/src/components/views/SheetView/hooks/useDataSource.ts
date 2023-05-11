@@ -1,7 +1,7 @@
 import { CompactSelection, GridCellKind } from '@glideapps/glide-data-grid'
 import { range } from 'lodash'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { RECORDS_PAGE_SIZE, useQueryRecord } from 'web/hooks/dataset/useQueryRecord'
+import { RECORDS_PAGE_SIZE, useQueryViewRecord } from 'web/hooks/dataset/useQueryViewRecord'
 import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
 import { useActivatedView } from 'web/hooks/useActivatedView'
 
@@ -9,7 +9,7 @@ import { useFields } from './useFields'
 import { useScrollDirection } from './useScrollDirection'
 import { useFieldsConfig } from '../fields'
 
-import type { SheetField } from '../field/Field'
+import type { Field } from '../field/Field'
 import type { DataEditorProps, GridCell, Rectangle } from '@glideapps/glide-data-grid'
 import type { Row } from 'web/components/views/SheetView/row/Row'
 import type { Record } from 'web/types'
@@ -19,9 +19,9 @@ export function useDataSource() {
   const [view] = useActivatedView()
   const [rows, setRows] = useState(0)
   const [visiblePages, setVisiblePages] = useState<Rectangle>({ x: 0, y: 0, width: 0, height: 0 })
-  const { data, hasNextPage, fetchNextPage } = useQueryRecord()
+  const { data, hasNextPage, fetchNextPage } = useQueryViewRecord()
   const { selectedFields } = useFields()
-  const { isScrolling, hasScrolledTo } = useScrollDirection()
+  const { hasScrolledTo } = useScrollDirection()
   const loadingRef = useRef(CompactSelection.empty())
   const visiblePagesRef = useRef(visiblePages)
   const fieldsConfig = useFieldsConfig()
@@ -43,7 +43,7 @@ export function useDataSource() {
     }
   }, [data])
 
-  const getField = useCallback((fieldIndex: number): SheetField | undefined => {
+  const getField = useCallback((fieldIndex: number): Field | undefined => {
     return selectedFields?.[fieldIndex]
   }, [selectedFields])
 
@@ -122,9 +122,8 @@ export function useDataSource() {
   return {
     getRow,
     getField,
-    getCell: getCellContent,
+    getGridCell: getCellContent,
     fields: selectedFields,
-    isScrolling,
     props: {
       rows,
       columns: selectedFields,

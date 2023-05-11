@@ -1,7 +1,10 @@
+import { atom, useAtom } from 'jotai'
 import { useEffect, useRef, useState } from 'react'
 
+const isScrollingAtom = atom(false)
+
 export function useScrollDirection() {
-  const [isScrolling, setIsScrolling] = useState(false)
+  const [isScrolling, setIsScrolling] = useAtom(isScrollingAtom)
   const lastScrollTop = useRef(0)
   const lastScrollLeft = useRef(0)
   let timer: NodeJS.Timeout

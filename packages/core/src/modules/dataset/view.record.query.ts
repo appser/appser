@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { viewSchema } from './helpers/view/view.schema'
 
 // TODO: pageToken
-export const queryRecord = new Controller(
+export const queryViewRecord = new Controller(
   async (ctx, next) => {
     const {
       access: { guard },
@@ -21,8 +21,9 @@ export const queryRecord = new Controller(
     view.updateConfig({ filter, sorts, fields })
 
     const records = await model.query
+      .where('datasetId', datasetId)
       .select(view.toSelectQuery())
-      .select('id')
+      .select('datasetId', 'id')
       .filter(view.toFilterQuery(userFormula.parse(filter)))
       .filter(view.toFilterQuery(userFormula.parse(view.toJSON().filter)))
       .orderBy(view.toOrderByQuery(sorts))
@@ -49,6 +50,7 @@ export const queryRecord = new Controller(
     response: {
       200: z.object({
         records: z.object({
+          datasetId: z.string(),
           id: z.string()
         }).catchall(z.any()).array(),
         pageToken: z.number().int().optional()

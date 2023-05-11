@@ -4,7 +4,7 @@ import { forwardRef, useMemo } from 'react'
 import { FieldTypeIcon } from './FieldTypeIcon'
 import { useFields } from '../hooks/useFields'
 
-import type { SheetField } from './Field'
+import type { Field } from './Field'
 import type { SelectProps } from '@appser/ui'
 import type { FC } from 'react'
 
@@ -25,8 +25,8 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(({ label, Icon, ...othe
 
 interface Props extends Omit<SelectProps, 'onChange' | 'data'> {
   defaultFieldName?: string
-  defaultFields?: SheetField[]
-  onChange?: (field: SheetField) => void
+  defaultFields?: Field[]
+  onChange?: (field: Field) => void
 }
 
 export const FieldSelect: FC<Props> = ({ defaultFieldName, defaultFields, onChange, ...rest }) => {
@@ -46,7 +46,7 @@ export const FieldSelect: FC<Props> = ({ defaultFieldName, defaultFields, onChan
       defaultValue={defaultFieldName}
       size='xs'
       onChange={(v) => {
-        onChange?.(selectedFields.find(c => c.id === v) as SheetField)
+        onChange?.(selectedFields.find(c => c.id === v) as Field)
       }}
       itemComponent={SelectItem}
       maxDropdownHeight={400}

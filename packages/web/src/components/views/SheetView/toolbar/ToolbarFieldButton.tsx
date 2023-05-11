@@ -16,7 +16,7 @@ import { FieldConfigForm } from '../field/FieldConfigForm'
 import { FieldTypeIcon } from '../field/FieldTypeIcon'
 import { useFields } from '../hooks/useFields'
 
-import type { SheetField } from '../field/Field'
+import type { Field } from '../field/Field'
 import type { FC } from 'react'
 import type { DatasetField } from 'web/types'
 
@@ -33,7 +33,7 @@ export const ToolbarFieldButton: FC = () => {
     type: 'simpleText'
   }
 
-  const toggleField = (field: SheetField) => {
+  const toggleField = (field: Field) => {
     updateView.mutate({
       field: {
         [field.name]: {
@@ -52,7 +52,7 @@ export const ToolbarFieldButton: FC = () => {
     })
   }
 
-  const confirmDeleteField = (field: SheetField) => {
+  const confirmDeleteField = (field: Field) => {
     openConfirmModal({
       title: 'Delete Field',
       zIndex: 9000,

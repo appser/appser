@@ -4,32 +4,34 @@ import { IconEdit2 } from 'web/components/icons/IconEdit2'
 import useAccess from 'web/hooks/useAccess'
 import { useActivatedApp } from 'web/hooks/useActivatedApp'
 import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
-import { useActivatedView } from 'web/hooks/useActivatedView'
 
 import { useFieldsConfig } from '../fields'
-import { useActivatedCell } from '../hooks/useActivatedCell'
+import { useEditingCell } from '../hooks/useEditingCell'
+import { useScrollDirection } from '../hooks/useScrollDirection'
 
-import type { ActivatedCell } from '../hooks/useActivatedCell'
+import type { Cell } from './Cell'
 import type { FC } from 'react'
 
-interface Props extends ActivatedCell { }
+interface Props {
+  cell: Cell
+}
 
-export const CellEditFloatingIcon: FC<Props> = ({ bounds, cell, row, field, location }) => {
+export const CellEditorFloatingIcon: FC<Props> = ({ cell }) => {
+  const { row, field, bounds, gridCell } = cell
+  const { isScrolling } = useScrollDirection()
   const fields = useFieldsConfig()
-  const [currentApp] = useActivatedApp()
+  const [app] = useActivatedApp()
   const [dataset] = useActivatedDataset()
-  const [view] = useActivatedView()
   const { can } = useAccess()
-  const { allow: allowEdit } = can('app:dataset:view:record:field:update', {
-    appId: currentApp?.id ?? '',
+  const [editingCell, setEditingCell] = useEditingCell()
+  const FieldCellEditor = fields[field.type].CellEditor
+  const { allow: allowEdit } = can('app:dataset:record:field:update', {
+    appId: app?.id ?? '',
     datasetId: dataset?.id ?? '',
-    viewId: view?.id ?? '',
     recordId: row.record.id,
     fieldName: field.name
   })
-  const [activatedCell, setActivatedCell] = useActivatedCell()
-  const CellEditor = fields[field.type].CellEditor
-  const showIcon = allowEdit && !activatedCell && CellEditor && cell.kind !== GridCellKind.Boolean
+  const showIcon = !isScrolling && allowEdit && !editingCell && FieldCellEditor && gridCell.kind !== GridCellKind.Boolean
 
   if (!showIcon) return null
 
@@ -52,13 +54,7 @@ export const CellEditFloatingIcon: FC<Props> = ({ bounds, cell, row, field, loca
         sx={{ pointerEvents: 'auto' }}
         size='sm'
         mr={3}
-        onClick={() => setActivatedCell({
-          bounds,
-          row,
-          cell,
-          field,
-          location
-        })}
+        onClick={() => setEditingCell(cell)}
       >
         <IconEdit2 size={14} />
       </ActionIcon>

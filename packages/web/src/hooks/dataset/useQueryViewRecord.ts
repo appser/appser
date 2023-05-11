@@ -9,7 +9,7 @@ import db from 'web/vendor/db'
 import type { Filter, FilterConfig } from '../../types'
 import type { QueryKey } from '@tanstack/react-query'
 
-export const queryRecordQuery = (datasetId: string, viewId: string, params?: unknown) => ({
+export const queryViewRecordQuery = (datasetId: string, viewId: string, params?: unknown) => ({
   queryKey: ['dataset', datasetId, 'view', viewId, 'record', 'query', params]
 })
 
@@ -23,7 +23,7 @@ export const useCurrentRecordQueryKey = () => useAtom(queryKey)
 export const useCurrentRecordFilter = () => useAtom(filter)
 export const useCurrentRecordSorts = () => useAtom(sorts)
 
-export function useQueryRecord(toDatasetId?: string, toViewId?: string) {
+export function useQueryViewRecord(toDatasetId?: string, toViewId?: string) {
   const p = useParams()
   const [dataset] = useActivatedDataset()
   const [view] = useActivatedView()
@@ -44,7 +44,7 @@ export function useQueryRecord(toDatasetId?: string, toViewId?: string) {
     filter: queryParamsFilter,
     sorts: sorts.length === 0 ? undefined : sorts
   }
-  const queryKey = queryRecordQuery(datasetId, viewId, queryParams).queryKey
+  const queryKey = queryViewRecordQuery(datasetId, viewId, queryParams).queryKey
 
   useEffect(() => {
     setCurrentQueryKey(queryKey)
@@ -61,7 +61,7 @@ export function useQueryRecord(toDatasetId?: string, toViewId?: string) {
   return useInfiniteQuery({
     queryKey,
     queryFn: ({ pageParam = 0 }) => {
-      return db.dataset.queryRecord({
+      return db.dataset.queryViewRecord({
         datasetId,
         viewId,
         requestBody: {
