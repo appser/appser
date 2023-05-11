@@ -15,19 +15,21 @@ export const useAddField = (toDatasetId?: string, toViewId?: string) => {
   const datasetId = toDatasetId ?? dataset?.id
   const viewId = toViewId ?? view?.id
 
-  if (!datasetId || !viewId) throw new Error('Dataset ID or view ID is required to add a field')
-
   return useMutation({
-    mutationFn: (values: P['requestBody']) => db.dataset.addField({
-      datasetId,
-      requestBody: {
-        ...values,
-        appendViewId: viewId
-      }
-    }),
+    mutationFn: (values: P['requestBody']) => {
+      if (!datasetId || !viewId) throw new Error('Dataset ID or view ID is required to add a field')
+
+      return db.dataset.addField({
+        datasetId,
+        requestBody: {
+          ...values,
+          appendViewId: viewId
+        }
+      })
+    },
     onSuccess(_, value) {
-      queryClient.invalidateQueries(getDatasetQuery(datasetId))
-      viewId && queryClient.invalidateQueries(getViewQuery(datasetId, viewId))
+      datasetId && queryClient.invalidateQueries(getDatasetQuery(datasetId))
+      datasetId && viewId && queryClient.invalidateQueries(getViewQuery(datasetId, viewId))
     }
   })
 }

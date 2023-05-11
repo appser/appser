@@ -11,16 +11,19 @@ export const useDeleteField = () => {
   const [dataset] = useActivatedDataset()
   const [view] = useActivatedView()
   const queryClient = useQueryClient()
-
-  if (!dataset?.id) throw new Error('Dataset ID is required to delete a field')
+  const datasetId = dataset?.id
 
   return useMutation({
-    mutationFn: (p: Pick<P, 'fieldName'>) => db.dataset.deleteField({
-      ...p,
-      datasetId: dataset.id
-    }),
+    mutationFn: (p: Pick<P, 'fieldName'>) => {
+      if (!datasetId) throw new Error('Dataset ID is required to delete a field')
+
+      return db.dataset.deleteField({
+        ...p,
+        datasetId
+      })
+    },
     onSuccess: () => {
-      view?.id && queryClient.invalidateQueries(getViewQuery(dataset.id, view.id))
+      datasetId && view?.id && queryClient.invalidateQueries(getViewQuery(datasetId, view.id))
     }
   })
 }

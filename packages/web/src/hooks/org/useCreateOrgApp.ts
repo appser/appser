@@ -11,10 +11,10 @@ export const useCreateOrgApp = () => {
   const queryClient = useQueryClient()
   const fetcher = useFetcher()
 
-  if (!orgId) throw new Error('orgId is required')
-
   return useMutation({
     mutationFn: () => {
+      if (!orgId) throw new Error('orgId is required')
+
       return db.org.createOrgApp({
         orgId,
         requestBody: {}
