@@ -24,7 +24,7 @@
     "build-storybook": "storybook build"
   },
   "devDependencies": {
-    "@appser/eslint-config": "^1.0.1",
+    "@appser/eslint-config": "^1.0.2",
     "@emotion/react": "^11.10.6",
     "@mantine/core": "^6.0.8",
     "@storybook/addon-a11y": "^6.5.13",
