@@ -3,8 +3,8 @@ import { createLogger } from 'core/logger'
 import { z } from 'zod'
 
 import type { Column } from 'core/db/model/column'
-import type { Path } from 'core/db/model/path'
-import type { FieldConfig } from 'core/modules/dataset/helpers/field/field.schema'
+import type { Field } from 'core/db/model/field'
+import type { DatasetFieldConfig } from 'core/models/dataset/field.schema'
 import type { Schema } from 'zod'
 
 const log = createLogger('dataset:field')
@@ -14,7 +14,7 @@ interface Meta<S, O extends Schema> {
   schema: S | ((o: z.infer<O>) => S)
 }
 
-export class Field {
+export class DatasetField {
   static store: { [T in string]?: Meta<unknown, Schema> } = {}
 
   name
@@ -23,9 +23,9 @@ export class Field {
   #meta
   #options: unknown
 
-  constructor(name: string, config: FieldConfig) {
+  constructor(name: string, config: DatasetFieldConfig) {
     const { type, options } = config
-    const meta = Field.store[type]
+    const meta = DatasetField.store[type]
 
     if (!meta) throw new Error(`Field type '${type}' not stored, define it first.`)
 
@@ -52,16 +52,16 @@ export class Field {
     }
   }
 
-  static toColumnWithFields(fields: Record<string, FieldConfig>): Column {
-    const schema = Object.entries(fields).reduce((acc, [name, config]) => {
-      let s = new Field(name, config).schema.optional()
+  static toColumn(plain: Record<string, DatasetFieldConfig>): Column {
+    const schema = Object.entries(plain).reduce((acc, [name, config]) => {
+      let s = new DatasetField(name, config).schema.optional()
 
       if (config.required) s = s.required()
 
       acc[name] = s
 
       return acc
-    }, {} as Record<string, Schema | Path>)
+    }, {} as Record<string, Schema | Field>)
 
     return column('jsonb', schema)
   }

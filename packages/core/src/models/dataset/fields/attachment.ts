@@ -1,7 +1,7 @@
-import { Field } from 'core/modules/dataset/helpers/field/field'
+import { DatasetField } from 'core/models/dataset/helpers/datasetField'
 import { z } from 'zod'
 
-export default Field.define('attachment', {
+export default DatasetField.define('attachment', {
   optionSchema: z.object({
     isMultiple: z.boolean()
   }).partial().optional(),

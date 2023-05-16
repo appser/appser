@@ -3,8 +3,8 @@ import { column } from 'core/db/model/column'
 import { genSnowflakeId } from 'core/vendors/snowflakeId'
 import { z } from 'zod'
 
-import { fieldConfigSchema } from '../modules/dataset/helpers/field/field.schema'
-import { viewSchema } from '../modules/dataset/helpers/view/view.schema'
+import { datasetFieldSchema } from './field.schema'
+import { viewSchema } from '../../modules/dataset/helpers/view/view.schema'
 
 import type { Optional } from '@appser/common'
 import type { Knex } from 'knex'
@@ -13,7 +13,7 @@ export const Dataset = Model.define('dataset', {
   id: column('bigint', z.string().default(() => genSnowflakeId().toString())),
   appId: column('bigint', z.string()),
   name: column('text', z.string().optional()),
-  field: column('jsonb', z.record(fieldConfigSchema).default({
+  field: column('jsonb', z.record(datasetFieldSchema).default({
     name: { type: 'simpleText' }
   })),
   views: column('jsonb', viewSchema.array().default(() => [viewSchema.parse({})])),

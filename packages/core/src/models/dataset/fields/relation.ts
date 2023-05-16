@@ -1,7 +1,7 @@
-import { Field } from 'core/modules/dataset/helpers/field/field'
+import { DatasetField } from 'core/models/dataset/helpers/datasetField'
 import { z } from 'zod'
 
-export default Field.define('relation', {
+export default DatasetField.define('relation', {
   optionSchema: z.object({
     table: z.string(),
     selects: z.string().array(),

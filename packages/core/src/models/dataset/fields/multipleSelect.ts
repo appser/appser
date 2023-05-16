@@ -1,9 +1,9 @@
-import { Field } from 'core/modules/dataset/helpers/field/field'
+import { DatasetField } from 'core/models/dataset/helpers/datasetField'
 import { z } from 'zod'
 
 import { optionSchema } from './singleSelect'
 
-export default Field.define('multipleSelect', {
+export default DatasetField.define('multipleSelect', {
   optionSchema,
 
   schema:

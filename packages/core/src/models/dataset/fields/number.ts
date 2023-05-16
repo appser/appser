@@ -1,7 +1,7 @@
-import { Field } from 'core/modules/dataset/helpers/field/field'
+import { DatasetField } from 'core/models/dataset/helpers/datasetField'
 import { z } from 'zod'
 
-export default Field.define('number', {
+export default DatasetField.define('number', {
   optionSchema: z.object({
     precision: z.number().int().gte(0).lte(8).default(0),
     allowNegative: z.boolean().default(false)

@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { fields } from '../fields'
+import { fields } from './fields'
 
 const {
   checkbox,
@@ -14,7 +14,7 @@ const {
   url
 } = fields
 
-const baseConfigSchema = z.object({
+const baseSchema = z.object({
   name: z.string(),
   title: z.string().max(255).trim(),
   required: z.boolean(),
@@ -34,6 +34,6 @@ export const fieldOptionSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('url'), options: url.optionSchema })
 ])
 
-export const fieldConfigSchema = fieldOptionSchema.and(baseConfigSchema)
+export const datasetFieldSchema = fieldOptionSchema.and(baseSchema)
 
-export type FieldConfig = z.infer<typeof fieldConfigSchema>
+export type DatasetFieldConfig = z.infer<typeof datasetFieldSchema>

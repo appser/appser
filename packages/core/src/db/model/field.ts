@@ -10,7 +10,7 @@ interface Config {
   }
 }
 
-export class Path<S extends Schema = Schema> {
+export class Field<S extends Schema = Schema> {
   parent: string
   schema: Schema
   config: Config = {}
@@ -25,6 +25,6 @@ export class Path<S extends Schema = Schema> {
   // }
 }
 
-export function path<S extends Schema>(schema: S) {
-  return new Path<S>(schema)
+export function field<S extends Schema>(schema: S) {
+  return new Field<S>(schema)
 }

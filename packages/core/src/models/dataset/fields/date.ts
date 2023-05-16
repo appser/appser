@@ -1,7 +1,7 @@
-import { Field } from 'core/modules/dataset/helpers/field/field'
+import { DatasetField } from 'core/models/dataset/helpers/datasetField'
 import { z } from 'zod'
 
-export default Field.define('date', {
+export default DatasetField.define('date', {
   optionSchema: z.object({
     dynamicDefault: z.literal('now'),
     calendar: z.enum(['gregory', 'chinese', 'hebrew', 'islamic', 'coptic', 'indian', 'ethiopic', 'iso8601', 'japanese', 'persian']),

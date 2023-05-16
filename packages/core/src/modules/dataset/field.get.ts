@@ -1,4 +1,4 @@
-import { Field } from 'core/modules/dataset/helpers/field/field'
+import { DatasetField } from 'core/models/dataset/helpers/datasetField'
 import { Controller } from 'core/server/controller'
 import { z } from 'zod'
 
@@ -19,7 +19,7 @@ export const getField = new Controller(
 
     if (!config) return ctx.throw(datasetError('fieldNotFound'))
 
-    const field = new Field(fieldName, config)
+    const field = new DatasetField(fieldName, config)
 
     Object.assign(ctx.state, {
       getDatasetField: {
@@ -40,7 +40,7 @@ export const getField = new Controller(
 declare module 'core/server/controller' {
   interface State {
     getDatasetField: {
-      field: Field
+      field: DatasetField
     }
   }
 }

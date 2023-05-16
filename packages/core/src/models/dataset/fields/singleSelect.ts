@@ -1,4 +1,4 @@
-import { Field } from 'core/modules/dataset/helpers/field/field'
+import { DatasetField } from 'core/models/dataset/helpers/datasetField'
 import { z } from 'zod'
 
 export const optionSchema = z.object({
@@ -16,7 +16,7 @@ export const optionSchema = z.object({
   })
 })
 
-export default Field.define('singleSelect', {
+export default DatasetField.define('singleSelect', {
   optionSchema,
 
   schema: opts => z.string()

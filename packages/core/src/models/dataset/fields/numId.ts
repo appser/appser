@@ -1,8 +1,8 @@
-import { Field } from 'core/modules/dataset/helpers/field/field'
+import { DatasetField } from 'core/models/dataset/helpers/datasetField'
 import { genSnowflakeId } from 'core/vendors/snowflakeId'
 import { z } from 'zod'
 
-export default Field.define('numId', {
+export default DatasetField.define('numId', {
   optionSchema: z.object({
     dynamicDefault: z.literal('snowflakeId')
   }).partial().optional(),

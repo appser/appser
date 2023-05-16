@@ -2,7 +2,7 @@ import db from 'core/db'
 import { createLogger } from 'core/logger'
 import { Schema, z } from 'zod'
 
-import { Path } from './path'
+import { Field } from './field'
 
 import type { Columns, Models } from 'core/db/model'
 import type { Knex } from 'knex'
@@ -125,7 +125,7 @@ export function column<S extends ColumnType>(dataType: DataType, schema: S) {
     ? schema
     : Object.entries(schema).reduce((acc, [name, subSchema]) => {
       return acc.extend({
-        [name]: subSchema instanceof Path ? subSchema.schema : subSchema
+        [name]: subSchema instanceof Field ? subSchema.schema : subSchema
       })
     }, z.object({}))
 
@@ -133,12 +133,12 @@ export function column<S extends ColumnType>(dataType: DataType, schema: S) {
   return new Column<ResolveColumnSchema<S>>(dataType, _schema)
 }
 
-export type ColumnType = Schema | Record<string, Schema | Path>
+export type ColumnType = Schema | Record<string, Schema | Field>
 
 type ResolveColumnSchema<T extends ColumnType> = T extends Schema
   ? T
   : T extends Record<string, infer S>
     ? ZodObject<{
-      [K in keyof T]-?: T[K] extends Schema ? T[K] : T[K] extends Path ? T[K]['schema'] : ZodNever
+      [K in keyof T]-?: T[K] extends Schema ? T[K] : T[K] extends Field ? T[K]['schema'] : ZodNever
     }>
     : ZodNever
