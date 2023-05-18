@@ -2,8 +2,8 @@ import { CompactSelection, GridCellKind } from '@glideapps/glide-data-grid'
 import { range } from 'lodash'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { RECORDS_PAGE_SIZE, useQueryViewRecord } from 'web/hooks/dataset/useQueryViewRecord'
-import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
-import { useActivatedView } from 'web/hooks/useActivatedView'
+import { useActivateDataset } from 'web/hooks/ui/useActivateDataset'
+import { useActivateView } from 'web/hooks/ui/useActivateView'
 
 import { useFields } from './useFields'
 import { useScrollDirection } from './useScrollDirection'
@@ -15,8 +15,8 @@ import type { Row } from 'web/components/views/SheetView/row/Row'
 import type { Record } from 'web/types'
 
 export function useViewDataSource() {
-  const [dataset] = useActivatedDataset()
-  const [view] = useActivatedView()
+  const [dataset] = useActivateDataset()
+  const [view] = useActivateView()
   const [rows, setRows] = useState(0)
   const [visiblePages, setVisiblePages] = useState<Rectangle>({ x: 0, y: 0, width: 0, height: 0 })
   const { data, hasNextPage, fetchNextPage } = useQueryViewRecord()

@@ -7,7 +7,7 @@ import { IconSun } from '../icons/IconSun'
 
 import type { SelectProps } from '@appser/ui'
 import type { FC } from 'react'
-import type { ImprovedColorScheme } from 'web/hooks/useImprovedColorScheme'
+import type { ImprovedColorScheme } from 'web/hooks/ui/useImprovedColorScheme'
 
 interface ThemeSelectProps extends Omit<SelectProps, 'data'> {
 }

@@ -8,7 +8,7 @@ import { RouterProvider } from 'react-router-dom'
 
 import { LoaderFallback } from './components/common/LoaderFallback'
 import modals from './components/modals'
-import useCustomColorScheme from './hooks/useImprovedColorScheme'
+import useCustomColorScheme from './hooks/ui/useImprovedColorScheme'
 import router from './router'
 import queryClient from './vendor/queryClient'
 

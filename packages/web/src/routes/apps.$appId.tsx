@@ -15,7 +15,7 @@ import ResizablePanels from 'web/components/common/ResizablePanels'
 import { useGridSelection } from 'web/components/views/SheetView/hooks/useGridSelection'
 import { loadQueryData } from 'web/helpers/loadQueryData'
 import { getAppQuery, useGetApp } from 'web/hooks/app/useGetApp'
-import { useActivatedApp } from 'web/hooks/useActivatedApp'
+import { useActivateApp } from 'web/hooks/ui/useActivateApp'
 
 import type { QueryClient } from '@tanstack/react-query'
 import type { LoaderFunctionArgs } from 'react-router-dom'
@@ -116,7 +116,7 @@ export default function AppsId() {
   const navigate = useNavigate()
   const { classes } = useStyles()
   const { appId = '' } = useParams()
-  const [,setActivatedApp] = useActivatedApp()
+  const [,setActivatedApp] = useActivateApp()
   const { data: app } = useGetApp(appId)
   const { selection } = useGridSelection()
   const [leftSidebarState, setLeftSidebarState] = useState({

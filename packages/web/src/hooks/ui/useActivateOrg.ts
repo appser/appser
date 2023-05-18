@@ -15,4 +15,4 @@ const activatedOrgAtom = atom(
   }
 )
 
-export const useActivatedOrg = () => useAtom(activatedOrgAtom)
+export const useActivateOrg = () => useAtom(activatedOrgAtom)

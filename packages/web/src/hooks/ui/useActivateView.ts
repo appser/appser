@@ -4,4 +4,4 @@ import type { View } from 'web/types'
 
 const activatedView = atom<View | null>(null)
 
-export const useActivatedView = () => useAtom(activatedView)
+export const useActivateView = () => useAtom(activatedView)

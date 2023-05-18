@@ -1,9 +1,9 @@
 import { ActionIcon, Flex } from '@appser/ui'
 import { GridCellKind } from '@glideapps/glide-data-grid'
 import { IconEdit2 } from 'web/components/icons/IconEdit2'
-import useAccess from 'web/hooks/useAccess'
-import { useActivatedApp } from 'web/hooks/useActivatedApp'
-import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
+import useAccess from 'web/hooks/ui/useAccess'
+import { useActivateApp } from 'web/hooks/ui/useActivateApp'
+import { useActivateDataset } from 'web/hooks/ui/useActivateDataset'
 
 import { useFieldsConfig } from '../fields'
 import { useEditingCell } from '../hooks/useEditingCell'
@@ -20,8 +20,8 @@ export const CellEditorFloatingIcon: FC<Props> = ({ cell }) => {
   const { row, field, bounds, gridCell } = cell
   const { isScrolling } = useScrollDirection()
   const fields = useFieldsConfig()
-  const [app] = useActivatedApp()
-  const [dataset] = useActivatedDataset()
+  const [app] = useActivateApp()
+  const [dataset] = useActivateDataset()
   const { can } = useAccess()
   const [editingCell, setEditingCell] = useEditingCell()
   const FieldCellEditor = fields[field.type].CellEditor

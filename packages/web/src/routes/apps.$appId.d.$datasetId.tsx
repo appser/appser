@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 import { getDatasetQuery, useGetDataset } from 'web/hooks/dataset/useGetDataset'
-import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
+import { useActivateDataset } from 'web/hooks/ui/useActivateDataset'
 
 import type { QueryClient } from '@tanstack/react-query'
 import type { LoaderFunctionArgs } from 'react-router-dom'
@@ -15,7 +15,7 @@ export const loader = (queryClient: QueryClient) => async ({ request, params }: 
 
 export default function AppsIdDatasetId() {
   const { datasetId = '' } = useParams()
-  const [, setActivatedDataset] = useActivatedDataset()
+  const [, setActivatedDataset] = useActivateDataset()
   const { data: dataset } = useGetDataset(datasetId)
 
   useEffect(() => {

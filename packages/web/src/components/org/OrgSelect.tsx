@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import { IconSelector } from 'web/components/icons/IconSelector'
 import { OrgLogo } from 'web/components/org/OrgLogo'
 import { useListAccountOrg } from 'web/hooks/account/useListAccountOrg'
-import { useActivatedOrg } from 'web/hooks/useActivatedOrg'
+import { useActivateOrg } from 'web/hooks/ui/useActivateOrg'
 
 import type { FC } from 'react'
 import type { Org } from 'web/types'
 
 export const OrgSelect: FC = () => {
   const navigate = useNavigate()
-  const [activatedOrg, setActivatedOrg] = useActivatedOrg()
+  const [activatedOrg, setActivatedOrg] = useActivateOrg()
   const { data: orgs, isSuccess } = useListAccountOrg()
 
   if (!isSuccess) return null

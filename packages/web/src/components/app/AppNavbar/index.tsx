@@ -5,7 +5,7 @@ import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { ActionButton } from 'web/components/common/ActionButton'
 import { StrictModeDroppable } from 'web/components/common/StrictModeDroppable'
 import { useCreateDataset } from 'web/hooks/app/useCreateDataset'
-import { useActivatedApp } from 'web/hooks/useActivatedApp'
+import { useActivateApp } from 'web/hooks/ui/useActivateApp'
 
 import { AppDatasetNavLink } from './AppDatasetNavLink'
 import { AppViewNavLink } from './AppViewNavLink'
@@ -24,7 +24,7 @@ const reorder = (list: any[], startIndex: number, endIndex: number): any[] => {
 }
 
 export const AppNavbar: FC<NavbarProps> = (p) => {
-  const [app] = useActivatedApp()
+  const [app] = useActivateApp()
   const createDataset = useCreateDataset()
 
   const onDragEnd = (result: DropResult) => {

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
-import { useActivatedView } from 'web/hooks/useActivatedView'
+import { useActivateDataset } from 'web/hooks/ui/useActivateDataset'
+import { useActivateView } from 'web/hooks/ui/useActivateView'
 import db from 'web/vendor/db'
 
 import { getViewQuery } from './useGetView'
@@ -8,8 +8,8 @@ import { getViewQuery } from './useGetView'
 type P = Parameters<typeof db.dataset.deleteField>[0]
 
 export const useDeleteField = () => {
-  const [dataset] = useActivatedDataset()
-  const [view] = useActivatedView()
+  const [dataset] = useActivateDataset()
+  const [view] = useActivateView()
   const queryClient = useQueryClient()
   const datasetId = dataset?.id
 

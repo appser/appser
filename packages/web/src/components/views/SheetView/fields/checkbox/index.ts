@@ -1,8 +1,8 @@
 import { GridCellKind } from '@glideapps/glide-data-grid'
-import useAccess from 'web/hooks/useAccess'
-import { useActivatedApp } from 'web/hooks/useActivatedApp'
-import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
-import { useActivatedView } from 'web/hooks/useActivatedView'
+import useAccess from 'web/hooks/ui/useAccess'
+import { useActivateApp } from 'web/hooks/ui/useActivateApp'
+import { useActivateDataset } from 'web/hooks/ui/useActivateDataset'
+import { useActivateView } from 'web/hooks/ui/useActivateView'
 
 import { CheckboxFilterOperatorItem } from './CheckboxFilterOperatorItem'
 import { CheckboxFormInput } from './CheckboxFormInput'
@@ -14,9 +14,9 @@ import type { BooleanCell } from '@glideapps/glide-data-grid'
 
 export function useCheckboxFieldConfig(): FieldConfig<BooleanCell> {
   const { can } = useAccess()
-  const [app] = useActivatedApp()
-  const [dataset] = useActivatedDataset()
-  const [view] = useActivatedView()
+  const [app] = useActivateApp()
+  const [dataset] = useActivateDataset()
+  const [view] = useActivateView()
 
   const toCellContent: FieldConfig<BooleanCell>['toCellContent'] = ({ row, field, value }) => {
     const { deny } = can('app:dataset:record:field:update', {

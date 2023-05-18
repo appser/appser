@@ -5,7 +5,7 @@ import { Forbidden } from 'web/components/errors/Forbidden'
 import { NotFound } from 'web/components/errors/NotFound'
 import { loadQueryData } from 'web/helpers/loadQueryData'
 import { getViewQuery, useGetView } from 'web/hooks/dataset/useGetView'
-import { useActivatedView } from 'web/hooks/useActivatedView'
+import { useActivateView } from 'web/hooks/ui/useActivateView'
 
 import type { QueryClient } from '@tanstack/react-query'
 import type { LoaderFunctionArgs } from 'react-router-dom'
@@ -21,7 +21,7 @@ export const loader = (queryClient: QueryClient) => async ({ request, params }: 
 
 export default function AppsIdViewsId() {
   const { viewId = '', datasetId = '' } = useParams()
-  const [, setActivatedView] = useActivatedView()
+  const [, setActivatedView] = useActivateView()
   const { data: view, isLoading, isSuccess } = useGetView(datasetId, viewId)
 
   useEffect(() => {
