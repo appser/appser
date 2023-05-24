@@ -12,17 +12,24 @@ const useStyles = createStyles((theme, _: AppNavLinkStylesParams) => ({
     padding: '0 12px',
     paddingLeft: 20,
     height: 38,
-    position: 'relative'
+    position: 'relative',
+    '&[aria-menu-opened = true]': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]
+    },
+    '& .targetButton': {
+      display: 'none'
+    },
+    '& .targetButton[aria-menu-opened]': {
+      display: 'flex',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
+    },
+    '&:hover .targetButton': {
+      display: 'flex'
+    }
   },
-  // label: {
-  //   fontSize: theme.fontSizes.sm - 1
-  // },
+
   icon: {
     marginRight: 6
-  },
-  rightSection: {
-    position: 'absolute',
-    left: -8
   }
 }))
 

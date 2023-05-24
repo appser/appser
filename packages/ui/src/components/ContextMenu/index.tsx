@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react'
 
 import { ContextMenuContext } from './ContextMenu.context'
 import { ContextMenuTarget } from './ContextMenuTarget'
+import { ContextMenuTargetButton } from './ContextMenuTargetButton'
 
 import type { MenuProps } from '@mantine/core'
 
@@ -63,6 +64,7 @@ export const ContextMenu = ({ children, opened, onClose, ...rest }: MenuProps) =
 }
 
 ContextMenu.Target = ContextMenuTarget
+ContextMenu.TargetButton = ContextMenuTargetButton
 ContextMenu.Dropdown = Menu.Dropdown
 ContextMenu.Item = Menu.Item
 ContextMenu.Divider = Menu.Divider

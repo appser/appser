@@ -1,4 +1,4 @@
-import { Navbar } from '@appser/ui'
+import { Button, Navbar } from '@appser/ui'
 import { IconPlus } from '@tabler/icons'
 import { useCallback } from 'react'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
@@ -73,7 +73,7 @@ export const AppNavbar: FC<NavbarProps> = (p) => {
 
   return (
     <Navbar withBorder={false} {...p}>
-      <Navbar.Section pr={7}
+      {/* <Navbar.Section pr={7}
         sx={{
           flex: '0 0 44px',
           height: 44,
@@ -85,13 +85,23 @@ export const AppNavbar: FC<NavbarProps> = (p) => {
         <ActionButton loading={createDataset.isLoading} onClick={() => createDataset.mutate()}>
           <IconPlus size={18} />
         </ActionButton>
-      </Navbar.Section>
-      <Navbar.Section p="md" pt={0} grow sx={{ overflow: 'auto' }}>
+      </Navbar.Section> */}
+      <Navbar.Section p="md" pt={20} grow sx={{ overflow: 'auto' }}>
         <DragDropContext
           onDragEnd={onDragEnd}
         >
           {renderList(app?.datasets ?? [], 'dnd-list-app')}
         </DragDropContext>
+      </Navbar.Section>
+      <Navbar.Section>
+        <Button
+          w='100%'
+          radius={0}
+          loading={createDataset.isLoading}
+          onClick={() => createDataset.mutate()}
+        >
+          Create Table
+        </Button>
       </Navbar.Section>
     </Navbar>
   )

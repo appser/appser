@@ -1,5 +1,5 @@
-import { ContextMenu } from '@appser/ui'
-import { IconTable } from '@tabler/icons'
+import { ActionIcon, ContextMenu, Flex } from '@appser/ui'
+import { IconDots, IconTable } from '@tabler/icons'
 import { useState } from 'react'
 import EditableText from 'web/components/common/EditableText'
 
@@ -23,16 +23,36 @@ export const AppDatasetNavLink: FC<Props> = ({ children, dataset }) => {
           icon={<IconTable size={18} />}
           childrenOffset={0}
           label={
-            <EditableText
-              onCancel={() => setIsEdit(false)}
-              isEditable={isEdit}
-              onConfirm={v => {
-                console.log(v)
-                setIsEdit(false)
-              }}
-            >
-              {dataset.name || 'Untitled Dataset'}
-            </EditableText>
+
+            <Flex align='center' justify='space-between' w='100%'>
+              <EditableText
+                onCancel={() => setIsEdit(false)}
+                isEditable={isEdit}
+                onConfirm={v => {
+                  console.log(v)
+                  setIsEdit(false)
+                }}
+              >
+                {dataset.name || 'Untitled Dataset'}
+              </EditableText>
+              {!isEdit && (
+                <ContextMenu.TargetButton>
+                  <ActionIcon
+                    className='targetButton'
+                    variant='subtle'
+                    color='dark'
+                    sx={theme => ({
+                      '&:hover': {
+                        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
+                      }
+                    })}
+                  >
+                    <IconDots size={15} />
+                  </ActionIcon>
+                </ContextMenu.TargetButton>
+              )}
+
+            </Flex>
           }
         >
           {children}
