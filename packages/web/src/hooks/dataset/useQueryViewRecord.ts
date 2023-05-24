@@ -2,8 +2,8 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { atom, useAtom } from 'jotai'
 import { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
-import { useActivatedView } from 'web/hooks/useActivatedView'
+import { useActivateDataset } from 'web/hooks/ui/useActivateDataset'
+import { useActivateView } from 'web/hooks/ui/useActivateView'
 import db from 'web/vendor/db'
 
 import type { Filter, FilterConfig } from '../../types'
@@ -25,8 +25,8 @@ export const useCurrentRecordSorts = () => useAtom(sorts)
 
 export function useQueryViewRecord(toDatasetId?: string, toViewId?: string) {
   const p = useParams()
-  const [dataset] = useActivatedDataset()
-  const [view] = useActivatedView()
+  const [dataset] = useActivateDataset()
+  const [view] = useActivateView()
   const [filter] = useCurrentRecordFilter()
   const [sorts] = useCurrentRecordSorts()
   const [, setCurrentQueryKey] = useCurrentRecordQueryKey()

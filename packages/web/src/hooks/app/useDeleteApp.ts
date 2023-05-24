@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useActivatedOrg } from 'web/hooks/useActivatedOrg'
+import { useActivateOrg } from 'web/hooks/ui/useActivateOrg'
 import db from 'web/vendor/db'
 
 import { listOrgAppQuery } from '../org/useListOrgApp'
@@ -7,7 +7,7 @@ import { listOrgAppQuery } from '../org/useListOrgApp'
 export type DeleteAppParams = Parameters<typeof db.app.deleteApp>[0]
 
 export const useDeleteApp = () => {
-  const [org] = useActivatedOrg()
+  const [org] = useActivateOrg()
   const queryClient = useQueryClient()
 
   return useMutation({

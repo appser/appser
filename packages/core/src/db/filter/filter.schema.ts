@@ -1,7 +1,5 @@
 import { z } from 'zod'
 
-import db from '..'
-
 /**
  * Parameter 3 is a bound string with two characters; '[' means inclusive, '(' exclusive
  *

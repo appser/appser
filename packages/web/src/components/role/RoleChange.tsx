@@ -1,7 +1,7 @@
 import { Radio, Stack } from '@appser/ui'
 import { useChangeOrgPeopleRole } from 'web/hooks/org/useChangeOrgPeopleRole'
 import { useListOrgRole } from 'web/hooks/org/useListOrgRole'
-import { useActivatedOrg } from 'web/hooks/useActivatedOrg'
+import { useActivateOrg } from 'web/hooks/ui/useActivateOrg'
 
 import type { FC } from 'react'
 
@@ -12,7 +12,7 @@ interface RoleChangeProps {
 }
 
 export const RoleChange: FC<RoleChangeProps> = ({ userId, roleId, done }) => {
-  const [{ id: orgId = '' }] = useActivatedOrg()
+  const [{ id: orgId = '' }] = useActivateOrg()
   const { data: roles = [] } = useListOrgRole({ orgId })
   const changeOrgPersonRole = useChangeOrgPeopleRole()
 

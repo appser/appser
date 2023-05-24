@@ -5,7 +5,7 @@ import { openContextModal } from '@appser/ui/modals'
 import { useTranslation } from 'react-i18next'
 import { useCreateOrgInvitation } from 'web/hooks/org/useCreateOrgInvitation'
 import { useListOrgRole } from 'web/hooks/org/useListOrgRole'
-import { useActivatedOrg } from 'web/hooks/useActivatedOrg'
+import { useActivateOrg } from 'web/hooks/ui/useActivateOrg'
 import i18n from 'web/vendor/i18n'
 
 import { FormSection } from '../common/FormSection'
@@ -15,7 +15,7 @@ import type { ContextModalProps } from '@appser/ui/modals'
 
 export function InviteOrgPeopleModal({ context, id, innerProps }: ContextModalProps) {
   const { t } = useTranslation()
-  const [{ id: orgId = '' }] = useActivatedOrg()
+  const [{ id: orgId = '' }] = useActivateOrg()
   const { data: orgRoles = [] } = useListOrgRole({ orgId })
   const createOrgInvitation = useCreateOrgInvitation()
   const clipboard = useClipboard()

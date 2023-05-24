@@ -4,7 +4,7 @@ import merge from 'lodash/merge'
 import db from 'web/vendor/db'
 
 import { useCurrentRecordQueryKey } from './useQueryViewRecord'
-import { useActivatedDataset } from '../useActivatedDataset'
+import { useActivateDataset } from '../ui/useActivateDataset'
 
 import type { InfiniteData } from '@tanstack/react-query'
 import type { Row } from 'web/components/views/SheetView/row/Row'
@@ -20,7 +20,7 @@ type QueryRecordResponse = Awaited<ReturnType<typeof db.dataset.queryViewRecord>
 export function useUpdateRecord(fromDatasetId?: string) {
   const queryClient = useQueryClient()
   const [queryKey] = useCurrentRecordQueryKey()
-  const [dataset] = useActivatedDataset()
+  const [dataset] = useActivateDataset()
   const datasetId = fromDatasetId ?? dataset?.id
 
   return useMutation({

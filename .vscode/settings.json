@@ -54,20 +54,10 @@
     "Wordmark",
     "Zhuang"
   ],
-  "files.eol": "\n",
   "typescript.tsdk": "node_modules/typescript/lib",
-  "eslint.packageManager": "pnpm",
-  "npm.packageManager": "pnpm",
-  "code-runner.executorMap": {
-    "typescript": "tsx"
-  },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "eslint.codeAction.showDocumentation": {
-    "enable": true
-  },
-  "eslint.quiet": true,
   "eslint.validate": [
     "javascript",
     "typescript",
@@ -82,7 +72,6 @@
     "json5"
   ],
   "prettier.enable": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "[javascript]": {
     "editor.formatOnSave": false
@@ -96,10 +85,8 @@
   "[typescriptreact]": {
     "editor.formatOnSave": false
   },
-  "prettier.insertPragma": false,
   "i18n-ally.localesPaths": ["locales", "languages"],
   "i18n-ally.enabledFrameworks": ["react", "i18next"],
   "i18n-ally.keystyle": "nested",
-  "i18n-ally.sourceLanguage": "en",
-  "editor.suggest.snippetsPreventQuickSuggestions": false
+  "i18n-ally.sourceLanguage": "en"
 }

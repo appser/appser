@@ -4,7 +4,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import db from 'web/vendor/db'
 
 import { getViewQuery } from './useGetView'
-import { useActivatedView } from '../../hooks/useActivatedView'
+import { useActivateView } from '../ui/useActivateView'
 
 import type { View } from 'web/types'
 
@@ -12,7 +12,7 @@ type P = Parameters<typeof db.dataset.updateView>[0]
 
 export const useUpdateView = () => {
   const queryClient = useQueryClient()
-  const [view] = useActivatedView()
+  const [view] = useActivateView()
   const viewQuery = view && getViewQuery(view.datasetId, view.id)
 
   return useMutation({

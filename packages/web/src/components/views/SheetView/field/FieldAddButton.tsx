@@ -4,8 +4,8 @@ import { useEffect } from 'react'
 import { ActionButton } from 'web/components/common/ActionButton'
 import { IconPlus } from 'web/components/icons/IconPlus'
 import { useAddField } from 'web/hooks/dataset/useAddField'
-import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
-import { useActivatedView } from 'web/hooks/useActivatedView'
+import { useActivateDataset } from 'web/hooks/ui/useActivateDataset'
+import { useActivateView } from 'web/hooks/ui/useActivateView'
 
 import { FieldConfigForm } from './FieldConfigForm'
 
@@ -13,8 +13,8 @@ import type { FC } from 'react'
 import type { DatasetField } from 'web/types'
 
 export const FieldAddButton: FC = () => {
-  const [dataset] = useActivatedDataset()
-  const [view] = useActivatedView()
+  const [dataset] = useActivateDataset()
+  const [view] = useActivateView()
   const { mutate, isLoading } = useAddField(dataset?.id)
   const [opened, { toggle }] = useDisclosure(false)
 

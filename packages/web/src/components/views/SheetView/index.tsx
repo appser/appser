@@ -2,7 +2,7 @@ import { Flex } from '@appser/ui'
 import { DataEditor } from '@glideapps/glide-data-grid'
 import { useCallback, useRef, useState } from 'react'
 import { openCreateRecord } from 'web/components/modals/createRecord'
-import useAccess from 'web/hooks/useAccess'
+import useAccess from 'web/hooks/ui/useAccess'
 
 import { CellEditor } from './cell/CellEditor'
 import { CellEditorFloatingIcon } from './cell/CellEditorFloatingIcon'

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import cloneDeep from 'lodash/cloneDeep'
-import { useActivatedOrg } from 'web/hooks/useActivatedOrg'
+import { useActivateOrg } from 'web/hooks/ui/useActivateOrg'
 import db from 'web/vendor/db'
 
 import { listOrgAppQuery } from '../org/useListOrgApp'
@@ -10,7 +10,7 @@ import type { ListOrgAppResponse } from '../org/useListOrgApp'
 type UpdateAppParams = Parameters<typeof db.app.updateApp>[0]
 
 export const useUpdateApp = () => {
-  const [org] = useActivatedOrg()
+  const [org] = useActivateOrg()
   const queryClient = useQueryClient()
 
   return useMutation({

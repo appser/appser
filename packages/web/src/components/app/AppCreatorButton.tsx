@@ -2,7 +2,7 @@ import { Group, Loader, Text, ThemeIcon, UnstyledButton, colors } from '@appser/
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import { useCreateOrgApp } from 'web/hooks/org/useCreateOrgApp'
-import useAccess from 'web/hooks/useAccess'
+import useAccess from 'web/hooks/ui/useAccess'
 
 import { IconPlusSquare } from '../icons/IconPlusSquare'
 

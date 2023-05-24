@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
-import { useActivatedView } from 'web/hooks/useActivatedView'
+import { useActivateDataset } from 'web/hooks/ui/useActivateDataset'
+import { useActivateView } from 'web/hooks/ui/useActivateView'
 import db from 'web/vendor/db'
 
 import { getDatasetQuery } from './useGetDataset'
@@ -10,8 +10,8 @@ type P = Parameters<typeof db.dataset.addField>[0]
 
 export const useAddField = (toDatasetId?: string, toViewId?: string) => {
   const queryClient = useQueryClient()
-  const [dataset] = useActivatedDataset()
-  const [view] = useActivatedView()
+  const [dataset] = useActivateDataset()
+  const [view] = useActivateView()
   const datasetId = toDatasetId ?? dataset?.id
   const viewId = toViewId ?? view?.id
 

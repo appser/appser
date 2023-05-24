@@ -1,8 +1,8 @@
 import { atom, useAtom } from 'jotai'
 import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useActivatedDataset } from 'web/hooks/useActivatedDataset'
-import { useActivatedView } from 'web/hooks/useActivatedView'
+import { useActivateDataset } from 'web/hooks/ui/useActivateDataset'
+import { useActivateView } from 'web/hooks/ui/useActivateView'
 
 import type { Field } from '../field/Field'
 
@@ -10,8 +10,8 @@ const fieldsAtom = atom<Field[]>([])
 
 export const useFields = () => {
   const { t } = useTranslation()
-  const [view] = useActivatedView()
-  const [dataset] = useActivatedDataset()
+  const [view] = useActivateView()
+  const [dataset] = useActivateDataset()
   const [defaultFields, instantUpdate] = useAtom(fieldsAtom)
 
   const fields = useMemo(
@@ -31,7 +31,7 @@ export const useFields = () => {
           ...fieldInView,
           // grid column
           id: name,
-          title: fieldInDataset.title || t(`field.type.${fieldInDataset.type}`),
+          title: fieldInDataset.title || t([`field.${name}`, `field.type.${fieldInDataset.type}`]),
           icon: fieldInDataset.type,
           hasMenu: true,
           width: fieldInView?.width

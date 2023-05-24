@@ -11,8 +11,8 @@ import { RoleChange } from 'web/components/role/RoleChange'
 import { UserAvatar } from 'web/components/user/UserAvatar'
 import { listOrgPeopleQuery, useListOrgPeople } from 'web/hooks/org/useListOrgPeople'
 import { useRemoveOrgPerson } from 'web/hooks/org/useRemoveOrgPerson'
-import useAccess from 'web/hooks/useAccess'
-import { useActivatedOrg } from 'web/hooks/useActivatedOrg'
+import useAccess from 'web/hooks/ui/useAccess'
+import { useActivateOrg } from 'web/hooks/ui/useActivateOrg'
 
 import type { QueryClient } from '@tanstack/react-query'
 import type { LoaderFunctionArgs } from 'react-router-dom'
@@ -46,7 +46,7 @@ export default function OrgIdMembers() {
   const { can } = useAccess()
   const { classes } = useStyles()
   const { orgId = '' } = useParams<{ orgId: string }>()
-  const [currentOrg] = useActivatedOrg()
+  const [currentOrg] = useActivateOrg()
   const { data: people } = useListOrgPeople({ orgId, kind: 'member' })
   const removePerson = useRemoveOrgPerson()
   const [activatedUserId, setActivatedUserId] = useState('')

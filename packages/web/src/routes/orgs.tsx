@@ -5,7 +5,7 @@ import { OrgSidebar } from 'web/components/org/OrgSidebar'
 import { getLastOrgId, setLastOrgId } from 'web/helpers/lastOrgId'
 import { loadQueryData } from 'web/helpers/loadQueryData'
 import { listAccountOrgQuery, useListAccountOrg } from 'web/hooks/account/useListAccountOrg'
-import { useActivatedOrg } from 'web/hooks/useActivatedOrg'
+import { useActivateOrg } from 'web/hooks/ui/useActivateOrg'
 
 import type { QueryClient } from '@tanstack/react-query'
 import type { LoaderFunctionArgs } from 'react-router-dom'
@@ -31,7 +31,7 @@ export const loader = (queryClient: QueryClient) => async ({ request, params }: 
 }
 
 export default function Org() {
-  const [,setActivatedOrg] = useActivatedOrg()
+  const [,setActivatedOrg] = useActivateOrg()
   const lastOrgId = getLastOrgId()
   const { data: orgs } = useListAccountOrg()
 

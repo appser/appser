@@ -1,6 +1,6 @@
 import db from 'core/db'
 import { Dataset } from 'core/models/dataset'
-import { fieldOptionSchema } from 'core/modules/dataset/helpers/field/field.schema'
+import { fieldOptionSchema } from 'core/models/dataset/field.schema'
 import { Controller } from 'core/server/controller'
 import merge from 'lodash/merge'
 import { z } from 'zod'

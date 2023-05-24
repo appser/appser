@@ -7,8 +7,8 @@ import { Sidebar } from 'web/components/common/Sidebar'
 import { IconGrid } from 'web/components/icons/IconGrid'
 import { IconSettings } from 'web/components/icons/IconSettings'
 import { IconUsers } from 'web/components/icons/IconUsers'
-import useAccess from 'web/hooks/useAccess'
-import { useActivatedOrg } from 'web/hooks/useActivatedOrg'
+import useAccess from 'web/hooks/ui/useAccess'
+import { useActivateOrg } from 'web/hooks/ui/useActivateOrg'
 
 import { OrgSidebarAccountSection } from './OrgSidebarAccountSection'
 import { OrgSelect } from '../OrgSelect'
@@ -20,7 +20,7 @@ export const SIDEBAR_WIDTH = 230
 export const OrgSidebar: FC = () => {
   const { t } = useTranslation()
   const { pathname } = useLocation()
-  const [{ id: orgId = '' }] = useActivatedOrg()
+  const [{ id: orgId = '' }] = useActivateOrg()
   const { can } = useAccess()
   const { deny: denyUpdateOrg } = can('org:update', { orgId })
   const { deny: denyListPeople } = can('org:people:list', { orgId })
