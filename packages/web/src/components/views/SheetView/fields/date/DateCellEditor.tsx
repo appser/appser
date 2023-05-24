@@ -1,41 +1,29 @@
 import { Loader } from '@appser/ui'
-import { useForm } from '@appser/ui/form'
-import React, { Suspense, forwardRef, useEffect, useImperativeHandle, useState } from 'react'
+import React, { Suspense, forwardRef, useImperativeHandle, useState } from 'react'
 
 import type { FieldCellEditorProps, FieldCellEditorRef } from '..'
 import type { TextCell } from '@glideapps/glide-data-grid'
 import type { ForwardRefRenderFunction } from 'react'
 
-const DatePickerInput = React.lazy(() => import('@appser/ui/dates').then((module) => ({ default: module.DatePickerInput })))
+const DateInput = React.lazy(() => import('@appser/ui/dates').then((module) => ({ default: module.DateInput })))
 
 const DateCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, FieldCellEditorProps<TextCell> > = (
   { cell, defaultValue, onDone },
   forwardedRef
 ) => {
-  // const [date, setDate] = useState<Date | null>()
-  const [opened, setOpened] = useState(true)
-  const form = useForm({
-    initialValues: {
-      date: typeof defaultValue === 'number' ? new Date(defaultValue) : null
-    }
-  })
+  const [date, setDate] = useState<Date | null>(typeof defaultValue === 'number' ? new Date(defaultValue) : null)
 
   useImperativeHandle(forwardedRef, () => ({
     save() {
-      onDone?.(form.values.date?.valueOf())
+      onDone?.(date?.valueOf())
     }
   }))
 
-  useEffect(() => {
-    if (form.isDirty()) {
-      onDone?.(form.values.date?.valueOf())
-    }
-  }, [form.values])
-
   return (
     <Suspense fallback={<Loader size="xs" />}>
-      <DatePickerInput
+      <DateInput
         variant='unstyled'
+        allowDeselect
         styles={() => ({
           wrapper: {
             height: '100%'
@@ -44,8 +32,8 @@ const DateCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, FieldCell
             height: '100%'
           }
         })}
-        defaultValue={form.values.date}
-        onChange={(v) => form.setFieldValue('date', v)}
+        value={date}
+        onChange={(v) => setDate(v)}
         placeholder="Pick date"
         popoverProps={{
           opened: true

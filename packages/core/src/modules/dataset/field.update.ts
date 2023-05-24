@@ -2,7 +2,6 @@ import db from 'core/db'
 import { Dataset } from 'core/models/dataset'
 import { fieldOptionSchema } from 'core/models/dataset/field.schema'
 import { Controller } from 'core/server/controller'
-import merge from 'lodash/merge'
 import { z } from 'zod'
 
 import { datasetError } from './dataset.error'
@@ -21,7 +20,7 @@ export const updateField = new Controller(
 
     if (field.locked && (type || options)) return ctx.throw(datasetError('fieldIsLocked'))
 
-    const config = merge(field.toJSON(), {
+    const config = Object.assign(field.toJSON(), {
       type,
       options,
       title

@@ -1,67 +1,91 @@
-import { useForm } from '@appser/ui/form'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { FormSection } from 'web/components/common/FormSection'
+import { useLocale } from 'web/hooks/ui/useLocale'
 
 import type { FieldOptionEditorProps } from '..'
 import type { FC } from 'react'
 
 export const DateOptionEditor: FC<FieldOptionEditorProps> = ({ onChange, field }) => {
-  const form = useForm({
-    initialValues: field.type === 'date'
-      ? field.options
-      : {
-          calendar: 'gregory',
-          dateStyle: 'short',
-          timeStyle: 'short'
-        }
-  })
+  const [locale] = useLocale()
+  const [includeTime, setIncludeTime] = useState(Boolean(field.options?.timeStyle))
+  const [dateStyle, setDateStyle] = useState(field.options?.dateStyle)
+  const [timeStyle, setTimeStyle] = useState(field.options?.timeStyle)
 
-  const calendarSelectData = useMemo(() => ([
+  const dateStyleData = useMemo(() => ([
     {
-      label: 'Gregory',
-      value: 'gregory'
+      label: new Intl.DateTimeFormat(`${locale.language}-u-ca-${locale.calendar}`, {
+        dateStyle: 'short',
+        timeStyle: undefined
+      }).format(new Date()),
+      value: 'short'
     },
     {
-      label: 'Chinese',
-      value: 'chinese'
+      label: new Intl.DateTimeFormat(`${locale.language}-u-ca-${locale.calendar}`, {
+        dateStyle: 'medium',
+        timeStyle: undefined
+      }).format(new Date()),
+      value: 'medium'
     },
     {
-      label: 'Japanese',
-      value: 'japanese'
+      label: new Intl.DateTimeFormat(`${locale.language}-u-ca-${locale.calendar}`, {
+        dateStyle: 'full',
+        timeStyle: undefined
+      }).format(new Date()),
+      value: 'full'
     }
-  ]), [])
+  ]), [locale])
 
-  const formatSelectData = useMemo(() => ([
+  const timeStyleData = useMemo(() => ([
     {
-      label: 'YYYY-MM-DD',
-      value: 'short,short'
+      label: new Intl.DateTimeFormat(`${locale.language}-u-ca-${locale.calendar}`, {
+        dateStyle: undefined,
+        timeStyle: 'short'
+      }).format(new Date()),
+      value: 'short'
+    },
+    {
+      label: new Intl.DateTimeFormat(`${locale.language}-u-ca-${locale.calendar}`, {
+        dateStyle: undefined,
+        timeStyle: 'medium'
+      }).format(new Date()),
+      value: 'medium'
+    },
+    {
+      label: new Intl.DateTimeFormat(`${locale.language}-u-ca-${locale.calendar}`, {
+        dateStyle: undefined,
+        timeStyle: 'long'
+      }).format(new Date()),
+      value: 'long'
     }
-  ]), [])
+  ]), [locale])
 
-  useEffect(() => onChange?.(form.values), [form.values])
+  useEffect(() => {
+    onChange?.({
+      dateStyle,
+      timeStyle: includeTime ? timeStyle : undefined
+    })
+  }, [dateStyle, timeStyle, includeTime])
 
   return (
     <FormSection title="Options" mt="md">
       <FormSection.Select
-        label='Calendar'
-        defaultValue={form.values.calendar}
-        data={calendarSelectData}
+        label='Date Formatter'
+        defaultValue={dateStyle}
+        data={dateStyleData}
         w={100}
-        onChange={v => form.setFieldValue('precision', Number(v))}
+        onChange={v => v && setDateStyle(v)}
       />
+      <FormSection.Switch label="Include time" checked={includeTime} onChange={v => setIncludeTime(v.currentTarget.checked)} />
+      {includeTime && (
+        <FormSection.Select
+          label='Time Formatter'
+          defaultValue={timeStyle}
+          data={timeStyleData}
+          w={100}
+          onChange={v => v && setTimeStyle(v)}
+        />
+      )}
       <FormSection.Divider />
-      <FormSection.Select
-        label='Formatter'
-        defaultValue={[form.values.dateStyle, form.values.timeStyle].join(',')}
-        data={formatSelectData}
-        w={100}
-        onChange={v => {
-          if (!v) return
-          const [dateStyle, timeStyle] = v.split(',')
-          form.setFieldValue('dateStyle', dateStyle)
-          form.setFieldValue('timeStyle', timeStyle)
-        }}
-      />
     </FormSection>
   )
 }

@@ -3,6 +3,7 @@ import { App } from 'core/models/app'
 import { Dataset } from 'core/models/dataset'
 import { Org } from 'core/models/org'
 import { People } from 'core/models/people'
+import { Record } from 'core/models/record'
 import { Controller } from 'core/server/controller'
 import { rNumId } from 'core/utils/regex'
 import { z } from 'zod'
@@ -25,7 +26,7 @@ export const deleteOrg = new Controller(
       // drop datasets
       const datasets = await Dataset.query.whereIn('appId', appIds).delete().returning('id').transacting(trx)
       const datasetIds = datasets.map(t => t.id)
-      await Promise.all(datasetIds.map(datasetId => db.schema.dropTable(datasetId).transacting(trx)))
+      await Record.query.whereIn('datasetId', datasetIds).delete().transacting(trx)
     })
 
     ctx.status = 204

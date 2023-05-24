@@ -3,8 +3,8 @@
 import { atom, useAtom } from 'jotai'
 
 const locale = atom({
-  language: 'en',
-  region: 'US',
+  /** eg. zh-CN, en-US */
+  language: navigator.language,
   calendar: 'gregory',
   firstDayOfWeek: 1
 })

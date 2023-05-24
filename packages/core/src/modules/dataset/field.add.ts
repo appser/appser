@@ -2,10 +2,11 @@ import db from 'core/db'
 import { Dataset } from 'core/models/dataset'
 import { fieldOptionSchema } from 'core/models/dataset/field.schema'
 import { Controller } from 'core/server/controller'
-import { nanoid } from 'nanoid'
+import { customAlphabet } from 'nanoid'
 import { z } from 'zod'
 
 import { View } from './helpers/view/view'
+const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 8)
 
 export const addField = new Controller(
   async (ctx, next) => {
