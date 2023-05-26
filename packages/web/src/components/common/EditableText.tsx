@@ -19,7 +19,8 @@ interface EditableTextStylesParams {
 const useStyles = createStyles((theme, { isEditable }: EditableTextStylesParams) => ({
   root: {
     minHeight: 30,
-    alignItems: 'center'
+    alignItems: 'center',
+    minWidth: 0
   },
   input: {
     borderColor: isEditable ? theme.fn.primaryColor(theme.colorScheme) : 'transparent',
@@ -29,7 +30,10 @@ const useStyles = createStyles((theme, { isEditable }: EditableTextStylesParams)
   text: {
     fontSize: 'inherit',
     color: 'inherit',
-    userSelect: 'none'
+    userSelect: 'none',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis'
   }
 }))
 

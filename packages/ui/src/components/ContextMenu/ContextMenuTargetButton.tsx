@@ -4,34 +4,36 @@ import { ContextMenuContext } from './ContextMenu.context'
 
 import type { FC, MouseEvent, PropsWithChildren, ReactElement } from 'react'
 
-export interface ContextMenuTargetProps extends PropsWithChildren {
+export interface ContextMenuTargetButtonProps extends PropsWithChildren {
   onShouldOpen?: (e: MouseEvent) => boolean
-  onContextMenu?: (e: MouseEvent) => void
+  onClick?: (e: MouseEvent) => void
 }
 
-export const ContextMenuTarget: FC<ContextMenuTargetProps> = ({ children, onShouldOpen }) => {
+export const ContextMenuTargetButton: FC<ContextMenuTargetButtonProps> = ({ children, onShouldOpen }) => {
   const ctx = useContext(ContextMenuContext)
 
   if (!isValidElement(children)) return null
 
-  const onContextMenu = (e: MouseEvent) => {
+  const onClick = (e: MouseEvent) => {
     e.preventDefault()
-    children.props.onContextMenu?.(e)
+    e.stopPropagation()
+    children.props.onClick?.(e)
 
     if (typeof onShouldOpen === 'function' && !onShouldOpen(e)) return
     if (typeof onShouldOpen === 'boolean' && !onShouldOpen) return
 
-    const { clientX, clientY } = e
-
+    const { currentTarget } = e
+    const { top, left } = currentTarget.getBoundingClientRect()
+    const { offsetHeight } = (currentTarget as HTMLButtonElement)
     ctx?.setStatus({
       isOpen: true,
-      clientX,
-      clientY
+      clientX: left,
+      clientY: top + offsetHeight
     })
   }
 
   return cloneElement(children as ReactElement, {
     'aria-menu-opened': ctx?.status.isOpen ? true : undefined,
-    onContextMenu
+    onClick
   })
 }
