@@ -1,5 +1,5 @@
 import { Flex } from '@appser/ui'
-import { DataEditor } from '@glideapps/glide-data-grid'
+import { DataEditor, GridCellKind } from '@glideapps/glide-data-grid'
 import { useCallback, useRef, useState } from 'react'
 import { openCreateRecord } from 'web/components/modals/createRecord'
 import useAccess from 'web/hooks/ui/useAccess'
@@ -97,6 +97,14 @@ const GridView: FC<GridViewProps> = ({ view }) => {
         onHeaderContextMenu={(col, { bounds, preventDefault }) => {
           preventDefault()
           showFieldMenu(col, bounds)
+        }}
+        drawCell={args => {
+          const { cell, rect, ctx } = args
+          if (cell.kind !== GridCellKind.Loading) {
+            console.log(cell)
+          }
+          // console.log(cell)
+          return false
         }}
         // column
         freezeColumns={view.stickyField}
