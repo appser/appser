@@ -1,5 +1,5 @@
 import { Flex } from '@appser/ui'
-import { DataEditor, GridCellKind } from '@glideapps/glide-data-grid'
+import { DataEditor, GridCellKind, Item } from '@glideapps/glide-data-grid'
 import { useCallback, useRef, useState } from 'react'
 import { openCreateRecord } from 'web/components/modals/createRecord'
 import useAccess from 'web/hooks/ui/useAccess'
@@ -28,6 +28,8 @@ import type { View } from 'web/types'
 
 import '@glideapps/glide-data-grid/dist/index.css'
 import { useFields } from './hooks/useFields'
+import { RowExpandFloatingIcon } from './cell/RowExpandFloatingIcon'
+import { useTimeout } from '@appser/ui/hooks'
 
 interface ShowMenu {
   bounds: Rectangle
@@ -47,7 +49,7 @@ const GridView: FC<GridViewProps> = ({ view }) => {
   const gridRef = useRef<DataEditorRef | null>(null)
   const [showMenu, setShowMenu] = useState<ShowMenu>()
   const gridTheme = useGridTheme()
-  const [editingCell] = useEditingCell()
+  const [editingCell, setEditingCell] = useEditingCell()
   const { selectedFields: fields } = useFields()
   const { props: dataSourceProps, getRow } = useViewDataSource()
   const { props: headerIconsProps } = useHeaderIcons()
@@ -55,6 +57,10 @@ const GridView: FC<GridViewProps> = ({ view }) => {
   const { handler: gridSelectionHandler } = useGridSelection()
   const { handler: editCellHandler } = useGridCellEdit()
   const { handler: resizeColumnHandler } = userResizeColumn()
+  const activeCell = useRef<Item | null>(null)
+  const { start, clear } = useTimeout(() => {
+    activeCell.current = null
+  } , 300)
 
   const showFieldMenu = useCallback((col: number, bounds: Rectangle) => {
     setShowMenu(pre => pre
@@ -79,6 +85,7 @@ const GridView: FC<GridViewProps> = ({ view }) => {
         // grid
         theme={gridTheme}
         rowMarkers='clickable-number'
+        rowMarkerWidth={50}
         ref={gridRef}
         width="100%"
         height='100%'
@@ -98,19 +105,23 @@ const GridView: FC<GridViewProps> = ({ view }) => {
           preventDefault()
           showFieldMenu(col, bounds)
         }}
-        drawCell={args => {
-          const { cell, rect, ctx } = args
-          if (cell.kind !== GridCellKind.Loading) {
-            console.log(cell)
-          }
-          // console.log(cell)
-          return false
-        }}
         // column
         freezeColumns={view.stickyField}
         {...resizeColumnHandler}
         // cell
         {...editCellHandler}
+        onCellClicked={(cell) => {
+          if (cell[0] === activeCell.current?.[0] && cell[1] === activeCell.current?.[1]) {
+            setEditingCell(hoveringCell)
+          } else {
+            if (activeCell.current) {
+              activeCell.current = null
+              clear()
+            }
+            activeCell.current = cell
+            start()
+          }
+        }}
         onCellContextMenu={([col, _row], { bounds, preventDefault, localEventX, localEventY }) => {
           preventDefault()
           const row = getRow(_row)
@@ -157,7 +168,8 @@ const GridView: FC<GridViewProps> = ({ view }) => {
         />
       )}
 
-      {hoveringCell && <CellEditorFloatingIcon cell={hoveringCell} />}
+      {/* {hoveringCell && <CellEditorFloatingIcon cell={hoveringCell} />} */}
+      {hoveringCell && <RowExpandFloatingIcon cell={hoveringCell} />}
       {editingCell && <CellEditor cell={editingCell} />}
 
     </Flex>

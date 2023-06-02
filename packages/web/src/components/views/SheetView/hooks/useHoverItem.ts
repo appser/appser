@@ -25,7 +25,6 @@ export function useHoverItem() {
 
   const onItemHovered = useCallback((args: GridMouseEventArgs) => {
     const [col, row] = args.location
-
     if (args.kind === 'cell') {
       setRowIndex(row)
       setFieldIndex(col)
@@ -48,15 +47,15 @@ export function useHoverItem() {
   )
 
   useEffect(() => {
-    if (cellBounds && rowIndex !== undefined && rowIndex >= 0 && fieldIndex !== undefined && fieldIndex >= 0) {
+    if (cellBounds && rowIndex !== undefined && rowIndex >= 0 && fieldIndex !== undefined && fieldIndex >= -1) {
+      
       const field = getField(fieldIndex)
       const gridCell = getGridCell([fieldIndex, rowIndex])
       const row = getRow(rowIndex)
-
-      if (field && gridCell && row) {
+      if (gridCell && row) {
         setHoveringCell({
           gridCell,
-          field,
+          field: field ?? null,
           row,
           bounds: cellBounds,
           location: [fieldIndex, rowIndex] as const
