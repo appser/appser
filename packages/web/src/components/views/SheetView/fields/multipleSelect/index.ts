@@ -11,23 +11,25 @@ import type { FieldConfig } from '..'
 import type { BubbleCell } from '@glideapps/glide-data-grid'
 
 export function useMultipleSelectFieldConfig(): FieldConfig<BubbleCell> {
-  const toCellContent: FieldConfig<BubbleCell>['toCellContent'] = ({ value }) => {
-    if (!Array.isArray(value)) return
-
-    return {
-      kind: GridCellKind.Bubble,
-      allowOverlay: false,
-      data: value
-    }
-  }
-
   return {
     CellEditor: MultipleSelectCellEditor,
     OptionEditor: MultipleSelectOptionEditor,
     FormInput: MultipleSelectFormInput,
     FilterOperatorItem: MultipleSelectFilterOperatorItem,
     SortDirection: MultipleSelectSortDirection,
-    toCellContent,
+    toCellContent({ value, field }) {
+      if (!Array.isArray(value) || field.type !== 'multipleSelect') return
+
+      const data = value
+        .map(v => field.options.items.find(item => item.id === v)?.name)
+        .filter(Boolean) as string[]
+
+      return {
+        kind: GridCellKind.Bubble,
+        allowOverlay: false,
+        data
+      }
+    },
     icon: p => multipleSelectIcon({ color: p.fgColor, size: 20 })
   }
 }

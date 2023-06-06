@@ -15,12 +15,13 @@ export class SignupService {
   public signupByEmail({
     requestBody,
   }: {
-    requestBody: {
+    requestBody: ({
       invitationToken?: string | null;
+    } & {
       email: string;
       password: string;
       name: string;
-    },
+    }),
   }): CancelablePromise<{
     id: string;
     name?: string;

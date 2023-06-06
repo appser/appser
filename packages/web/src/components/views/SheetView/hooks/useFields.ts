@@ -22,6 +22,8 @@ export const useFields = () => {
         const fieldInDataset = dataset.field[name]
         const fieldInView = view.field[name]
 
+        console.log('===', fieldInDataset, dataset)
+
         if (!fieldInDataset || !fieldInView) throw new Error(`Field ${name} not found in dataset or view.`)
 
         return {

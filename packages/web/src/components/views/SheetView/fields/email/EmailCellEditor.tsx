@@ -22,7 +22,10 @@ const EmailCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, FieldCel
   return (
     <TextInput
       autoFocus
+      type='email'
+      value={data}
       variant='unstyled'
+      onChange={v => setData(v.currentTarget.value)}
     />
   )
 }

@@ -9,6 +9,7 @@ export const EmailFormInput: FC<FieldFormInputProps> = ({ field, onDone, default
       ? <Text fz='sm'>{String(defaultValue)}</Text>
       : <TextInput
           variant='filled'
+          type='email'
           defaultValue={String(defaultValue ?? '')}
           onChange={e => onDone?.(e.currentTarget.value)}
         />

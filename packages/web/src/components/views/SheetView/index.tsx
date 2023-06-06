@@ -105,6 +105,14 @@ const GridView: FC<GridViewProps> = ({ view }) => {
           preventDefault()
           showFieldMenu(col, bounds)
         }}
+        drawCell={args => {
+          const { cell, rect, ctx } = args
+          if (cell.kind !== GridCellKind.Loading) {
+            console.log(cell)
+          }
+          // console.log(cell)
+          return false
+        }}
         // column
         freezeColumns={view.stickyField}
         {...resizeColumnHandler}

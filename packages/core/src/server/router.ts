@@ -205,7 +205,7 @@ export class Router {
       const { query, body, header, params } = requestSchema
 
       if (query) acc.query = acc.query ? acc.query.merge(query) : query
-      if (body) acc.body = acc.body ? acc.body.merge(body) : body
+      if (body) acc.body = acc.body ? acc.body.and(body) : body
       if (header) acc.header = acc.header ? acc.header.merge(header) : header
       if (params) acc.params = acc.params ? acc.params.merge(params) : params
 
