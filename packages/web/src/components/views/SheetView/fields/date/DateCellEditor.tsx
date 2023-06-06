@@ -24,14 +24,6 @@ const DateCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, FieldCell
       <DateInput
         variant='unstyled'
         allowDeselect
-        styles={() => ({
-          wrapper: {
-            height: '100%'
-          },
-          input: {
-            height: '100%'
-          }
-        })}
         value={date}
         onChange={(v) => setDate(v)}
         placeholder="Pick date"

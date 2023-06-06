@@ -9,7 +9,7 @@ export const MultipleSelectFilterOperatorItem: FC<FieldFilterOperatorItemProps> 
   const form = useForm({
     initialValues: {
       type: defaultOperatorItem?.type,
-      value: defaultOperatorItem?.value as number[] | undefined
+      value: defaultOperatorItem?.value as string[] | undefined
     }
   })
 
@@ -56,7 +56,7 @@ export const MultipleSelectFilterOperatorItem: FC<FieldFilterOperatorItemProps> 
         placeholder="Pick all that you like"
         defaultValue={Array.isArray(form.values.value) ? form.values.value.map(String) : undefined}
         clearable
-        onChange={v => form.setFieldValue('value', v.map(Number))}
+        onChange={v => form.setFieldValue('value', v)}
       />
     </Group>
   )

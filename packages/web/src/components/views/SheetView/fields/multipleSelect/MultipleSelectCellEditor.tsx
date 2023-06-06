@@ -5,11 +5,11 @@ import type { FieldCellEditorProps, FieldCellEditorRef } from '..'
 import type { BubbleCell } from '@glideapps/glide-data-grid'
 import type { ForwardRefRenderFunction } from 'react'
 
-const MultipleSelectCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, FieldCellEditorProps<BubbleCell> > = (
+const MultipleSelectCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef, FieldCellEditorProps<BubbleCell>> = (
   { cell, defaultValue, onDone },
   forwardedRef
 ) => {
-  const [data, setData] = useState(cell.data)
+  const [data, setData] = useState(Array.isArray(defaultValue) ? defaultValue : [])
   const list = useMemo(() => {
     if (cell.field.type !== 'multipleSelect') return []
 
@@ -30,11 +30,11 @@ const MultipleSelectCellEditorImpl: ForwardRefRenderFunction<FieldCellEditorRef,
   return (
     <MultiSelect
       data={list}
-      defaultValue={cell.data}
+      defaultValue={data}
       initiallyOpened
       clearable
       variant='unstyled'
-      onChange={v => setData(v)}
+      onChange={vs => setData(vs)}
     />
   )
 }
