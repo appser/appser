@@ -15,17 +15,18 @@ export function useGridSelection() {
     gridSelection: selection,
     onGridSelectionChange: useCallback((newSel: GridSelection) => {
       let newRows = CompactSelection.empty()
+      // console.log(newSel)
+      // if (newSel.current !== undefined) {
+      //   newRows = newRows.add([newSel.current.range.y, newSel.current.range.y + newSel.current.range.height])
+      // }
 
-      if (newSel.current !== undefined) {
-        newRows = newRows.add([newSel.current.range.y, newSel.current.range.y + newSel.current.range.height])
-      }
-
-      for (const b of newSel.current?.rangeStack ?? []) {
-        newRows = newRows.add([b.y, b.y + b.height])
-      }
+      // for (const b of newSel.current?.rangeStack ?? []) {
+      //   newRows = newRows.add([b.y, b.y + b.height])
+      // }
 
       setSelection({
         ...newSel,
+        // current: undefined,
         rows: newRows
       })
     }, [selection])

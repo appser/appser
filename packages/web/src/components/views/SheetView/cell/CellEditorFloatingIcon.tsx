@@ -24,6 +24,9 @@ export const CellEditorFloatingIcon: FC<Props> = ({ cell }) => {
   const [dataset] = useActivateDataset()
   const { can } = useAccess()
   const [editingCell, setEditingCell] = useEditingCell()
+  if (!field) return null
+  
+  
   const FieldCellEditor = fields[field.type].CellEditor
   const { allow: allowEdit } = can('app:dataset:record:field:update', {
     appId: app?.id ?? '',

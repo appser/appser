@@ -166,12 +166,6 @@ export default function AppsId() {
     }
   }, [rect])
 
-  // useEffect(() => {
-  //   setSelection({
-  //     rows: CompactSelection.empty(),
-  //     columns: CompactSelection.empty()
-  //   })
-  // }, [])
 
   useEffect(() => {
     const rows = selection.rows.toArray()
@@ -320,7 +314,7 @@ export default function AppsId() {
 
       </Flex>
 
-      <div id="portal" />
+      {/* <div id="portal" /> */}
     </Flex>
   )
 }
